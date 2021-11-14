@@ -5,16 +5,47 @@
 				background-image: url('background.png');
 				background-size: cover;
 			}
+			h1, h2, h3 {
+				font-variant: small-caps;
+				font-weight: 800;
+				text-align: center;
+				-webkit-background-clip: text;
+			}
 			.wt {
 				color: white;
 			}
 			.logo {
 				width: auto;
 				height: 128px;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			h1, h2 {
+  				color: rgb(255, 255, 255);
+ 				background-image: linear-gradient(
+  					rgb(255, 255, 255) 46%,
+ 				    rgb(125, 142, 167) 49%,
+   					rgb(211, 226, 249) 80%
+  				);
+  				-webkit-text-fill-color: transparent;
+ 				-webkit-text-stroke: 1px rgb(0, 0, 0);
+			}
+			h3 {
+				color: rgb(0, 255, 128);
+				background-image: linear-gradient(
+					rgb(0, 255, 128) 1%,
+  					rgb(17, 192, 169) 99%
+  				);
+				-webkit-text-fill-color: transparent;
 			}
 		</style>
 	</head>
 	<body>
 		<img class="logo" src="logo.jpg">
+		<h1>BonesYT's Home Page!</h1>
+		<h3>Welcome to my home page!</h3>
+		<h3>This is where my projects, games and other stuff will be! Awesome right?</h3>
+		<h3>First ever website. Made in GitHub!</h3>
 	</body>
 </html>

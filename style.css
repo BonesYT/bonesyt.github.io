@@ -32,9 +32,9 @@ h1{
 h2 {
     color: rgb(255, 255, 255);
     background-image: linear-gradient(
-        rgb(255, 255, 255) 0%,
-        rgb(153, 153, 153) 50%
-        rgb(66, 79, 109) 100%
+        rgb(255, 255, 255) 1%,
+        rgb(153, 153, 153) 50%,
+        rgb(66, 79, 109) 99%
     );
     -webkit-text-fill-color: transparent;
 }

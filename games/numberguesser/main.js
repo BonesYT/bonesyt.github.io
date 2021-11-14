@@ -30,5 +30,8 @@ function load() {
         $('pts').innerHTML = 'Points: ' + points
     } else {
         save()
+        load()
     }
 }
+
+load()

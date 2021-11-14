@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<style>
+			input {
+				-webkit-writing-mode: horizontal-tb !important;
+				text-rendering: auto;
+				color: -internal-light-dark(black, white);
+				letter-spacing: normal;
+				word-spacing: normal;
+				text-transform: none;
+				text-indent: 0px;
+				text-shadow: none;
+				display: inline-block;
+				text-align: start;
+				appearance: auto;
+				background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+ 				-webkit-rtl-ordering: logical;
+				cursor: text;
+				margin: 0em;
+				font: 400 13.3333px Arial;
+				padding: 1px 2px;
+				border-width: 2px;
+ 				border-style: inset;
+ 				border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+   				border-image: initial;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" placeholder="Enter code" onblur="getVal()" class="input">
+		<button class="start-button">Start</button>
+		<button class="stop-button">Stop</button>
+		<button class="next-button">Next</button>
+		<button class="reset-button">Reset</button>
+		<h1 class="resultText">(..)</h1>
+	</body>
+	<script>
+		codeInput = 0
+		let displayText = document.querySelector('.resultText');
+		let startButton = document.querySelector('.start-button');
+		let stopButton = document.querySelector('.stop-button');
+		let nextButton = document.querySelector('.next-button');
+		let resetButton = document.querySelector('.reset-button');
+		function getVal(show) {
+			show = show || false
+			const codeInput = document.querySelector('input').value;
+			codeInput2 = codeInput
+			if (show) {
+				console.log(codeInput)
+			}
+		}
+		t2=0
+		playing=false
+		function update() {
+			getVal()
+			t2++
+			code = 't='+t2+','+codeInput2
+			codeOutput = eval(code)
+			displayText.innerHTML = codeOutput
+		}
+		startButton.addEventListener("click",()=>{
+			if (!playing) {
+				interval = setInterval(update, 16)
+				playing = true
+			}
+		});
+		stopButton.addEventListener("click",()=>{
+			clearInterval(interval)
+			playing = false
+		});
+		nextButton.addEventListener("click",()=>{
+			update()
+		});
+		resetButton.addEventListener("click",()=>{
+			t2=0
+			getVal()
+			code = 't='+t2+','+codeInput2
+			codeOutput = eval(code)
+			displayText.innerHTML = codeOutput
+		});
+	</script>
+</html>

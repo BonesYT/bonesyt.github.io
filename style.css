@@ -23,11 +23,20 @@ h1{
     color: rgb(255, 255, 255);
     background-image: linear-gradient(
         rgb(255, 255, 255) 46%,
-        rgb(125, 142, 167) 49%,
+        rgb(197, 197, 197) 49%,
         rgb(211, 226, 249) 80%
       );
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke: 1px rgb(36, 36, 36);
+}
+h2 {
+    color: rgb(255, 255, 255);
+    background-image: linear-gradient(
+        rgb(255, 255, 255) 0%,
+        rgb(153, 153, 153) 50%
+        rgb(66, 79, 109) 100%
+    );
+    -webkit-text-fill-color: transparent;
 }
 h3 {
     color: rgb(0, 255, 128);

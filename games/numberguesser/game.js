@@ -1,6 +1,10 @@
 guesses = []
 answer = -1
 won = 0
+highscore = 101
+points = 0
+nhighscore = 1
+lastguess = 0
 
 function startGame() {
     $('main').style.display = 'none'
@@ -17,11 +21,28 @@ function guess() {
     $('guesses').innerHTML = 'Guesses: ' + guesses.join(', ')
     if ($('guess').value == answer) {
         won++
+
         $('main').style.display = 'block'
         $('game').style.display = 'none'
-        $('last').innerHTML = 'Won last round with ' + guesses.length + ' guesses.'
+
+        lastguess = guesses.length
+        $('last').innerHTML = 'Won last round with ' + lastguess + ' guesses.'
         $('won').innerHTML = 'Times won: ' + won
+
 		guesses = []
+
+        points += Math.floor(Math.log10(numbers)*50 + (1 / guesses) * (Math.log10(numbers)*50 * 1.2))
+        $('pts').innerHTML = 'Points: ' + points
+        
+        if (numbers > nhighscore) nhighscore = numbers
+        if ($('min').value == 0 & $('max').value == 100) {
+            if (lastguess < highscore) highscore = lastguess
+        }
+
+        $('nhigh').innerHTML = 'Highest ammount of numbers won: ' + nhighscore
+        $('high').innerHTML = 'Lowest guesses using default min/max: ' + highscore
+
+        save()
     } else {
         if ($('guess').value > answer) {
             $('answer').innerHTML = 'Lower!'

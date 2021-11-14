@@ -76,3 +76,6 @@ input {
     );
     font-family: 'Trebuchet MS', sans-serif;
 }
+.lowmargin {
+    margin: 7px;
+}

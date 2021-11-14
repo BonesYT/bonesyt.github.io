@@ -4,6 +4,7 @@
 			body {
 				background-image: url('background.png');
 				background-size: cover;
+				text-align: center;
 			}
 			h1, h2, h3 {
 				font-variant: small-caps;
@@ -40,7 +41,27 @@
   				);
 				-webkit-text-fill-color: transparent;
 			}
+			button {
+				font-family: 'Trebuchet MS', sans-serif;
+				color: rgb(255, 255, 255);
+				background-image: linear-gradient(
+					rgb(53, 45, 0) 0%,
+  					rgba(0, 26, 82) 100%
+  				);
+				border-radius: 6px;
+				font-size: 18px;
+				padding: 6px 11px;
+			}
+			button:hover {
+				color: rgb(255, 255, 255);
+				background-image: linear-gradient(
+					rgb(120, 110, 0) 0%,
+  					rgba(0, 110, 120) 100%
+  				);
+				border-color: rgb(180, 180, 180);
+			}
 		</style>
+		<script defer src="main.js"></script>
 	</head>
 	<body>
 		<img class="logo" src="logo.jpg">
@@ -48,5 +69,8 @@
 		<h3>Welcome to my home page!</h3>
 		<h3>This is where my projects, games and other stuff will be! Awesome right?</h3>
 		<h3>First ever website. Made in GitHub!</h3>
+		<h1>Classic Clicker</h1>
+		<h3>Click this button below until you reach 128 of value!</h3>
+		<button id="clicker">0 / 128 (0%)</button>
 	</body>
 </html>

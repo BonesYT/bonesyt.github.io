@@ -1,0 +1,182 @@
+<html>
+	<head>
+		<style id="style">.multiline {
+	white-space: pre-wrap;
+}
+button {
+	background-color: #E2E2E2;
+	border-color: #4F4F4F;
+	border-width: 1px;
+	color: black;
+	padding: 3px 15px;
+	margin: 1px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+}
+button:hover {
+	background-color: #FAFAFA;
+	border-color: #8C8C8C;
+}
+button:active {
+	background-color: #C8C8C8;
+	border-color: #2B2B2B;
+}
+		</style>
+		<script src="OmegaNum.min.js"></script>
+		<script src="ExpantaNum.min.js"></script>
+		<script defer src="JSFunctions/Functions.js"></script>
+		<script src="JSFunctions/Canvas.js"></script>
+		<script defer src="main.js"></script>
+		<script>
+			function tab(evt, tab) {
+				var i, tabcontent, tablinks;
+				tabcontent = document.getElementsByClassName("tabcontent");
+				for (i = 0; i < tabcontent.length; i++) {
+					tabcontent[i].style.display = "none";
+				}
+				tablinks = document.getElementsByClassName("tablinks");
+				for (i = 0; i < tablinks.length; i++) {
+					tablinks[i].className = tablinks[i].className.replace(" active", "");
+				}
+				document.getElementById(tab).style.display = "block";
+				evt.currentTarget.className += " active";
+			}
+		</script>
+	</head>
+	<body id="body">
+		<h5 id="version" margin="1px">Version </h5>
+		<div class="tab">
+			<button class="tablinks" onclick="tab(event,'main')">Main</button>
+			<button class="tablinks" onclick="tab(event,'config')">Config</button>
+			<button class="tablinks" onclick="tab(event,'functions')">Functions</button>
+		</div>
+		<div id="main" class="tabcontent" style="display: block;">
+			<div id="audioPlay">
+			
+				<h3>Audio</h3>
+				<button onclick="playAudioButton()">Play Audio</button>
+				<button onclick="audioPlayed = false; remAudio()">Stop Last Audio</button>
+				<button onclick="audioPlayed = false; remAudio('all')">Stop All Audio</button>
+				<br>
+				<input type="text" id="audioInput" value="Thesuren"></input>
+				<select id="audioSelect" value="mp3">
+					<option value="mp3">mp3</option>
+					<option value="wav">wav</option>
+					<option value="ogg">ogg</option>
+					<option value="m4a">m4a</option>
+					<option value="any">any</option>
+				</select>
+				<br>
+				<input type="checkbox" id="songRepeat">Multiple songs at once?</input>
+				<br>
+				<input type="checkbox" id="songArray">Array?</input>
+				
+			</div>
+			<div id="imageDiv">
+			
+				<h3>Image</h3>
+				<button onclick="changeImage()">Change Image</button>
+				<input type="text" id="imageInput" value="xorGlitchEffect"></input>
+				<select id="imageSelect" value="png">
+					<option value="png">png</option>
+					<option value="jpg">jpg</option>
+					<option value="bmp">bmp</option>
+					<option value="svg">svg</option>
+				</select>
+				<br>
+				<img src="xorGlitchEffect.png" id="image">
+				
+			</div>
+			<div id="stuff">
+			
+				<h1 id="text" class="multiline">Enter help() in Console for help</h1>
+				<h1 id="loopText" class="multiline">replace</h1>
+				<canvas width="256" height="256" id="imgCanvas">
+				
+			</div>
+		</div>
+		<div id="config" class="tabcontent" style="display: none;">
+		
+			<h3>CSS Config</h3>
+			<textarea style="width:640;height:320;" id="cssStyle"></textarea>
+			<br>
+			<button onclick="document.getElementById('cssStyle').value = defaultCSS">Set to default</button>
+			<button onclick="document.getElementById('cssStyle').value = previousCSS">Reset CSS</button>
+			<br>
+			<button onclick="var a=document.getElementById('cssStyle').value; document.getElementById('style').innerHTML = a; previousCSS = a">Confirm</button>
+			<br>
+			<button onclick="bonesytCss()">BonesYT's styling</button>
+			
+		</div>
+		<div id="functions" class="tabcontent" style="display: none;">
+			
+			<h3>Functions</h3>
+			<input list="funcOptions" value="updateText" id="funcOption">Function</input>
+			<datalist id="funcOptions">
+				<option value="help"></option>
+				<option value="updateText"></option>
+				<option value="big"></option>
+				<option value="bigRepeat"></option>
+				<option value="iterSeed"></option>
+				<option value="negPosIndentifier"></option>
+				<option value="compress"></option>
+				<option value="uncompress"></option>
+				<option value="numberListify"></option>
+				<option value="collatz"></option>
+				<option value="numberString"></option>
+				<option value="valueFix"></option>
+				<option value="reverseBoolean"></option>
+				<option value="allCharacters"></option>
+				<option value="spam"></option>
+				<option value="hex.component"></option>
+				<option value="hex.number"></option>
+				<option value="stringExpression"></option>
+				<option value="canvas.start"></option>
+				<option value="canvas.edit"></option>
+				<option value="canvas.square"></option>
+				<option value="canvas.clear"></option>
+				<option value="canvas.art"></option>
+				<option value="canvas.image"></option>
+				<option value="canvas.getPixel"></option>
+				<option value="canvas.getAll"></option>
+				<option value="canvas.colorApprox"></option>
+				<option value="canvas.code"></option>
+				<option value="canvas.read"></option>
+				<option value="value"></option>
+				<option value="document.getElementById"></option>
+				<option value="Array"></option>
+				<option value="String.fromCharCode"></option>
+				<option value="OmegaNum"></option>
+				<option value="fractal"></option>
+				<option value="inc.t"></option>
+				<option value="inc2.game"></option>
+			</datalist>
+			<br>
+			<textarea id="funcArg" style="margin-top: 4px; width: 400; height: 128"></textarea>
+			Arguments
+			<br>
+			Split by
+			<input list="splitSelectList" value="$array" id="splitSelect"></input>
+			<datalist id="splitSelectList">
+				<option value="$array"></option>
+				<option value="$arg"></option>
+				<option value=","></option>
+				<option value=";"></option>
+				<option value=", "></option>
+				<option value="; "></option>
+				<option value="-"></option>
+				<option value="_"></option>
+				<option value=" "></option>
+			</datalist>
+			<br>
+			<button id="funcRun" onclick="document.getElementById('funcOut').innerHTML = funcRun()" style="margin-top: 12px">Run Function</button>
+			<br>
+			<textarea id="funcOut" style="margin-top: 12px; width: 320; height: 80"></textarea>
+			Output
+			<br>
+			<input type="checkbox" id="JSONinstead">Use JSON.stringify() instead of .toString()?</input>
+		</div>
+	</body>
+</html>

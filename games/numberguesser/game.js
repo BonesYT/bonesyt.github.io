@@ -31,7 +31,7 @@ function guess() {
 
 		guesses = []
 
-        points += Math.floor(Math.log10(numbers)*50 + (1 / guesses) * (Math.log10(numbers)*50 * 1.2))
+        points += Math.floor(Math.log10(numbers)*50 + (1 / lastguess) * (Math.log10(numbers)*50 * 1.2))
         $('pts').innerHTML = 'Points: ' + points
         
         if (numbers > nhighscore) nhighscore = numbers

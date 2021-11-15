@@ -11,6 +11,7 @@ var pointsgain = 0
 var gets = 0
 var delay = 1
 var speed = 3.25
+var start = false
 
 //outgame
 var points = 0
@@ -44,56 +45,11 @@ canvas.addEventListener('mousedown', function(e) {
 })
 
 function startGame() {
+    start = true
     plays++
     gameStart = true
     $('main').style.display = 'none'
     $('gameStats').style.display = 'block'
-    int = setInterval(()=>{
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        for (var i in boxes) {
-            ctx.fillStyle = 'white';
-            ctx.fillRect(boxes[i][0], boxes[i][1], 50, 50);
-            boxes[i][1] += speed
-            if (boxes[i][1] >= 400) {
-                boxes.splice(i, 1)
-                lives--
-                if (lives == 0) {
-                    $('main').style.display = 'block'
-                    $('gameStats').style.display = 'none'
-                    points += pointsgain
-                    if (pointsgain > highscore) highscore = pointsgain
-                    update()
-                    boxes = []
-                    tick = 0
-                    tickUntil = 30
-                    lives = 5
-                    pointsgain = 0
-                    gets = 0
-                    delay = 1
-                    speed = 3.25
-					save()
-                    clearInterval(int)
-                }
-            }
-        }
-        if (tick > tickUntil) {
-            tickUntil += (Math.random()*40+55)*delay
-            boxes.push([Math.random()*600, -50])
-
-            delay /= 1.055
-            delay = Math.max(delay, 0.25)
-            speed *= 1.055
-            speed = Math.min(speed, 12)
-        }
-
-        tick++
-
-        $('ptsg').innerHTML = 'You gained ' + pointsgain + ' points!'
-        $('amm').innerHTML = 'You got ' + gets + ' boxes!'
-        $('liv').innerHTML = 'You have ' + lives + ' lives!'
-    }, 33)
 }
 
 function update() {
@@ -126,3 +82,56 @@ function load() {
 }
 
 load()
+
+int = setInterval(()=>{
+    if (start) {
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    for (var i in boxes) {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(boxes[i][0], boxes[i][1], 50, 50);
+        boxes[i][1] += speed
+        if (boxes[i][1] >= 400) {
+            boxes.splice(i, 1)
+            lives--
+            if (lives == 0) {
+                $('main').style.display = 'block'
+                $('gameStats').style.display = 'none'
+                points += pointsgain
+                if (pointsgain > highscore) highscore = pointsgain
+                update()
+                boxes = []
+                tick = 0
+                tickUntil = 30
+                lives = 5
+                pointsgain = 0
+                gets = 0
+                delay = 1
+                speed = 3.25
+                save()
+                start = false
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+    }
+    if (tick > tickUntil) {
+        tickUntil += (Math.random()*40+55)*delay
+        boxes.push([Math.random()*600, -50])
+
+        delay /= 1.055
+        delay = Math.max(delay, 0.25)
+        speed *= 1.055
+        speed = Math.min(speed, 12)
+    }
+
+    tick++
+
+    $('ptsg').innerHTML = 'You gained ' + pointsgain + ' points!'
+    $('amm').innerHTML = 'You got ' + gets + ' boxes!'
+    $('liv').innerHTML = 'You have ' + lives + ' lives!'
+
+    }
+}, 33)

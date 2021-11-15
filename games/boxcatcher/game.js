@@ -63,7 +63,7 @@ function startGame() {
                     $('main').style.display = 'block'
                     $('gameStats').style.display = 'none'
                     points += pointsgain
-                    if (points > highscore) highscore = points
+                    if (pointsgain > highscore) highscore = pointsgain
                     update()
                     boxes = []
                     tick = 0

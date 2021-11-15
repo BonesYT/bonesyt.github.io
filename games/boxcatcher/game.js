@@ -59,8 +59,8 @@ function update() {
 }
 
 function save() {
-    save = {pts: points, high: highscore, plays: plays}
-    document.cookie = JSON.stringify(save)
+    save2 = {pts: points, high: highscore, plays: plays}
+    document.cookie = JSON.stringify(save2)
 }
 function load() {
     var isJSON = true

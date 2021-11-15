@@ -22,6 +22,7 @@ function load() {
         highscore = load.high
         points = load.points
         nhighscore = load.nhigh
+        lastguess = load.last
         lastguess: load.last
         $('nhigh').innerHTML = 'Highest ammount of numbers won: ' + nhighscore
         $('high').innerHTML = 'Lowest guesses using default min/max: ' + highscore

@@ -16,7 +16,13 @@ function save() {
     document.cookie = JSON.stringify(save)
 }
 function load() {
-    if (document.cookie) {
+    var isJSON = true
+    try {
+        JSON.parse(document.cookie)
+    } catch {
+        isJSON = false
+    }
+    if (isJSON) {
         load = JSON.parse(document.cookie)
         won = load.wins
         highscore = load.high

@@ -6,6 +6,7 @@ function $(e) {
 var boxes = []
 var tick = 0
 var tickUntil = 30
+var tickUntil2 = 600
 var lives = 5
 var pointsgain = 0
 var gets = 0
@@ -34,6 +35,12 @@ function getCursorPosition(canvas, event) {
             if (x >= boxes[i][0] & x < (boxes[i][0]+50) & y >= boxes[i][1] & y < (boxes[i][1]+50)) {
                 gets++
                 pointsgain += Math.floor(90 + (-boxes[i][1]-50)/9)
+                if (boxes[i][2] == 1) {
+                    lives++
+                    new Audio('LifeCollect.wav').play()
+                } else {
+                    new Audio('Collect.wav').play()
+                }
                 boxes.splice(i, 1)
             }
         }
@@ -90,10 +97,15 @@ int = setInterval(()=>{
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     for (var i in boxes) {
-        ctx.fillStyle = 'white';
+        if (boxes[i][2] == 1) {
+            ctx.fillStyle = 'blue';
+        } else {
+            ctx.fillStyle = 'white';
+        }
         ctx.fillRect(boxes[i][0], boxes[i][1], 50, 50);
         boxes[i][1] += speed
         if (boxes[i][1] >= 400) {
+            new Audio('Miss.mp3').play()
             boxes.splice(i, 1)
             lives--
             if (lives == 0) {
@@ -105,6 +117,7 @@ int = setInterval(()=>{
                 boxes = []
                 tick = 0
                 tickUntil = 30
+                tickUntil2 = 600
                 lives = 5
                 pointsgain = 0
                 gets = 0
@@ -119,12 +132,16 @@ int = setInterval(()=>{
     }
     if (tick > tickUntil) {
         tickUntil += (Math.random()*40+55)*delay
-        boxes.push([Math.random()*600, -50])
+        boxes.push([Math.random()*600, -50, 0])
 
         delay /= 1.055
         delay = Math.max(delay, 0.25)
         speed *= 1.055
         speed = Math.min(speed, 12)
+    }
+    if (tick > tickUntil2) {
+        tickUntil2 += 450
+        boxes.push([Math.random()*600, -50, 1])
     }
 
     tick++

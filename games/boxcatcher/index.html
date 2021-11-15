@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../../style.css">
+		<script defer src="game.js"></script>
+	</head>
+	<body>
+		<h1>Box Catcher</h1>
+		<h3>Get as many boxes as you can!</h3>
+		<div id="main" style="display:block">
+			<h2 class="lowmargin" id="pts"></h2>
+			<h2 class="lowmargin" id="high"></h2>
+			<h2 class="lowmargin" id="plays"></h2>
+			<button onclick="startGame()">Start!</button>
+		</div>
+		<div id="gameStats" style="display:none">
+			<h2 class="lowmargin" id="ptsg">You gained points!</h2>
+			<h2 class="lowmargin" id="amm">You got boxes!</h2>
+			<h2 class="lowmargin" id="liv">You have 5 lives left!</h2>
+		</div>
+		<canvas id="canvas" width="650" height="400"></canvas>
+	</body>
+</html>

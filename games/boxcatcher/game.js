@@ -62,9 +62,17 @@ function startGame() {
                 if (lives == 0) {
                     $('main').style.display = 'block'
                     $('gameStats').style.display = 'none'
-                    update()
                     points += pointsgain
                     if (points > highscore) highscore = points
+                    update()
+                    boxes = []
+                    tick = 0
+                    tickUntil = 30
+                    lives = 5
+                    pointsgain = 0
+                    gets = 0
+                    delay = 1
+                    speed = 3.25
 					save()
                     clearInterval(int)
                 }

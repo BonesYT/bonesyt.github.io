@@ -56,7 +56,7 @@ function startGame() {
             ctx.fillStyle = 'white';
             ctx.fillRect(boxes[i][0], boxes[i][1], 50, 50);
             boxes[i][1] += speed
-            if (boxes[i][1] <= 400) {
+            if (boxes[i][1] >= 400) {
                 boxes.splice(i, 1)
                 lives--
                 if (lives == 0) {
@@ -65,6 +65,7 @@ function startGame() {
                     update()
                     points += pointsgain
                     if (points > highscore) highscore = points
+					save()
                     clearInterval(int)
                 }
             }

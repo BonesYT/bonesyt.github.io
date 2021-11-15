@@ -37,6 +37,7 @@ function getCursorPosition(canvas, event) {
                 pointsgain += Math.floor(90 + (-boxes[i][1]-50)/9)
                 if (boxes[i][2] == 1) {
                     lives++
+                    lives = Math.min(lives, 5)
                     new Audio('LifeCollect.wav').play()
                 } else {
                     new Audio('Collect.wav').play()

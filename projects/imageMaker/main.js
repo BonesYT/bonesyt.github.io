@@ -101,6 +101,7 @@ function draw(a) {
     }
 }
 function effect(a) {
+    $('wait-dialogue-2').innerHTML = 'Apply effect.'
     link.push(a)
     $('wait-2').style.display = 'block'
     $('effects').style.display = 'none'

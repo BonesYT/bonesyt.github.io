@@ -1,0 +1,76 @@
+<html>
+	<head>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
+        <script defer src="main.js"></script>
+        <title>Image Maker</title>
+    </head>
+	<body>
+		<h1>Image Maker</h1>
+		<h3>Image creator, draw shapes, apply effects and more.</h3>
+        <div id="start" style="display:block">
+            <h2>Width</h2>
+            <input type="number" id="width" min="1" max="1024" value="256">
+            <h2>Height</h2>
+            <input type="number" id="height" min="1" max="1024" value="256">
+            <br>
+            <button onclick="start()">Start</button>
+        </div>
+        <div id="main" style="display:none">
+            <div id="main-options" style="display:block">
+                <button onclick="options(0)">Draw</button>
+                <button onclick="options(1)">Effects</button>
+            </div>
+            <div id="draw" style="display:none">
+                <button onclick="draw(0)">Pen</button>
+                <button onclick="draw(1)">Circle</button>
+                <button onclick="draw(2)">Square</button>
+                <button onclick="draw(3)">Polygon</button>
+                <button onclick="draw(4)">Fill</button>
+                <button onclick="back()">Back</button>
+            </div>
+            <div id="effects" style="display:none">
+                <button onclick="effect(0)">Add</button>
+                <button onclick="effect(1)">Subtract</button>
+                <button onclick="effect(2)">Multiply</button>
+                <button onclick="effect(3)">Invert</button>
+                <button onclick="effect(4)">Black and White</button>
+                <button onclick="back()">Back</button>
+            </div>
+            <div id="wait" style="display:none">
+                <h2 id="wait-dialogue">Please click on 2 locations in the canvas.</h2>
+                <div id="back" style="display:block">
+                    <button onclick="backundo()">Back</button>
+                </div>
+
+                <div id="show-fill" style="display:block">
+                    <h3>Fill color</h3>
+                    <input type="color" id="fill-color">
+                </div>
+
+                <div id="show-outline" style="display:block">
+                    <h3>Outline color</h3>
+                    <input type="color" id="outline-color">
+                    <h3>Outline width</h3>
+                    <input type="number" id="outline-width" value="2">
+                </div>
+
+                <div id="show-radius" style="display:block">
+                    <h3>Radius</h3>
+                    <input type="number" id="radius" value="64">
+                </div>
+                
+                <div id="show-polygon" style="display:block">
+                    <button onclick="happen(0)">Done</button>
+                </div>
+            </div>
+            <div id="wait-2" style="display:none">
+                <h2 id="wait-dialogue">Please click on 2 locations in the canvas.</h2>
+                <input type="color" id="effect-color">
+                <button onclick="backundo()">Back</button>
+                <button onclick="done()">Done</button>
+            </div>
+            <canvas id="canvas" onmousemove="getPos(event)"></canvas>
+        </div>
+	</body>
+</html>

@@ -7,6 +7,7 @@ var ctx = canvas.getContext('2d')
 var link = []
 var places = []
 var pos = {}
+var saves = []
 
 function start() {
     $('start').style.display = 'none'
@@ -158,6 +159,28 @@ function done() {
     $('wait-2').style.display = 'none'
     $('effects').style.display = 'block'
 }
+function saveImage() {
+    saves.push(ctx.getImageData(0, 0, canvas.width, canvas.height).data)
+    var newcanvas = document.makeElement('canvas', '')
+    newcanvas.id = 'save' + (saves.length-1)
+    newcanvas.width = canvas.width
+    newcanvas.height = canvas.height
+    newcanvas.style.zoom = 32 / canvas.height
+    newcanvas.style.margin = '20px'
+    document.placeElement(newcanvas, 'saves')
+    var newctx = newcanvas.getContext('2d')
+    newctx.drawImage($('canvas'), 0, 0, canvas.width, canvas.height)
+    newcanvas.addEventListener('click', eval('()=>{loadImage('+(saves.length-1)+')}'))
+}
+function loadImage(id) {
+    ctx.drawImage($('save'+id), 0, 0, $('save'+id).width, $('save'+id).height)
+}
+function deleteSaves() {
+    for (var i in saves) {
+        $('save'+i).remove()
+    }
+    saves = []
+}
 
 function backundo() {
     ctx.closePath()
@@ -272,4 +295,14 @@ function htc(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+document.makeElement = (tag, innerHTML)=>{
+    var node = document.createElement(tag);
+    var textnode = document.createTextNode(innerHTML);
+    node.appendChild(textnode);
+    return node
+}
+document.placeElement = (node, id)=>{
+    document.getElementById(id).appendChild(node);
 }

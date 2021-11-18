@@ -20,6 +20,7 @@
             <div id="main-options" style="display:block">
                 <button onclick="options(0)">Draw</button>
                 <button onclick="options(1)">Effects</button>
+                <button onclick="saveImage()">Save Image</button>
             </div>
             <div id="draw" style="display:none">
                 <button onclick="draw(0)">Pen</button>
@@ -71,6 +72,9 @@
                 <button onclick="done()">Done</button>
             </div>
             <canvas id="canvas" onmousemove="getPos(event)"></canvas>
+            <div id="saves">
+                <button onclick="deleteSaves()">Delete all saves</button>
+            </div>
         </div>
 	</body>
 </html>

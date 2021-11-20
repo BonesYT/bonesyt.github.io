@@ -8,6 +8,7 @@ var link = []
 var places = []
 var pos = {}
 var saves = []
+var fxid = -1
 
 function start() {
     $('start').style.display = 'none'
@@ -42,6 +43,7 @@ function draw(a) {
     $('show-outline').style.display = 'block'
     $('show-fill').style.display = 'block'
     $('show-polygon').style.display = 'none'
+    $('show-gradient').style.display = 'none'
     $('back').style.display = 'block'
     switch (a) {
         case 0:
@@ -99,6 +101,16 @@ function draw(a) {
             $('draw').style.display = 'none'
             places = []
         break
+        case 5:
+            $('show-radius').style.display = 'none'
+            $('show-outline').style.display = 'none'
+            $('show-fill').style.display = 'none'
+            $('show-gradient').style.display = 'block'
+            $('wait-dialogue').innerHTML = 'Click on two locations to form a linear gradient.'
+            $('wait').style.display = 'block'
+            $('draw').style.display = 'none'
+            places = []
+        break
     }
 }
 function effect(a) {
@@ -108,12 +120,21 @@ function effect(a) {
     $('effects').style.display = 'none'
 }
 function done() {
+    if (fxid != -1) {
+        var fxcanvas = $('save' + fxid)
+        var fxctx = fxcanvas.getContext('2d')
+    }
     var rgb, r0, g0, b0, r1 = htc($('effect-color').value).r, g1 = htc($('effect-color').value).g, b1 = htc($('effect-color').value).b
     for (var x=0; x<canvas.width; x++) {
         for (var y=0; y<canvas.height; y++) {
             r0 = ctx.getImageData(x, y, 1, 1).data[0]
             g0 = ctx.getImageData(x, y, 1, 1).data[1]
             b0 = ctx.getImageData(x, y, 1, 1).data[2]
+            if (fxid != -1) {
+                r1 = fxctx.getImageData(x, y, 1, 1).data[0]
+                g1 = fxctx.getImageData(x, y, 1, 1).data[1]
+                b1 = fxctx.getImageData(x, y, 1, 1).data[2]
+            }
             switch (link[1]) {
                 case 0:
                     rgb = [
@@ -150,6 +171,20 @@ function done() {
                         (r0+g0+b0)/3
                     ]
                 break
+                case 5:
+                    rgb = [
+                        Math.abs(r0 - r1),
+                        Math.abs(g0 - g1),
+                        Math.abs(b0 - b1),
+                    ]
+                break
+                case 6:
+                    rgb = [
+                        r0 ** (r1 / 127.5),
+                        g0 ** (g1 / 127.5),
+                        b0 ** (b1 / 127.5)
+                    ]
+                break
             }
             ctx.fillStyle = 'rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')'
             ctx.fillRect(x, y, 1, 1);
@@ -173,7 +208,13 @@ function saveImage() {
     newcanvas.addEventListener('click', eval('()=>{loadImage('+(saves.length-1)+')}'))
 }
 function loadImage(id) {
-    ctx.drawImage($('save'+id), 0, 0, $('save'+id).width, $('save'+id).height)
+    if (link.length==2 & link[0]==1) {
+        fxid = id
+        done()
+        fxid = -1
+    } else {
+        ctx.drawImage($('save'+id), 0, 0, $('save'+id).width, $('save'+id).height)
+    }
 }
 function deleteSaves() {
     for (var i in saves) {
@@ -266,6 +307,20 @@ function getCursorPosition(canvas, event) {
                 link.pop()
                 $('wait').style.display = 'none'
                 $('draw').style.display = 'block'
+            break
+            case 5:
+                places.push([x, y])
+                if (places.length == 2) {
+                    var grad = ctx.createLinearGradient(places[0][0], places[0][1], places[1][0], places[1][1])
+                    grad.addColorStop(0, $('start-color').value)
+                    grad.addColorStop(1, $('end-color').value)
+                    ctx.fillStyle = grad
+                    ctx.fillRect(0, 0, canvas.width, canvas.height)
+                    
+                    link.pop()
+                    $('wait').style.display = 'none'
+                    $('draw').style.display = 'block'
+                }
             break
         }
     }

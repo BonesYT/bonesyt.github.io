@@ -158,4 +158,5 @@ function load() {
         v.gain = new Bar().gain
     })
     update()
+    placeBars()
 }

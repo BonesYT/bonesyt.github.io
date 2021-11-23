@@ -3,9 +3,49 @@ html {
 }
 body {
 	background-image: linear-gradient(
-	    rgb(31 210 247) 0%,
-	    rgb(21 100 213) 100%
+	    rgb(95, 98, 116) 0%,
+	    rgb(53, 56, 65) 100%
 	)
+}
+.menu {
+	top: 0;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    position: absolute;
+}
+.logo {
+	width: 30.6%;
+	height: auto;
+	transform: translate(-8px, -8px)
+}
+.gamescreen {
+	width: calc(70% - 4px);
+	height: 100%;
+	right: 0%;
+	top: 0%;
+	position: absolute;
+	padding-left: 4px;
+	overflow: auto;
+}
+.tabcontent {
+	right: 0%;
+	top: 0%;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.scr-progress {
+	background-image: linear-gradient(
+	    rgb(31, 210, 247) 0%,
+	    rgb(21, 100, 213) 100%
+	);
+}
+.scr-options {
+	background-image: linear-gradient(
+	    rgb(13, 223, 125) 0%,
+	    rgb(23, 97, 35) 100%
+	);
 }
 .progress {
 	height: 61px;
@@ -73,4 +113,34 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: myFirstFont;
+}
+.menu-button {
+	border-radius: 7px;
+	border-width: 4px;
+	font-family: myFirstFont;
+	font-size: 16px;
+	color: white;
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+    transition: font-size 0.5s, border-radius 0.5s;
+    width: calc(30% - 11px);
+    height: 40px;
+}
+.menu-button:active {
+	filter: brightness(70%)
+}
+.menu-button:hover {
+    font-size: 20px;
+    border-radius: 15px;
+}
+.menu-progress {
+	background-color: rgb(27, 192, 123);
+	border-color: rgb(25, 95, 66)
+}
+.menu-options {
+	background-color: rgb(211, 125, 27);
+	border-color: rgb(105, 37, 19)
+}
+.menu-upgrades {
+	background-color: rgb(13, 146, 223);
+	border-color: rgb(22, 61, 119)
 }

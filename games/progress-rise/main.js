@@ -125,3 +125,37 @@ function mute() {
         config.audio.pause()
     }
 }
+
+function tab(evt, tab) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    document.getElementById(tab).style.display = "block";
+}
+
+function save() {
+    $('savecode').innerHTML = btoa(JSON.stringify(game))
+}
+function load() {
+    game = JSON.parse(atob($('savecode').innerHTML))
+    game.points = EN(game.points)
+    game.tpoints = EN(game.tpoints)
+    game.next = EN(game.next)
+    game.bars.forEach((v,i,a) => {
+        v.points = EN(v.points)
+        v.tpoints = EN(v.tpoints)
+        v.max = EN(v.max)
+        v.level = EN(v.level)
+        v.cost = EN(v.cost)
+        v.multi = EN(v.multi)
+        v.cmulti = EN(v.cmulti)
+        v.speed = EN(v.speed)
+        v.nspeed = EN(v.nspeed)
+        v.pmulti = EN(v.pmulti)
+        v.gain = new Bar().gain
+    })
+    update()
+}

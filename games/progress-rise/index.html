@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="ExpantaNum.js"></script>
+        <script defer src="main.js"></script>
+        <script defer src="game.js"></script>
+    </head>
+    <body>
+        <button onclick="mute()" id="pause">mute/unmute</button>
+        <h1 id="points">[Points]</h1>
+        <button id="next-bar" onclick="NextBar()">Buy next bar</button>
+        <div id="progressbar-place">
+            <div id="progressbar-copy" class="progress" style="display:none">
+                <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="images/increment.png" class="pb-img"></button>
+                <div class="pb-container select" id="prog-cont" style="background-image: linear-gradient(rgb(161, 255, 161) 0%,rgb(68, 255, 132) 100%);outline: 4px solid rgb(8, 77, 32);">
+                    <div class="pb-prog select" id="prog-bar" style="width:20%;background-image: linear-gradient(rgb(40, 183, 89) 0%,rgb(24, 106, 52) 100%);">
+                        <h5 class="pb-text select" id="prog-text"></h5>
+                    </div>
+                </div>
+                <div class="pb-level select" id="prog-level" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); outline: rgb(8, 77, 32) solid 4px;">Level 3777343434</div>
+                <button class="pb-buy select" id="prog-buy" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); border-color: rgb(8, 77, 32)"></button>
+            </div>
+        </div>
+    </body>
+</html>

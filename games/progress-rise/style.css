@@ -1,0 +1,76 @@
+html {
+	height: 100%;
+}
+body {
+	background-image: linear-gradient(
+	    rgb(31 210 247) 0%,
+	    rgb(21 100 213) 100%
+	)
+}
+.progress {
+	height: 61px;
+	margin: 4px;
+}
+.pb-add {
+    padding: 0;
+    border-radius: 50%;
+    border-width: 3px;
+    position: absolute;
+    z-index: 2;
+}
+.pb-img {
+    border-radius: 50%;
+    width: 55px;
+    height: auto;
+}
+.pb-container {
+	height:30px;
+	width:200px;
+	overflow:hidden;
+	transform: translate(56px,16px);
+	position: absolute;
+	z-index: 1;
+}
+.pb-prog {
+	height:100%;
+	width:0%;
+	float:left;
+}
+.pb-level {
+	display: table-cell;
+	width: 90px;
+	height: 50px;
+	text-align: center;
+	vertical-align: middle;
+	transform: translate(270px,6px);
+	font-family: myFirstFont;
+	white-space: pre-wrap;
+}
+.pb-buy {
+	width: 95px;
+	height: 58px;
+	border-radius: 0;
+	border-width: 4px;
+	transform: translate(370px,-48px);
+	font-family: myFirstFont;
+	white-space: pre-wrap;
+}
+.pb-text {
+	margin: 0;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	font-family: myFirstFont;
+	text-align: center;
+	white-space: pre-wrap;
+	width: 100%;
+	font-size: 12px;
+}
+@font-face {
+    font-family: myFirstFont;
+    src: url(https://fonts.cdnfonts.com/s/9006/MonospaceTypewriter.woff);
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: myFirstFont;
+}

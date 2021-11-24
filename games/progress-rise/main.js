@@ -106,6 +106,13 @@ function placeBars() {
         config.bars++
     }
 }
+function removeBars() {
+    while (config.bars > game.bars.length) {
+        $('prog-' + (config.bars - 1)).remove()
+        config.bars--
+    }
+}
+
 function ButtonStyle(node, rgb) {
     if (node.tagName == 'BUTTON') {
         node.style.height = '48px'
@@ -137,10 +144,10 @@ function tab(evt, tab) {
 }
 
 function save() {
-    $('savecode').innerHTML = btoa(JSON.stringify(game))
+    $('savecode').value = btoa(JSON.stringify(game))
 }
 function load() {
-    game = JSON.parse(atob($('savecode').innerHTML))
+    game = JSON.parse(atob($('savecode').value))
     game.points = EN(game.points)
     game.tpoints = EN(game.tpoints)
     game.next = EN(game.next)
@@ -158,5 +165,6 @@ function load() {
         v.gain = new Bar().gain
     })
     update()
+    removeBars()
     placeBars()
 }

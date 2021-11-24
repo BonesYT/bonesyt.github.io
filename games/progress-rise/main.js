@@ -193,6 +193,11 @@ function load() {
     })
     game2.upgrades[0].formula = config.functions[0]
     game = game2
+    var a = EN(128)
+    for (i=0; i<(game.bars.length-1); i++) {
+        a = a.pow(1.8275)
+    }
+    game.next = a
     removeBars()
     placeBars()
     update()

@@ -14,6 +14,10 @@
             <br>
             <button class="menu-button menu-progress" onclick="tab(event,'progress')">Progress bars</button>
             <br>
+            <button class="menu-button menu-upgrades" onclick="tab(event,'upgrades')">Upgrades</button>
+            <br>
+            <button class="menu-button menu-stats" onclick="tab(event,'statistics')">Statistics</button>
+            <br>
             <button class="menu-button menu-options" onclick="tab(event,'options')">Options</button>
         </div>
         <div class="gamescreen">
@@ -39,6 +43,16 @@
                 <button onclick="load()" id="load">Load</button>
                 <br>
                 <textarea id="savecode"></textarea>
+            </div>
+            <div id="upgrades" class="tabcontent scr-upgrades" style="display:none">
+                <button class="upg-button upg-0" id="upg-0" onclick="upgrade(0)"></button>
+            </div>
+            <div id="statistics" class="tabcontent scr-stats" style="display:none">
+                <h1 class="title">Statistics</h1>
+                <h3 id="stats-tpoints"></h3>
+                <h3 id="stats-bars"></h3>
+                <h3 id="stats-upgbought"></h3>
+                <h3 id="stats-since"></h3>
             </div>
         </div>
     </body>

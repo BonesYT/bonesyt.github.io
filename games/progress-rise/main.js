@@ -5,6 +5,15 @@ function $(e) {
 var config = {
     bars: 0,
     playing: false,
+    lasttab: 'progress',
+    functions: [
+        (v, c, m, cm, t)=>{
+            if (game.points.gte(t.cost)) {
+                game.points = game.points.sub(c)
+                return [v.mul(m), c.pow(cm)]
+            } else {return false}
+        }
+    ]
 }
 
 document.onmousedown = function() { 
@@ -102,7 +111,7 @@ function placeBars() {
         c[5].addEventListener('click', new Function('barBuy(' + config.bars + ')'))
 
         document.placeElement(e, 'progressbar-place')
-        color(game.bars.length/3.75-1.4, 0, config.bars)
+        color(config.bars/3.75-1.4, 0, config.bars)
         config.bars++
     }
 }
@@ -118,7 +127,7 @@ function ButtonStyle(node, rgb) {
         node.style.height = '48px'
         node.style.borderRadius = '0'
         node.style.borderWidth = '4px'
-        node.style.fontFamily = 'myFirstFont'
+        node.style.fontFamily = 'gameFont'
         node.style.whiteSpace = 'pre-wrap'
         node.style.borderColor = 'rgb('+(rgb[0]/5)+','+(rgb[1]/5)+','+(rgb[2]/5)+')'
         node.style.backgroundImage = `linear-gradient(rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]}) 0%, rgb(${rgb[0]/1.1}, ${rgb[1]/1.15}, ${rgb[2]/1.15}) 100%)`
@@ -134,6 +143,10 @@ function mute() {
 }
 
 function tab(evt, tab) {
+    if (tab != config.lasttab) {
+        new Audio('audio/tab.mp3').play()
+    }
+    config.lasttab = tab
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -147,11 +160,11 @@ function save() {
     $('savecode').value = btoa(JSON.stringify(game))
 }
 function load() {
-    game = JSON.parse(atob($('savecode').value))
-    game.points = EN(game.points)
-    game.tpoints = EN(game.tpoints)
-    game.next = EN(game.next)
-    game.bars.forEach((v,i,a) => {
+    var game2 = JSON.parse(atob($('savecode').value))
+    game2.points = EN(game2.points)
+    game2.tpoints = EN(game2.tpoints)
+    game2.next = EN(game2.next)
+    game2.bars.forEach((v,i,a) => {
         v.points = EN(v.points)
         v.tpoints = EN(v.tpoints)
         v.max = EN(v.max)
@@ -164,7 +177,44 @@ function load() {
         v.pmulti = EN(v.pmulti)
         v.gain = new Bar().gain
     })
-    update()
+    game2.stats = game2.stats || game.stats
+    game2.stats.upg.bought = EN(game2.stats.upg.bought)
+    if (game2.upgrades == undefined) game2.upgrades = game.upgrades
+    game2.upgrades.forEach((v,i,a) => {
+        v.value = EN(v.value)
+        v.cost = EN(v.cost)
+        v.paid = EN(v.paid)
+        v.multi = EN(v.multi)
+        v.cmulti = EN(v.cmulti)
+        v.formula = new Upgrade().formula
+        v.mformula = new Upgrade().mformula
+        v.buy = new Upgrade().buy
+        v.buyMax = new Upgrade().buyMax
+    })
+    game2.upgrades[0].formula = config.functions[0]
+    game = game2
     removeBars()
     placeBars()
+    update()
+    var a = LdrToRGB(85, game.bars.length / 3.75 - 1.4, 100)
+    ButtonStyle($('next-bar'), [a.r, a.g, a.b])
 }
+
+buy = {
+    add:function(i,r,m) {
+        return EN.floor(EN.div(EN.ln(EN.div(EN.add(EN.div(i,EN.div(EN.div(EN.sub(r,10),EN.div(EN.sub(r,10),10)),
+               EN.sub(EN.mul(m,10),10))),r),r)),EN.ln(m)))
+    },
+    cost:function(a,r,m) {
+        return EN.mul(EN.sub(EN.mul(EN.pow(m,a),r),r),EN.div(20,EN.sub(EN.mul(m,20),20)))
+    }
+}
+
+function works(f) {
+    try {
+        f()
+        return true
+    } catch {
+        return false
+    }
+} 

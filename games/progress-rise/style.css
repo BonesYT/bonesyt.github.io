@@ -47,6 +47,18 @@ body {
 	    rgb(23, 97, 35) 100%
 	);
 }
+.scr-upgrades {
+	background-image: linear-gradient(
+	    rgb(255, 245, 140) 0%,
+	    rgb(187, 154, 13) 100%
+	);
+}
+.scr-stats {
+	background-image: linear-gradient(
+	    rgb(238, 0, 159) 0%,
+	    rgb(221, 75, 7)100%
+	);
+}
 .progress {
 	height: 61px;
 	margin: 4px;
@@ -83,7 +95,7 @@ body {
 	text-align: center;
 	vertical-align: middle;
 	transform: translate(270px,6px);
-	font-family: myFirstFont;
+	font-family: gameFont;
 	white-space: pre-wrap;
 }
 .pb-buy {
@@ -92,7 +104,7 @@ body {
 	border-radius: 0;
 	border-width: 4px;
 	transform: translate(370px,-48px);
-	font-family: myFirstFont;
+	font-family: gameFont;
 	white-space: pre-wrap;
 }
 .pb-text {
@@ -101,23 +113,23 @@ body {
 	top: 50%;
 	transform: translate(-50%, -50%);
 	position: absolute;
-	font-family: myFirstFont;
+	font-family: gameFont;
 	text-align: center;
 	white-space: pre-wrap;
 	width: 100%;
 	font-size: 12px;
 }
 @font-face {
-    font-family: myFirstFont;
+    font-family: gameFont;
     src: url(https://fonts.cdnfonts.com/s/9006/MonospaceTypewriter.woff);
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family: myFirstFont;
+	font-family: gameFont;
 }
 .menu-button {
 	border-radius: 7px;
 	border-width: 4px;
-	font-family: myFirstFont;
+	font-family: gameFont;
 	font-size: 16px;
 	color: white;
 	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
@@ -143,4 +155,34 @@ h1, h2, h3, h4, h5, h6 {
 .menu-upgrades {
 	background-color: rgb(13, 146, 223);
 	border-color: rgb(22, 61, 119)
+}
+.menu-stats {
+	background-color: rgb(217, 221, 0);
+	border-color: rgb(172, 140, 0)
+}
+.upg-button {
+	border-radius: 15px;
+	border-width: 7px;
+	font-family: gameFont;
+	font-size: 20px;
+	color: white;
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+    width: 220px;
+    height: 220px;
+	white-space: pre-wrap;
+}
+.upg-0 {
+	background-color: rgb(0, 162, 255);
+	border-color: rgb(0, 68, 214)
+}
+.title {
+	color: rgb(0, 27, 87);
+    background-image: linear-gradient(
+        rgb(0, 27, 87) 46%,
+        rgb(24, 68, 85) 64%,
+        rgb(33, 82, 35) 80%
+      );
+    -webkit-text-fill-color: #0000;
+    -webkit-background-clip: text;
+    font-size: 40px;
 }

@@ -1,10 +1,19 @@
 EN = ExpantaNum
 
 function Game() {
+    this.version = '0.2'
     this.points = EN(0) //points
     this.tpoints = EN(0) //total points
     this.bars = [new Bar] //progress bars
     this.next = EN(128) //progress bar cost
+    this.upgrades = [new Upgrade(1, 16000, 1.08, 2.03, 'Increase production of all progress bars', config.functions[0])],
+    this.stats = {
+        since: '0.1',
+        upg: {
+            bought: EN(0)
+        },
+        tbars: 0
+    }
 }
 
 function Bar(max=30, cost=1, multi=1.2, cmulti=1.375) {
@@ -25,6 +34,48 @@ function Bar(max=30, cost=1, multi=1.2, cmulti=1.375) {
         this.points = this.points.mod(this.max)
     }
 }
+function Upgrade(value=1, cost=1000, multi=1.2, cmulti=1.3, desc, f, mf) {
+    this.value = EN(value)
+    this.cost = EN(cost)
+    this.formula = f || ((v, c, m, cm, t)=>{
+        if (game.points.gte(t.cost)) {
+            game.points = game.points.sub(c)
+            return [v.mul(m), c.mul(cm)]
+        } else {return false}
+    })
+    this.paid = EN(0)
+    this.mformula = mf || ((v, c, m, cm, t)=>{
+        if (game.points.gte(t.cost)) {
+            var add = buy.add(v, c, cm)
+            var cost = buy.cost(add, c, cm)
+            game.points = game.points.sub(cost)
+            return [v.mul(m.pow(add)), c.mul(cm.pow(add)), add]
+        } else {return false}
+    })
+    this.buy = ()=>{
+        var result = this.formula(this.value, this.cost, this.multi, this.cmulti, this)
+        if (result) {
+            this.value = result[0]
+            this.cost = result[1]
+            this.paid = this.paid.add(1)
+            game.stats.upg.bought = game.stats.upg.bought.add(1)
+            return true
+        } else {return false}
+    }
+    this.buyMax = ()=>{
+        var result = this.mformula(this.value, this.cost, this.multi, this.cmulti, this)
+        if (result) {
+            this.value = result[0]
+            this.cost = result[1]
+            this.paid = this.paid.add(result[2])
+            game.stats.upg.bought = game.stats.upg.bought.add(result[2])
+            return true
+        } else {return false}
+    }
+    this.multi = multi
+    this.cmulti = cmulti
+    this.desc = desc
+}
 
 //game build
 var game = new Game
@@ -37,6 +88,9 @@ function update() {
             game.bars[i].speed = v.nspeed
         }
     })
+    game.upgrades.forEach((v,i,a)=>{
+        $('upg-' + i).innerHTML = v.desc + '\n\nCost: ' + ts(v.cost) + '\nValue: ' + ts(v.value)
+    })
     $('points').innerHTML = 'Points: ' + ts(game.points)
     $('next-bar').innerHTML = 'Buy next progress bar | Cost: ' + ts(game.next)
     for (var i in game.bars) {
@@ -45,14 +99,18 @@ function update() {
         $('prog-level-' + i).innerHTML = 'Level\n' + ts(game.bars[i].level)
         $('prog-buy-' + i).innerHTML = 'Upg. for:\n' + ts(EN.ceil(game.bars[i].cost))
     }
+    $('stats-tpoints').innerHTML = 'Total points: ' + game.tpoints
+    $('stats-bars').innerHTML = 'Progress bars: ' + game.bars.length
+    $('stats-upgbought').innerHTML = 'Upgrades bought: ' + game.stats.upg.bought
+    $('stats-since').innerHTML = 'Played since v' + game.stats.since
 }
 
 function barIncrement(id) {
     game.bars.forEach((v,i,a)=>{
         try {
-            game.bars[i].speed = v.nspeed.mul(a[i+1].pmulti)
+            game.bars[i].speed = v.nspeed.mul(a[i+1].pmulti).mul(game.upgrades[0].value)
         } catch {
-            game.bars[i].speed = v.nspeed
+            game.bars[i].speed = v.nspeed.mul(game.upgrades[0].value)
         }
     })
     game.bars.forEach((v,i)=>{game.bars[i].pmulti = i != 0 ? v.level.pow(0.715).div(20).add(1) : EN(1)})
@@ -81,12 +139,15 @@ function barBuy(id) {
 function NextBar() {
     if (game.points.gte(game.next)) {
         game.points = game.points.sub(game.next)
-        game.next = game.next.pow(1.65)
+        game.next = game.next.pow(1.8275)
         game.bars.push(new Bar(EN.pow(1.18, game.bars.length).mul(30).floor(), EN.pow(1.2, game.bars.length),
                                EN.pow(1.05, game.bars.length).mul(1.2), EN.pow(1.05, game.bars.length).mul(1.375)))
+        game.stats.tbars++
         placeBars()
         new Audio('audio/buy.mp3').play()
         update()
+        var a = LdrToRGB(85, game.bars.length / 3.75 - 1.4, 100)
+        ButtonStyle($('next-bar'), [a.r, a.g, a.b])
     } else {
         new Audio('audio/low.mp3').play()
     }
@@ -110,6 +171,12 @@ function ts(i,ep=6,en=-6,f=100,a=0) {
             return fb(neg?i*-1:i,f).toString()
         }
     }
+}
+
+function upgrade(id) {
+    var result = game.upgrades[id].buy()
+    if (result) {new Audio('audio/buy.mp3').play()} else {new Audio('audio/low.mp3').play()}
+    update()
 }
 
 placeBars()

@@ -6,7 +6,7 @@ function Game() {
     this.tpoints = EN(0) //total points
     this.bars = [new Bar] //progress bars
     this.next = EN(128) //progress bar cost
-    this.upgrades = [new Upgrade(1, 16000, 1.08, 2.03, 'Increase production of all progress bars', config.functions[0])],
+    this.upgrades = [new Upgrade(1, 16000, 1.11, 2.03, 'Increase production of all progress bars', config.functions[0])],
     this.stats = {
         since: '0.1',
         upg: {
@@ -95,7 +95,7 @@ function update() {
     $('next-bar').innerHTML = 'Buy next progress bar | Cost: ' + ts(game.next)
     for (var i in game.bars) {
         $('prog-bar-' + i).style.width = (game.bars[i].points.div(game.bars[i].max) * 100) + '%'
-        $('prog-text-' + i).innerHTML = ts(EN.floor(game.bars[i].points)) + ' / ' + ts(EN.floor(game.bars[i].max)) + '\nMulti: ' + ts(game.bars[i].speed) + ', Up: x' + ts(game.bars[i].pmulti)
+        $('prog-text-' + i).innerHTML = ts(EN.floor(game.bars[i].points)) + ' / ' + ts(EN.floor(game.bars[i].max)) + '\nMulti: ' + ts(game.bars[i].speed.mul(game.upgrades[0].value)) + ', Up: x' + ts(game.bars[i].pmulti)
         $('prog-level-' + i).innerHTML = 'Level\n' + ts(game.bars[i].level)
         $('prog-buy-' + i).innerHTML = 'Upg. for:\n' + ts(EN.ceil(game.bars[i].cost))
     }

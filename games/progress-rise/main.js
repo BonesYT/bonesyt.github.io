@@ -190,8 +190,9 @@ function load() {
         v.mformula = new Upgrade().mformula
         v.buy = new Upgrade().buy
         v.buyMax = new Upgrade().buyMax
+        v.id = i
     })
-    game2.upgrades[0].formula = config.functions[0]
+    game2.upgrades[0].formula = new Upgrade('f', 0).funct
     game = game2
     var a = EN(128)
     for (i=0; i<(game.bars.length-1); i++) {

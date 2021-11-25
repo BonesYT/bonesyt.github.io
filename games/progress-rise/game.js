@@ -6,7 +6,7 @@ function Game() {
     this.tpoints = EN(0) //total points
     this.bars = [new Bar] //progress bars
     this.next = EN(128) //progress bar cost
-    this.upgrades = [new Upgrade(1, 16000, 1.11, 2.03, 'Increase production of all progress bars', config.functions[0])],
+    this.upgrades = [new Upgrade(1, 16000, 1.11, 2.03, 0, 'Increase production of all progress bars', config.functions[0])],
     this.stats = {
         since: '0.1',
         upg: {
@@ -34,10 +34,11 @@ function Bar(max=30, cost=1, multi=1.2, cmulti=1.375) {
         this.points = this.points.mod(this.max)
     }
 }
-function Upgrade(value=1, cost=1000, multi=1.2, cmulti=1.3, desc, f, mf) {
-    this.value = EN(value)
-    this.cost = EN(cost)
+function Upgrade(value=1, cost=1000, multi=1.2, cmulti=1.3, id=0, desc, f, mf) {
+    this.value = EN(value=='f'?1:value)
+    this.cost = EN(value=='f'?1000:cost)
     this.formula = f || ((v, c, m, cm, t)=>{
+        console.log(t, t.cost)
         if (game.points.gte(t.cost)) {
             game.points = game.points.sub(c)
             return [v.mul(m), c.mul(cm)]
@@ -53,7 +54,9 @@ function Upgrade(value=1, cost=1000, multi=1.2, cmulti=1.3, desc, f, mf) {
         } else {return false}
     })
     this.buy = ()=>{
-        var result = this.formula(this.value, this.cost, this.multi, this.cmulti, this)
+        var t = game.upgrades[this.id]
+        var result = t.formula(t.value, t.cost, t.multi, t.cmulti, t)
+        console.log(t)
         if (result) {
             this.value = result[0]
             this.cost = result[1]
@@ -75,6 +78,19 @@ function Upgrade(value=1, cost=1000, multi=1.2, cmulti=1.3, desc, f, mf) {
     this.multi = multi
     this.cmulti = cmulti
     this.desc = desc
+    this.id = id
+    if (value == 'f') {
+        switch (cost) {
+            case 0:
+                this.funct = (v, c, m, cm, t)=>{
+                    if (game.points.gte(t.cost)) {
+                        game.points = game.points.sub(c)
+                        return [v.mul(m), c.pow(cm)]
+                    } else {return false}
+                }
+            break
+        }
+    }
 }
 
 //game build

@@ -3,7 +3,7 @@ function save(isCookie=false) {
         var date = new Date();
         date.setTime(date.getTime() + 8.64e10);
         var expires = '; expires=' + date.toUTCString();
-        document.cookie = 'GameData=' + btoa(JSON.stringify(game)) + expires + '; path=/';
+        document.cookie = 'GameData=' + btoa(JSON.stringify(game)).replace(/=/g, '!') + expires + '; path=/';
     } else {
         $('savecode').value = btoa(JSON.stringify(game))
     }
@@ -12,7 +12,7 @@ function save(isCookie=false) {
 function load(isCookie=false) {
     if (isCookie) {
         if (getCookieValue('GameData') == null) return false
-        var game2 = JSON.parse(atob(getCookieValue('GameData')))
+        var game2 = JSON.parse(atob(getCookieValue('GameData').replace(/!/g, '=')))
     }
     else {
         var game2 = JSON.parse(atob($('savecode').value))

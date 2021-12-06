@@ -93,6 +93,7 @@ function load(isCookie=false) {
     setTheme(game.stats.theme)
     tab(game.stats.page)
     statsCheck.upgradeUnlock()
+    game.stats.complete = statsCheck.barsCompleted()
 
     var a = LdrToRGB(85, game.bars.length / 3.75 - 1.4, 100)
     ButtonStyle($('next-bar'), [a.r, a.g, a.b])

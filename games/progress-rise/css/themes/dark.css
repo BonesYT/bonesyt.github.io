@@ -1,0 +1,95 @@
+body {
+	background-image: linear-gradient(
+	    rgb(19, 19, 22) 0%,
+	    rgb(35, 37, 43) 100%
+	);
+	color: white;
+}
+.scr-progress {
+	background-image: linear-gradient(
+	    rgb(49, 53, 58) 0%,
+	    rgb(66, 70, 78) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.scr-options {
+	background-image: linear-gradient(
+	    rgb(49, 53, 58) 0%,
+	    rgb(66, 70, 78) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+	text-align: center;
+}
+.scr-upgrades {
+	background-image: linear-gradient(
+	    rgb(49, 53, 58) 0%,
+	    rgb(66, 70, 78) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.scr-stats {
+	background-image: linear-gradient(
+	    rgb(49, 53, 58) 0%,
+	    rgb(66, 70, 78) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.scr-guide {
+	background-image: linear-gradient(
+	    rgb(73, 76, 82) 0%,
+	    rgb(22, 26, 34) 100%
+	);
+	text-align: center;
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.menu-button {
+	background-color: rgb(56, 59, 63);
+	border-color: rgb(26, 27, 29);
+}
+.upg-0 {
+	background-color: rgb(63, 66, 73);
+	border-color: rgb(24, 25, 29);
+}
+.upg-1 {
+	background-color: rgb(57, 65, 75);
+	border-color: rgb(24, 25, 31);
+}
+.upg-2 {
+	background-color: rgb(72, 72, 73);
+	border-color: rgb(37, 37, 37);
+}
+.title {
+	color: rgb(227, 234, 241);
+    background-image: linear-gradient(
+        rgb(227, 234, 241) 46%,
+        rgb(176, 184, 192) 64%,
+        rgb(202, 211, 221) 80%
+    );
+    -webkit-text-fill-color: #0000;
+    font-size: 40px;
+}
+#statistics h3 {
+	color: white;
+}
+.guide-item {
+	color: rgb(223, 223, 223);
+	background-image: linear-gradient(
+		rgb(50, 53, 58) 0%,
+        rgb(31, 34, 37) 100%
+    );
+	width: 90%;
+	margin: auto;
+	margin-bottom: 25px;
+	margin-top: 15px;
+	border: 7px solid #67696d;
+}

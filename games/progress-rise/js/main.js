@@ -1,3 +1,5 @@
+//Main
+
 function $(e) {
     return document.getElementById(e);
 };
@@ -6,17 +8,16 @@ var config = {
     bars: 0,
     playing: false,
     lasttab: 'progress',
-    functions: [
-        (v, c, m, cm, t)=>{
-            if (game.points.gte(t.cost)) {
-                game.points = game.points.sub(c)
-                return [v.mul(m), c.pow(cm)]
-            } else {return false}
-        }
-    ]
+    lastbar: 0,
+    int: {}
 }
 
-document.onmousedown = function() { 
+console.log('Only use console for testing. Please don\'t cheat.')
+if (document.location.href[0] == 'f') {
+    $('title').innerHTML = 'PR Testing'
+}
+
+document.onmousedown = () => { 
     if (!config.playing) {
         config.audio = new Audio('audio/themeSong.mp3')
         config.audio.volume = 0.4
@@ -85,6 +86,7 @@ function rainbow() {
         a+=0.05
     }, 33)
 }
+
 document.makeElement = (tag, innerHTML)=>{
     var node = document.createElement(tag);
     var textnode = document.createTextNode(innerHTML);
@@ -94,6 +96,7 @@ document.makeElement = (tag, innerHTML)=>{
 document.placeElement = (node, id)=>{
     document.getElementById(id).appendChild(node);
 }
+
 function placeBars() {
     while (config.bars < game.bars.length) {
         var e = $('progressbar-copy').cloneNode(true)
@@ -125,7 +128,7 @@ function removeBars() {
 function ButtonStyle(node, rgb) {
     if (node.tagName == 'BUTTON') {
         node.style.height = '48px'
-        node.style.borderRadius = '0'
+        node.style.borderRadius = '2.5px'
         node.style.borderWidth = '4px'
         node.style.fontFamily = 'gameFont'
         node.style.whiteSpace = 'pre-wrap'
@@ -142,68 +145,18 @@ function mute() {
     }
 }
 
-function tab(evt, tab) {
+function tab(tab) {
     if (tab != config.lasttab) {
+        game.stats.page = tab
         new Audio('audio/tab.mp3').play()
     }
     config.lasttab = tab
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
+    var i, tabcontent;
+    tabcontent = document.getElementsByClassName('tabcontent');
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        tabcontent[i].style.display = 'none';
     }
-    tablinks = document.getElementsByClassName("tablinks");
-    document.getElementById(tab).style.display = "block";
-}
-
-function save() {
-    $('savecode').value = btoa(JSON.stringify(game))
-}
-function load() {
-    var game2 = JSON.parse(atob($('savecode').value))
-    game2.points = EN(game2.points)
-    game2.tpoints = EN(game2.tpoints)
-    game2.next = EN(game2.next)
-    game2.bars.forEach((v,i,a) => {
-        v.points = EN(v.points)
-        v.tpoints = EN(v.tpoints)
-        v.max = EN(v.max)
-        v.level = EN(v.level)
-        v.cost = EN(v.cost)
-        v.multi = EN(v.multi)
-        v.cmulti = EN(v.cmulti)
-        v.speed = EN(v.speed)
-        v.nspeed = EN(v.nspeed)
-        v.pmulti = EN(v.pmulti)
-        v.gain = new Bar().gain
-    })
-    game2.stats = game2.stats || game.stats
-    game2.stats.upg.bought = EN(game2.stats.upg.bought)
-    if (game2.upgrades == undefined) game2.upgrades = game.upgrades
-    game2.upgrades.forEach((v,i,a) => {
-        v.value = EN(v.value)
-        v.cost = EN(v.cost)
-        v.paid = EN(v.paid)
-        v.multi = EN(v.multi)
-        v.cmulti = EN(v.cmulti)
-        v.formula = new Upgrade().formula
-        v.mformula = new Upgrade().mformula
-        v.buy = new Upgrade().buy
-        v.buyMax = new Upgrade().buyMax
-        v.id = i
-    })
-    game2.upgrades[0].formula = new Upgrade('f', 0).funct
-    game = game2
-    var a = EN(128)
-    for (i=0; i<(game.bars.length-1); i++) {
-        a = a.pow(1.8275)
-    }
-    game.next = a
-    removeBars()
-    placeBars()
-    update()
-    var a = LdrToRGB(85, game.bars.length / 3.75 - 1.4, 100)
-    ButtonStyle($('next-bar'), [a.r, a.g, a.b])
+    document.getElementById(tab).style.display = 'block';
 }
 
 buy = {
@@ -223,4 +176,50 @@ function works(f) {
     } catch {
         return false
     }
-} 
+}
+
+function setTheme(theme) {
+    $('theme').href = 'css/themes/' + theme + '.css'
+    game.stats.theme = theme
+}
+
+//ExpantaNum JSON fix (Infinity turns into null if you use JSON.stringify)
+function nullfix(i, o) {
+    try {
+        if (i.array[0][1] == null) i.array[0][1] = o || Infinity
+    } catch {}
+    return i
+}
+
+function time(i) {
+    var output = Math.floor(i / 1e3 % 60) + ' seconds'
+    if (i >= 6e4) output = Math.floor(i / 6e4 % 60) + ' minutes, ' + output
+    if (i >= 3.6e6) output = Math.floor(i / 3.6e6 % 24) + ' hours, ' + output
+    if (i >= 8.64e7) output = Math.floor(i / 8.64e7 % 365) + ' days, ' + output
+    if (i >= 3.1536e10)  output = Math.floor(i / 3.1536e10) + ' years, ' + output
+    return output
+}
+
+function wipe(a) {
+    if (a) {
+        for (var i = 0; i < 5; i++) {
+            if (!confirm('Are you ' + 'really '.repeat(i) + 'sure you want to wipe ALL of your progress? There is no prize. Click ' + (5 - i) + ' more times to confirm.')) {
+                return false
+            }
+        }
+        game = new Game
+        config.audio.pause()
+        new Audio('audio/wipe.mp3').play()
+        clearInterval(config.int.autosave)
+        setTimeout(() => {
+            alert('...And all the bars dissapear into the abyss.')
+            alert('Now you only have ONE MINUTE before your save is gone forever. If you changed your mind, please quickly restart the page.')
+        }, 50);
+        setTheme('color')
+        setTimeout(()=>{config.audio.play()}, 7000)
+        setTimeout(()=>{
+            save(true)
+            AutoStart(3)
+        }, 7000)
+    }
+}

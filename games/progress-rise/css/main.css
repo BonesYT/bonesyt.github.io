@@ -2,10 +2,7 @@ html {
 	height: 100%;
 }
 body {
-	background-image: linear-gradient(
-	    rgb(95, 98, 116) 0%,
-	    rgb(53, 56, 65) 100%
-	)
+	font-family: gameFont;
 }
 .menu {
 	top: 0;
@@ -35,30 +32,6 @@ body {
 	width: 100%;
 	height: 100%;
 }
-.scr-progress {
-	background-image: linear-gradient(
-	    rgb(31, 210, 247) 0%,
-	    rgb(21, 100, 213) 100%
-	);
-}
-.scr-options {
-	background-image: linear-gradient(
-	    rgb(13, 223, 125) 0%,
-	    rgb(23, 97, 35) 100%
-	);
-}
-.scr-upgrades {
-	background-image: linear-gradient(
-	    rgb(255, 245, 140) 0%,
-	    rgb(187, 154, 13) 100%
-	);
-}
-.scr-stats {
-	background-image: linear-gradient(
-	    rgb(238, 0, 159) 0%,
-	    rgb(221, 75, 7)100%
-	);
-}
 .progress {
 	height: 61px;
 	margin: 4px;
@@ -69,6 +42,14 @@ body {
     border-width: 3px;
     position: absolute;
     z-index: 2;
+    transition: filter 0.54s;
+    filter: brightness(1);
+}
+.pb-add:hover {
+	filter: brightness(1.4);
+}
+.pb-add:active {
+	filter: brightness(0.7);
 }
 .pb-img {
     border-radius: 50%;
@@ -87,6 +68,7 @@ body {
 	height:100%;
 	width:0%;
 	float:left;
+	color: black;
 }
 .pb-level {
 	display: table-cell;
@@ -97,6 +79,7 @@ body {
 	transform: translate(270px,6px);
 	font-family: gameFont;
 	white-space: pre-wrap;
+	color: black;
 }
 .pb-buy {
 	width: 95px;
@@ -106,6 +89,13 @@ body {
 	transform: translate(370px,-48px);
 	font-family: gameFont;
 	white-space: pre-wrap;
+	transition: font-size 0.5s;
+}
+.pb-buy:hover {
+	font-size: 14px
+}
+.pb-buy:active {
+	font-size: 12px
 }
 .pb-text {
 	margin: 0;
@@ -144,22 +134,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 20px;
     border-radius: 15px;
 }
-.menu-progress {
-	background-color: rgb(27, 192, 123);
-	border-color: rgb(25, 95, 66)
-}
-.menu-options {
-	background-color: rgb(211, 125, 27);
-	border-color: rgb(105, 37, 19)
-}
-.menu-upgrades {
-	background-color: rgb(13, 146, 223);
-	border-color: rgb(22, 61, 119)
-}
-.menu-stats {
-	background-color: rgb(217, 221, 0);
-	border-color: rgb(172, 140, 0)
-}
 .upg-button {
 	border-radius: 15px;
 	border-width: 7px;
@@ -170,19 +144,31 @@ h1, h2, h3, h4, h5, h6 {
     width: 220px;
     height: 220px;
 	white-space: pre-wrap;
+	vertical-align: top;
+	margin-right: -4px;
+	transition: border-radius 0.64s, filter 0.64s;
+	filter: brightness(1);
 }
-.upg-0 {
-	background-color: rgb(0, 162, 255);
-	border-color: rgb(0, 68, 214)
+.upg-button:hover {
+	border-radius: 30px;
+	filter: brightness(1.25);
+}
+.upg-button:active {
+	border-radius: 10px;
+	filter: brightness(0.75);
+}
+.main {
+	display: grid;
+}
+.button {
+	height: 48px;
+	border-radius: 2.5px;
+	border-width: 4px;
+	font-family: gameFont;
+	white-space: pre-wrap;
+	border-color: #444;
+	background-image: linear-gradient(#FFF 0%, #CCC 100%);
 }
 .title {
-	color: rgb(0, 27, 87);
-    background-image: linear-gradient(
-        rgb(0, 27, 87) 46%,
-        rgb(24, 68, 85) 64%,
-        rgb(33, 82, 35) 80%
-      );
-    -webkit-text-fill-color: #0000;
-    -webkit-background-clip: text;
-    font-size: 40px;
+	-webkit-background-clip: text;
 }

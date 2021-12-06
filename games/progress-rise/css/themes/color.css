@@ -1,0 +1,109 @@
+body {
+	background-image: linear-gradient(
+	    rgb(95, 98, 116) 0%,
+	    rgb(53, 56, 65) 100%
+	)
+}
+.scr-progress {
+	background-image: linear-gradient(
+	    rgb(31, 210, 247) 0%,
+	    rgb(21, 100, 213) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.scr-options {
+	background-image: linear-gradient(
+	    rgb(13, 223, 125) 0%,
+	    rgb(23, 97, 35) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+	text-align: center;
+}
+.scr-upgrades {
+	background-image: linear-gradient(
+	    rgb(255, 245, 140) 0%,
+	    rgb(187, 154, 13) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.scr-stats {
+	background-image: linear-gradient(
+	    rgb(238, 0, 159) 0%,
+	    rgb(221, 75, 7) 100%
+	);
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.scr-guide {
+	background-image: linear-gradient(
+	    rgb(64, 71, 109) 0%,
+	    rgb(131, 104, 82) 100%
+	);
+	text-align: center;
+	background-attachment: fixed;
+	height: auto;
+	min-height: 100%;
+}
+.menu-progress {
+	background-color: rgb(27, 192, 123);
+	border-color: rgb(25, 95, 66)
+}
+.menu-options {
+	background-color: rgb(211, 125, 27);
+	border-color: rgb(105, 37, 19)
+}
+.menu-upgrades {
+	background-color: rgb(13, 146, 223);
+	border-color: rgb(22, 61, 119)
+}
+.menu-stats {
+	background-color: rgb(217, 221, 0);
+	border-color: rgb(172, 140, 0)
+}
+.menu-guide {
+	background-color: rgb(0, 238, 255);
+	border-color: rgb(14, 144, 196);
+	color: black;
+}
+.upg-0 {
+	background-color: rgb(0, 162, 255);
+	border-color: rgb(0, 68, 214)
+}
+.upg-1 {
+	background-color: rgb(255, 251, 0);
+	border-color: rgb(179, 140, 12);
+	color: black;
+}
+.upg-2 {
+	background-color: rgb(20, 175, 90);
+	border-color: rgb(16, 77, 63);
+}
+.title {
+	color: rgb(0, 27, 87);
+    background-image: linear-gradient(
+        rgb(0, 27, 87) 46%,
+        rgb(24, 68, 85) 64%,
+        rgb(33, 82, 35) 80%
+    );
+    -webkit-text-fill-color: #0000;
+    font-size: 40px;
+}
+.guide-item {
+	color: white;
+	background-image: linear-gradient(
+		rgb(9, 119, 27) 0%,
+        rgb(9, 80, 0) 100%
+    );
+	width: 90%;
+	margin: auto;
+	margin-bottom: 25px;
+	margin-top: 15px;
+	border: 7px solid #3eed9c;
+}

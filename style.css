@@ -65,8 +65,14 @@ button:hover {
     );
     border-color: rgb(180, 180, 180);
 }
-a {font-family: 'Trebuchet MS', sans-serif; color: rgb(0, 255, 255)}
-a:visited {font-family: 'Trebuchet MS', sans-serif; color: rgb(255, 255, 30)}
+a {
+    font-family: 'Trebuchet MS', sans-serif;
+    color: rgb(0, 255, 255)
+}
+a:visited {
+    font-family: 'Trebuchet MS', sans-serif;
+    color: rgb(255, 255, 30)
+}
 input {
     border-radius: 4px;
     border-width: 3px;

@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="style.css">
-        <script src="ExpantaNum.js"></script>
-        <script defer src="main.js"></script>
-        <script defer src="game.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/themes/color.css" id="theme">
+        <script src="js/ExpantaNum.js"></script>
+        <script defer src="js/items.js"></script>
+        <script defer src="js/main.js"></script>
+        <script defer src="js/game.js"></script>
+        <script defer src="js/saveload.js"></script>
         <link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
-        <title>Progress Rise Beta</title>
+        <title id="title">Progress Rise Beta</title>
     </head>
     <body>
         <div class="main">
             <img src="images/logo.png" class="logo">
-            <br>
-            <button class="menu-button menu-progress" onclick="tab(event,'progress')">Progress bars</button>
-            <br>
-            <button class="menu-button menu-upgrades" onclick="tab(event,'upgrades')">Upgrades</button>
-            <br>
-            <button class="menu-button menu-stats" onclick="tab(event,'statistics')">Statistics</button>
-            <br>
-            <button class="menu-button menu-options" onclick="tab(event,'options')">Options</button>
+            <button class="menu-button menu-progress" onclick="tab('progress')">Progress bars</button>
+            <button class="menu-button menu-upgrades" onclick="tab('upgrades')">Upgrades</button>
+            <button class="menu-button menu-stats" onclick="tab('statistics')">Statistics</button>
+            <button class="menu-button menu-guide" onclick="tab('guide')">Guide</button>
+            <button class="menu-button menu-options" onclick="tab('options')">Options</button>
         </div>
         <div class="gamescreen">
             <div id="progress" class="tabcontent scr-progress">
@@ -38,21 +38,65 @@
                 </div>
             </div>
             <div id="options" class="tabcontent scr-options" style="display:none">
+                <h1>Volume</h1>
                 <button onclick="mute()" id="pause">mute/unmute</button>
-                <button onclick="save()" id="save">Save</button>
-                <button onclick="load()" id="load">Load</button>
+                <h1>Save/Load</h1>
+                <button onclick="save(true)" id="save">Save</button>
+                <button onclick="save()" id="export">Export</button>
+                <button onclick="load()" id="import">Import</button>
+                <button onclick="wipe(true)" id="wipe">WIPE SAVE</button>
                 <br>
-                <textarea id="savecode"></textarea>
+                <textarea id="savecode" style="margin-top: 15px; width: 300px; height: 180px"></textarea>
+                <br>
+                <label>
+                    Theme
+                    <button onclick="setTheme('color')" class="button">Colorful</button>
+                    <button onclick="setTheme('light')" class="button">Light</button>
+                    <button onclick="setTheme('dark')" class="button">Dark</button>
+                    <button onclick="setTheme('cold')" class="button">Cold</button>
+                    <button onclick="setTheme('hot')" class="button">Hot</button>
+                </label>
             </div>
             <div id="upgrades" class="tabcontent scr-upgrades" style="display:none">
                 <button class="upg-button upg-0" id="upg-0" onclick="upgrade(0)"></button>
+                <button class="upg-button upg-1" id="upg-1" onclick="upgrade(1)"></button>
+                <button class="upg-button upg-1" id="upg-2" onclick="upgrade(2)"></button>
+                <button class="upg-button upg-2" id="upg-3" onclick="upgrade(3)"></button>
+                <button class="upg-button upg-2" id="upg-4" onclick="upgrade(4)"></button>
             </div>
             <div id="statistics" class="tabcontent scr-stats" style="display:none">
                 <h1 class="title">Statistics</h1>
                 <h3 id="stats-tpoints"></h3>
                 <h3 id="stats-bars"></h3>
+                <h3 id="stats-allbars"></h3>
                 <h3 id="stats-upgbought"></h3>
                 <h3 id="stats-since"></h3>
+                <h3 id="stats-time"></h3>
+            </div>
+            <div id="guide" class="tabcontent scr-guide" style="display:none">
+                <div class="guide-item">
+                    <h1>Getting Started</h1>
+                    <h3>Progress Rise is a game about progress bars increasing. Your main goal is to complete every progress bar.</h3>  <br>
+                    <h3>Go to the 'Progress bars' page to start!</h3>
+                </div>
+                <div class="guide-item">
+                    <h1>Tips</h1>
+                    <h3>Click on a button and hold enter! This will make you click it aprox. 30 times per second! You can
+                        also click other buttons while holding enter.</h3>
+                </div>
+                <div class="guide-item">
+                    <h1>Progress Bars</h1>
+                    <h3>On the progress bars page, click on the circular buttons to increase their value.</h3>  <br>
+                    <h3>Once a bar fills up, its level increases! And it goes back to zero.</h3>  <br>
+                    <h3>You can upgrade the progress bars by pressing the buttons on the right. Do it to increase production.</h3>  <br>
+                    <h3>Press the "Buy next progress bar" button if you have enough points. It will create a new progress bar!</h3>  <br>
+                    <h3>Fact: Increasing the 2nd, 3rd, 4th, etc. bars will increase the speed of the bar above them!</h3>
+                </div>
+                <div class="guide-item">
+                    <h1>Upgrades</h1>
+                    <h3>Upgrades are a way to make progress faster.</h3>  <br>
+                    <h3>If you have enough points, you can buy them. They will be useful to make progress.</h3>
+                </div>
             </div>
         </div>
     </body>

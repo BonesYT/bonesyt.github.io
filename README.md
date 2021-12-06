@@ -5,3 +5,20 @@ Also copying this is not allowed lol
 
 Normal Note: There will be incrementals here.
 Ostrich Note: Ostrichings disguisions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NIEN NINE NEIN ENIN NINE NINE 🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸 (There are 20 disguisions here in total. 🥸)

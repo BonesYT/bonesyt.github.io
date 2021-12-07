@@ -222,7 +222,7 @@ function wipe(a) {
         setTimeout(()=>{
             save(true)
             AutoStart(3)
-        }, 7000)
+        }, 60000)
         update()
     }
 }

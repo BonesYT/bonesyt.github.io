@@ -208,18 +208,21 @@ function wipe(a) {
             }
         }
         game = new Game
+        placeBars()
+        removeBars()
         config.audio.pause()
         new Audio('audio/wipe.mp3').play()
         clearInterval(config.int.autosave)
         setTimeout(() => {
             alert('...And all the bars dissapear into the abyss.')
             alert('Now you only have ONE MINUTE before your save is gone forever. If you changed your mind, please quickly restart the page.')
-        }, 50);
+        }, 300);
         setTheme('color')
         setTimeout(()=>{config.audio.play()}, 7000)
         setTimeout(()=>{
             save(true)
             AutoStart(3)
         }, 7000)
+        update()
     }
 }

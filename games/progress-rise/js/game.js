@@ -16,6 +16,7 @@ function update() {
         $('upg-' + i).innerHTML = upgradeText(v)
     })
     game.stats.bars.cps = statsCheck.getTotalCPS()
+    statsCheck.upgradeUnlock()
     $('points').innerHTML = 'Points: ' + ts(game.points)
     $('next-bar').innerHTML = 'Buy next progress bar | Cost: ' + ts(game.next)
     for (var i in game.bars) {

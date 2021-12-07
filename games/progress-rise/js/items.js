@@ -5,7 +5,7 @@ function Game(obj={}) {
     this.tpoints = obj.tpoints || EN(0) //total points
     this.bars = obj.bars || [new Bar] //progress bars
     this.next = obj.next || EN(128) //progress bar cost
-    this.upgrades = [new Upgrade(1, 16000, 1.11, 2.03, Infinity, 'return true', 0, 'Increase production of all progress bars', new Upgrade('f', 0).funct),
+    this.upgrades = obj.upgrades || [new Upgrade(1, 16000, 1.11, 2.03, Infinity, 'return true', 0, 'Increase production of all progress bars', new Upgrade('f', 0).funct),
                      new Upgrade(0, 20480904.45235072, 1, 1.8275, Infinity, 'return true', 1, 'Increase auto increment range', new Upgrade('f', 1).funct),
                      new Upgrade(2.4, 20480904.45235072, 1.4, 1.45, 9, 'return true', 2, 'Increase auto increment speed', new Upgrade('f', 0).funct),
                      new Upgrade(0, 1e60, 1, Infinity, 1, 'return true', 3, 'Enable maxbuy on progress bars', new Upgrade('f', 2).funct),

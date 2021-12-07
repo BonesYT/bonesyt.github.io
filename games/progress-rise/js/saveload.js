@@ -2,8 +2,7 @@ function save(isCookie=false) {
     if (isCookie) {
         var date = new Date();
         date.setTime(date.getTime() + 8.64e10);
-        var expires = '; expires=' + date.toUTCString();
-        document.cookie = 'GameData=' + btoa(JSON.stringify(game)).replace(/=/g, '!') + expires + '; path=/';
+        document.cookie = 'GameData=' + JSON.stringify(game) + '; expires=' + date.toUTCString() + '; path=/';
     } else {
         $('savecode').value = btoa(JSON.stringify(game))
     }
@@ -12,7 +11,7 @@ function save(isCookie=false) {
 function load(isCookie=false) {
     if (isCookie) {
         if (getCookieValue('GameData') == null) return false
-        var game2 = JSON.parse(atob(getCookieValue('GameData').replace(/!/g, '=')))
+        var game2 = JSON.parse(getCookieValue('GameData'))
     }
     else {
         var game2 = JSON.parse(atob($('savecode').value))
@@ -94,6 +93,8 @@ function load(isCookie=false) {
     tab(game.stats.page)
     statsCheck.upgradeUnlock()
     game.stats.complete = statsCheck.barsCompleted()
+
+    game = new Game(game)
 
     var a = LdrToRGB(85, game.bars.length / 3.75 - 1.4, 100)
     ButtonStyle($('next-bar'), [a.r, a.g, a.b])

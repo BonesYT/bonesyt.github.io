@@ -82,6 +82,8 @@ function load(isCookie=false) {
 
     if (game.upgrades[1].value.gte(1)) {
         AutoStart(0)
+    } if (game.upgrades[4].value.gt(1)) {
+        AutoStart(2)
     }
 
     removeBars()

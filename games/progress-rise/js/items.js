@@ -9,7 +9,7 @@ function Game(obj={}) {
                      new Upgrade(0, 20480904.45235072, 1, 1.8275, Infinity, 'return true', 1, 'Increase auto increment range', new Upgrade('f', 1).funct),
                      new Upgrade(2.4, 20480904.45235072, 1.4, 1.45, 9, 'return true', 2, 'Increase auto increment speed', new Upgrade('f', 0).funct),
                      new Upgrade(0, 1e60, 1, Infinity, 1, 'return true', 3, 'Enable maxbuy on progress bars', new Upgrade('f', 2).funct),
-                     new Upgrade(0, 'ee10', 1, Infinity, 1, 'return game.upgrades[3].value.eq(1)', 4, 'Enable automat maxbuy on bar lastly clicked', new Upgrade('f', 2).funct)],
+                     new Upgrade(0, 'ee10', 1, Infinity, 1, 'return game.upgrades[3].value.eq(1)', 4, 'Enable automatic maxbuy on bar lastly clicked', new Upgrade('f', 2).funct)],
     this.stats = obj.stats || {
         since: '0.2',
         tbars: 0,

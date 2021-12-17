@@ -67,7 +67,7 @@ function update() {
     if (game.prestige.gain.isNaN()) game.prestige.gain = EN(0)
     $('prestige-gain').innerHTML = 'Gain: +' + ts(game.prestige.gain) + (game.prestige.scaleUnlocked ? (' | Give: +' + ts(game.prestige.scalegain)) : '')
     game.prestige.boost = game.prestige.points.pow(0.825).mul(1.1).add(1)
-    game.prestige.scaleboost = game.prestige.scalebar.level.pow(0.775).div(92).add(1)
+    game.prestige.scaleboost = game.prestige.scalebar.level.pow(0.8).div(87).add(1)
 
     var dif = game.points.log10().log10().div(EN.log10('e5e10').log10())
     if (dif.isNaN()) dif = EN(0)

@@ -17,13 +17,26 @@ body {
 	transform: translate(-8px, -8px)
 }
 .gamescreen {
-	width: calc(70% - 4px);
+	width: 70%;
 	height: 100%;
 	right: 0%;
 	top: 0%;
 	position: absolute;
-	padding-left: 4px;
 	overflow: auto;
+}
+#whitescreen {
+	width: 1%;
+	height: 100vh;
+	display: table-cell;
+	background-color: white;
+	vertical-align: middle;
+	z-index: 200;
+	position: relative;
+}
+#whitescreentext {
+	text-align: center;
+	margin: auto;
+	white-space: nowrap;
 }
 .tabcontent {
 	right: 0%;
@@ -44,6 +57,9 @@ body {
     z-index: 2;
     transition: filter 0.54s;
     filter: brightness(1);
+}
+.pb-add[selected] {
+	animation: glow 1s ease-in-out infinite alternate;
 }
 .pb-add:hover {
 	filter: brightness(1.4);
@@ -148,6 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-right: -4px;
 	transition: border-radius 0.64s, filter 0.64s;
 	filter: brightness(1);
+	margin-right: -9px;
 }
 .upg-button:hover {
 	border-radius: 30px;
@@ -171,4 +188,168 @@ h1, h2, h3, h4, h5, h6 {
 }
 .title {
 	-webkit-background-clip: text;
+}
+.basic-container {
+	height: 30px;
+	width: 200px;
+	overflow: hidden;
+	outline: 4px solid #333;
+	background-image: linear-gradient(#FFF 0%, #CCC 100%);
+	position: relative;
+	z-index: 100;
+	margin: 12px auto;
+}
+.basic-prog {
+	position: inherit;
+	height: 100%;
+	width: 40%;
+	float: left;
+	color: black;
+	background-image: linear-gradient(#888 0%, #555 100%);
+	z-index: 100;
+}
+.basic-text {
+	margin: 0;
+	position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    top: 50%;
+	transform: translateY(-50%);
+	z-index: 101;
+}
+.glow-text {
+	color: #f0f;
+	text-shadow: 0px 0px 8px #f0f, 0px 0px 20px #3a0a87;
+	font-size: 30px;
+}
+.center {
+	text-align: center;
+}
+#prestige-gain {
+	font-size: 14px;
+	text-align: center;
+	margin: 3px 0 7px 0;
+	text-shadow: 0 0 5px rgb(162, 0, 255);
+}
+.main > h1 {
+	text-align: center;
+	transform: translate(-6px);
+	width:30%;
+	font-size: 12px;
+	z-index: 99999;
+}
+#progress-2 > #boost {
+	font-size: 20px;
+}
+@keyframes glow {
+	from {
+		filter: brightness(1.5)
+	}
+	to {
+		filter: brightness(0.75)
+	}
+}
+.ach-page {
+	display: flow-root;
+	height: 25vh;
+	width: 100%;
+	text-align: center;
+	position: relative;
+	min-height: 120px;
+}
+.ach-page>div {
+	position:absolute;
+	bottom:0;
+	margin-bottom:30px;
+	left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+.ach-page>div>button {
+	padding: 4px 10px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+	font-family: gameFont;
+	border-radius: 8px;
+	transition: border-radius 0.5s, filter 0.5s;
+	font-size: 20px;
+}
+.ach-page>div>button:hover {
+	border-radius: 15px;
+	filter: brightness(1.4);
+}
+.ach-page>div>button:active {
+	border-radius: 5px;
+	filter: brightness(0.75);
+}
+.ach-screen {
+	display: flow-root;
+	height: 75%;
+	text-align: center;
+	min-height: 360px;
+}
+th>div {
+	height: 115px;
+	width: 115px;
+	background-color: #719bbf;
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 51%);
+	border-radius: 10px;
+	border: #2b3746 solid 4px;
+	vertical-align: middle;
+	position: relative;
+}
+th>div[unlocked] {
+	animation: glow2 1s ease-in-out infinite alternate;
+}
+@keyframes glow2 {
+	from {
+		filter: brightness(1.55)
+	}
+	to {
+		filter: brightness(1.35)
+	}
+}
+th>div>h1 {
+	font-size: 20px;
+	position:absolute;
+	left: 50%;
+	top: 39%;
+	transform: translate(-50%, -50%);
+}
+#ach-desc {
+	height: 35px;
+}
+#ach-desc>h1 {
+	margin:auto;
+	font-size: 18px;
+	vertical-align:middle;
+	transform: translateY(5px);
+}
+table {
+	margin:auto;
+}
+input[type="range"] {
+	-webkit-appearance: none;
+	width: 225px;
+	height: 14px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 51%);
+	border-radius: 4px;
+}
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 28px;
+	width: 28px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.25) 65.01%);
+	cursor: pointer;
+	border-radius: 50%;
+}
+textarea {
+	background-image: linear-gradient(
+        #0000,
+        #0007
+	);
+	border-radius: 10px;
+	animation-fill-mode: forwards;
 }

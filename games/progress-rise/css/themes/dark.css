@@ -56,6 +56,10 @@ body {
 	background-color: rgb(56, 59, 63);
 	border-color: rgb(26, 27, 29);
 }
+.menu-progress-2 {
+	background-color: rgb(99, 109, 119);
+	border-color: rgb(50, 55, 61);
+}
 .upg-0 {
 	background-color: rgb(63, 66, 73);
 	border-color: rgb(24, 25, 29);
@@ -67,6 +71,14 @@ body {
 .upg-2 {
 	background-color: rgb(72, 72, 73);
 	border-color: rgb(37, 37, 37);
+}
+.upg-3 {
+	background-color: rgb(50, 63, 77);
+	border-color: rgb(32, 37, 43);
+}
+.upg-4 {
+	background-color: rgb(59, 59, 59);
+	border-color: rgb(35, 41, 44);
 }
 .title {
 	color: rgb(227, 234, 241);
@@ -92,4 +104,44 @@ body {
 	margin-bottom: 25px;
 	margin-top: 15px;
 	border: 7px solid #67696d;
+}
+.main > h1 {
+	text-shadow: 0 0 5px white;
+	color: white;
+}
+.ach-page {
+	background-image: linear-gradient(
+        #333841,
+        #1a1e24
+	);
+}
+.ach-page>div>button {
+	background-color: #484e58;
+	border-color: #1b1e22;
+}
+.ach-screen {
+	background-image: linear-gradient(
+        #4a5058,
+        #2f363b
+	);
+}
+#ach-desc {
+	background-image: linear-gradient(
+        #747b81,
+        #4e565c
+	);
+	color: white
+}
+input[type="range"] {
+	background-color: #2a323a;
+	border: 2px solid #16191f
+}
+input[type="range"]::-webkit-slider-thumb {
+	background-color: #636d7a;
+	border: 2px solid #23272e
+}
+textarea {
+	background-color: #3b424d;
+	border: 2px solid #101214;
+	color: white;
 }

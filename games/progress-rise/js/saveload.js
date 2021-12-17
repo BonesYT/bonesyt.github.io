@@ -98,7 +98,7 @@ function load(isCookie=false) {
         game2.achievements[i] = game2.achievements[i] || game.achievements[i]
     })
     game2.stats.vol = game2.stats.vol || game.stats.vol
-    config.audio.volume = game2.stats.vol.music
+    config.audio.volume = game2.stats.vol.music * 0.4
     $('vol-music').value = game2.stats.vol.music.toString()
     $('vol-sfx').value = game2.stats.vol.sfx.toString()
     game2.upgrades[1].limit = EN(35)

@@ -1,0 +1,17 @@
+body {
+    background-color: gray;
+}
+button {
+    width: 100px;
+    height: 100px;
+    border-radius: 7px;
+    border-color: black;
+    border-width: 4px;
+    transition: border-radius 0.5s;
+}
+button:hover {
+    border-radius: 14px;
+}
+button:active {
+    border-radius: 4px;
+}

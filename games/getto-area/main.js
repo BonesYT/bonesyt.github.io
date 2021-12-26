@@ -89,7 +89,7 @@ function save() {
 }
 function load() {
     if (localStorage.getItem('GettoArea') == null) return false
-    var game = JSON.parse(atob(localStorage.getItem('GettoArea')))
+    game = JSON.parse(atob(localStorage.getItem('GettoArea')))
 }
 
 load()

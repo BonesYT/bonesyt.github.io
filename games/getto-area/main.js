@@ -65,6 +65,7 @@ function start() {
                     $('game').style.display = 'none'
                     game.highscore = Math.max(game.highscore, game.points)
                     $('high').innerHTML = 'Highscore: ' + game.highscore
+                    save()
                 }
             }
             game.area.x = Math.random()*400
@@ -96,6 +97,6 @@ load()
 
 saveint = setInterval(()=>{
     save()
-}, 3000)
+}, 1000)
 
 $('high').innerHTML = 'Highscore: ' + game.highscore

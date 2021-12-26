@@ -211,6 +211,7 @@ function RGB(r, g, b, a) {
         }
     }
 }
+
 if (ImageRGBAllow)
 function RGBImage(w, h) {
     if (typeof w=='object') {

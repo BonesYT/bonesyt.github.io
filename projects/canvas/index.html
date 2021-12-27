@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script defer src="main.js"></script>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <link rel="stylesheet" href="style.css">
+		<link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
+    </head>
+    <body>
+        <h1>Canvas Editor</h1>
+        <h3>Version: B1</h3>
+        <h3>Credits to Danidanijr for some stuffados!</h3>
+        <h1>Code</h1>
+        <textarea id="code" cols="80" rows="16"></textarea>
+        <h1>Errors</h1>
+        <textarea id="errors" cols="80" rows="8" readonly style="color: lightcoral"></textarea>
+        <br>
+        <canvas id="canvas" onmousemove="getPos(event)" onmousedown="sys.mouseDown = true" onmouseup="sys.mouseDown = false" width="1080" height="720"></canvas>
+        <br><br>
+        <button onclick="Start()">Play</button>
+        <button onclick="Stop()">Stop</button>
+        <button onclick="Pause()">Pause/resume</button>
+        <h2 id="exp"></h2>
+    </body>
+</html>

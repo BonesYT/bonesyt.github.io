@@ -10,7 +10,8 @@ function update() {
         } catch {
             game.bars[i].speed = v.nspeed.mul(game.upgrades[0].value)
         }
-        game.bars[i].speed = game.bars[i].speed.pow(game.bars[i].speed.log().pow(game.prestige.scaleboost.sub(1)))
+        var calc = game.bars[i].speed.log().pow(game.prestige.scaleboost.sub(1))
+        game.bars[i].speed = game.bars[i].speed.pow(calc.isNaN()?1:calc)
         game.bars[i].pmulti = (i != 0 ? v.level.pow(0.715).div(20).add(1) : EN(1)).mul(game.prestige.boost)
     })
     game.prestige.bars.forEach((v,i,a)=>{

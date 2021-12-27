@@ -6,10 +6,11 @@ var game = new Game
 function update() {
     game.bars.forEach((v,i,a)=>{
         try {
-            game.bars[i].speed = v.nspeed.mul(a[i+1].pmulti).mul(game.upgrades[0].value).pow(game.prestige.scaleboost)
+            game.bars[i].speed = v.nspeed.mul(a[i+1].pmulti).mul(game.upgrades[0].value)
         } catch {
-            game.bars[i].speed = v.nspeed.mul(game.upgrades[0].value).pow(game.prestige.scaleboost)
+            game.bars[i].speed = v.nspeed.mul(game.upgrades[0].value)
         }
+        game.bars[i].speed = game.bars[i].speed.pow(game.bars[i].speed.log().pow(game.prestige.scaleboost.sub(1)))
         game.bars[i].pmulti = (i != 0 ? v.level.pow(0.715).div(20).add(1) : EN(1)).mul(game.prestige.boost)
     })
     game.prestige.bars.forEach((v,i,a)=>{
@@ -18,7 +19,7 @@ function update() {
         } catch {
             game.prestige.bars[i].speed = v.nspeed
         }
-        game.prestige.bars[i].pmulti = i != 0 ? v.level.pow(0.715).div(20).add(1) : EN(1)
+        game.prestige.bars[i].pmulti = (i != 0 ? v.level.pow(0.715).div(20).add(1) : EN(1)).pow(Math.pow(10, game.upgrades[13].value))
     })
     game.upgrades.forEach((v,i,a)=>{
         $('upg-' + i).innerHTML = upgradeText(v)
@@ -58,7 +59,7 @@ function update() {
             $('points-2').innerHTML = `Sky Points: ${ts(game.prestige.points)}`
             $('waited-points').innerHTML = 'Waited Points: ' + ts(game.prestige.gpoints)
             $('boost').innerHTML = 'Sky Points gained boosts ALL Layer 1 ups by x' + ts(game.prestige.boost)
-            $('boost-sb').innerHTML = 'ScaleBar boosts L1 bars\' speed by ^' + ts(game.prestige.scaleboost, 6, -6, 1000)
+            $('boost-sb').innerHTML = 'ScaleBar boosts L1 bars\' speed by ee*' + ts(game.prestige.scaleboost, 6, -6, 1000000)
             $('next-bar-2').innerHTML = 'Unlock next progress bar | Requirement: ' + ts(game.prestige.next)
     }
 
@@ -67,7 +68,7 @@ function update() {
     if (game.prestige.gain.isNaN()) game.prestige.gain = EN(0)
     $('prestige-gain').innerHTML = 'Gain: +' + ts(game.prestige.gain) + (game.prestige.scaleUnlocked ? (' | Give: +' + ts(game.prestige.scalegain)) : '')
     game.prestige.boost = game.prestige.points.pow(0.825).mul(1.1).add(1)
-    game.prestige.scaleboost = game.prestige.scalebar.level.pow(0.8).div(87).add(1)
+    game.prestige.scaleboost = game.prestige.scalebar.level.pow(0.8).div(87).add(1).pow(0.001)
 
     var dif = game.points.log10().log10().div(EN.log10('e5e10').log10())
     if (dif.isNaN()) dif = EN(0)
@@ -251,10 +252,10 @@ function NextBar(layer) {
     }
 }
 
-function maxAll(layer) {
+function maxAll(layer, sound=true) {
     switch (layer) {
         case 1:
-            var paidAtLeast = false
+            if (sound) var paidAtLeast = false
             game.prestige.bars.forEach(v=>{
                 var req = v.cost.log10()
                 var val = v.level.log10()
@@ -265,10 +266,12 @@ function maxAll(layer) {
                 v.cost = v.cost.mul(v.cmulti.pow(buy))
                 game.stats.bars.buys = game.stats.bars.buys.add(buy)
             })
-            if (paidAtLeast) {
-                playSFX('audio/buy.mp3')
-            } else {
-                playSFX('audio/low.mp3')
+            if (sound) {
+                if (paidAtLeast) {
+                    playSFX('audio/buy.mp3')
+                } else {
+                    playSFX('audio/low.mp3')
+                }
             }
         break
     }
@@ -412,7 +415,7 @@ function ConfirmSelect(layer) {
                 if (game.prestige.bars[v].level.gte(1)) addBar(`pb-${layer}-${v}`)
         }
     });
-    if (which.length != 0) game.prestige.gpoints = EN(0)
+    if (which.length != 0 & game.upgrades[12].value.eq(0)) game.prestige.gpoints = EN(0)
     update()
 }
 
@@ -526,6 +529,28 @@ function AutoStart(i, l=0) {
                 save(true)
             }, 10000);
         break
+        case 4:
+            config.int.others = setInterval(() => {
+                game.prestige.gpoints = game.prestige.gpoints.add(game.prestige.gain.div(30).mul(game.upgrades[10].value))
+                game.prestige.tgpoints = game.prestige.tgpoints.add(game.prestige.gain.div(30).mul(game.upgrades[10].value))
+                game.prestige.scalebar.gain(game.prestige.scalegain.div(30).mul(game.upgrades[11].value))
+                if (game.upgrades[12].value.eq(1)) {
+                    maxAll(1,0)
+                    var add = game.prestige.gpoints.div(game.prestige.bars.length)
+                    game.prestige.bars.forEach((a,v) => {
+                        game.prestige.bars[v].points = game.prestige.bars[v].points.add(add.mul(game.prestige.bars[v].speed))
+                        game.prestige.bars[v].tpoints = game.prestige.bars[v].tpoints.add(add)
+                        game.prestige.bars[v].level = game.prestige.bars[v].level.add(game.prestige.bars[v].points.div(game.prestige.bars[v].max).floor())
+                        if (v == 0) {
+                            game.prestige.points = game.prestige.points.add(game.prestige.bars[v].points.div(game.prestige.bars[v].max).floor())
+                            game.prestige.tpoints = game.prestige.tpoints.add(game.prestige.bars[v].points.div(game.prestige.bars[v].max).floor())
+                        }
+                        game.prestige.bars[v].points = game.prestige.bars[v].points.mod(game.prestige.bars[v].max)
+                        if (game.prestige.bars[v].level.gte(1)) addBar(`pb-1-${v}`)
+                    });
+                }
+            }, 33)
+        break
     }
 }
 
@@ -558,3 +583,5 @@ var statsCheck = {
         })
     }
 }
+
+AutoStart(4)

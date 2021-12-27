@@ -55,7 +55,7 @@ function load(isCookie=false) {
         v.unlock = game.upgrades[i].unlock
         game2.upgrades[i] = new Upgrade(v)
     })
-    for (var i=0; i<10; i++) {
+    for (var i=0; i<14; i++) {
         game2.upgrades[i] = game2.upgrades[i] || game.upgrades[i]
     }
     game2.upgrades[0].formula = new Upgrade('f', 0).funct
@@ -68,6 +68,10 @@ function load(isCookie=false) {
     game2.upgrades[7].formula = new Upgrade('f', 4).funct
     game2.upgrades[8].formula = new Upgrade('f', 4).funct
     game2.upgrades[9].formula = new Upgrade('f', 4).funct
+    game2.upgrades[10].formula = new Upgrade('f', 5).funct
+    game2.upgrades[11].formula = new Upgrade('f', 5).funct
+    game2.upgrades[12].formula = new Upgrade('f', 4).funct
+    game2.upgrades[13].formula = new Upgrade('f', 6).funct
 
     game2.prestige = game2.prestige || new Game().prestige
     game2.prestige.cost = EN(game2.prestige.cost)

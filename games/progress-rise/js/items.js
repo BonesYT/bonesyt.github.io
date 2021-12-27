@@ -1,6 +1,6 @@
 //The game itself
 function Game(obj={}) {
-    this.version = '0.3'
+    this.version = '0.3.1'
     this.points = obj.points || EN(0) //points
     this.tpoints = obj.tpoints || EN(0) //total points
     this.next = obj.next || EN(128) //progress bar cost
@@ -14,7 +14,11 @@ function Game(obj={}) {
         new Upgrade(1, 7, 1.7, 1.5825, Infinity, 'return true', 6, 'Decrease all L1 bars\' maximum value', new Upgrade('f', 3).funct),
         new Upgrade(0, 70, 1, Infinity, 1, 'return game.prestige.points.gte(35)', 7, 'Keep all Surface Layer upgrades', new Upgrade('f', 4).funct),
         new Upgrade(0, 4.2e5, 1, Infinity, 1, 'return game.prestige.points.gte(1e4)', 8, 'Don\'t reset anything in Surface Layer', new Upgrade('f', 4).funct),
-        new Upgrade(0, 7.77e77, 1, Infinity, 1, 'return game.prestige.points.gte(1e12)', 9, 'Create a Max All button', new Upgrade('f', 4).funct)
+        new Upgrade(0, 7.77e77, 1, Infinity, 1, 'return game.prestige.points.gte(1e12)', 9, 'Create a Max All button', new Upgrade('f', 4).funct),
+        new Upgrade(0, 'e800', 5, 1.4, 20, 'return true', 10, 'Increase ascends/sec', new Upgrade('f', 5).funct),
+        new Upgrade(0, 'e820', 4, 1.35, 20, 'return game.upgrades[10].paid.gte(1)', 11, 'Increase scalebar gives/sec', new Upgrade('f', 5).funct),
+        new Upgrade(0, 'ee8', 1, Infinity, 1, 'return game.upgrades[10].paid.gte(1)', 12, 'Automate increase/maxall bars without spending WP', new Upgrade('f', 4).funct),
+        new Upgrade(0, 'ee12', 0.07, 1.7, Infinity, 'return game.upgrades[12].paid.gte(1)', 13, 'Add a power boost to all Sky Bars', new Upgrade('f', 6).funct)
     ]
     this.achievements = obj.achievements || [
         new Achievement('Startup', 'Complete the very first progress bar.', 0, 'return game.stats.complete >= 1'),
@@ -26,11 +30,13 @@ function Game(obj={}) {
         new Achievement('Big restart', 'Ascend for the first time.', 6, 'return game.stats.ascended[0] > 0', '#5ee6a6', '#2a5237'),
         new Achievement('The ScaleBar', 'Give Surface Points to ScaleBar.', 7, 'return game.stats.giveScalebar[0] > 0', '#5ee6a6', '#2a5237'),
         new Achievement('Eraser Deleter', 'Stop Surface Layer from reseting.', 8, 'return game.upgrades[8].value.eq(1)', '#5ee6a6', '#2a5237'),
-        new Achievement('Too full', 'Reach Surface Layer\' bar limit.', 9, 'return game.bars.length == 35')
+        new Achievement('Too full', 'Reach Surface Layer\' bar limit.', 9, 'return game.bars.length == 35'),
+        new Achievement('Overpoint', 'Get to EE500 points', 10, 'return game.points.gte("ee500")'),
+        new Achievement('Increase For You', 'Buy the "automate increase/maxall" upgrade', 11, 'return game.upgrades[12].value.eq(1)', '#5ee6a6', '#2a5237')
     ]
     this.bars = obj.bars || [new Bar] //progress bars
     this.stats = obj.stats || {
-        since: '0.3',
+        since: '0.3.1',
         tbars: 0,
         sincedate: Date.now(),
         complete: 0,
@@ -232,6 +238,20 @@ function Upgrade(value=1, cost=1000, multi=1.2, cmulti=1.3, limit=Infinity, unlo
                 this.funct = (v, c, m, cm, t)=>{
                     if (game.prestige.points.gte(t.cost)) {
                         return [1, Infinity]
+                    } else {return false}
+                }
+            break
+            case 5:
+                this.funct = (v, c, m, cm, t)=>{
+                    if (game.prestige.points.gte(t.cost)) {
+                        return [v.add(m), c.pow(cm)]
+                    } else {return false}
+                }
+            break
+            case 6:
+                this.funct = (v, c, m, cm, t)=>{
+                    if (game.prestige.points.gte(t.cost)) {
+                        return [v.add(m), c.pow(EN.pow(10, cm))]
                     } else {return false}
                 }
             break

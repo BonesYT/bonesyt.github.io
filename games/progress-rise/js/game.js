@@ -66,6 +66,7 @@ function update() {
 
     game.prestige.gain = game.points.log10().log10().sub(EN.log10('5e10')).add(1).pow(0.625).mul(300)
     game.prestige.scalegain = game.points.log10().log10().div(10).pow(0.8475).mul(10)
+    if (game.prestige.scalegain.isNaN()) game.prestige.scalegain = EN(0)
     if (game.prestige.gain.isNaN()) game.prestige.gain = EN(0)
     $('prestige-gain').innerHTML = 'Gain: +' + ts(game.prestige.gain) + (game.prestige.scaleUnlocked ? (' | Give: +' + ts(game.prestige.scalegain)) : '')
     game.prestige.boost = game.prestige.points.pow(0.825).mul(1.1).add(1)
@@ -534,7 +535,8 @@ function AutoStart(i, l=0) {
             config.int.others = setInterval(() => {
                 game.prestige.gpoints = game.prestige.gpoints.add(game.prestige.gain.div(30).mul(game.upgrades[10].value))
                 game.prestige.tgpoints = game.prestige.tgpoints.add(game.prestige.gain.div(30).mul(game.upgrades[10].value))
-                game.prestige.scalebar.gain(game.prestige.scalegain.div(30).mul(game.upgrades[11].value))
+                var a = game.prestige.scalegain.div(30).mul(game.upgrades[11].value)
+                game.prestige.scalebar.gain(a.isNaN()?0:a)
                 if (game.upgrades[12].value.eq(1)) {
                     maxAll(1,0)
                     var add = game.prestige.gpoints.div(game.prestige.bars.length)

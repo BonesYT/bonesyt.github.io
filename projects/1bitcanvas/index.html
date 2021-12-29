@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+		<link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
+        <title>2 Bit Canvas</title>
+        <script defer src="main.js"></script>
+    </head>
+    <body>
+        <div id="options" style="display: none;">
+            <label for="cw">
+                Canvas Width
+                <input type="number" id="cw" value="256">
+            </label><br>
+            <label for="ch">
+                Canvas Height
+                <input type="number" id="ch" value="256">
+            </label><br>
+            <label for="w">
+                Pixels Width
+                <input type="number" id="w" value="16">
+            </label><br>
+            <label for="h">
+                Pixels Height
+                <input type="number" id="h" value="16">
+            </label><br>
+            <button onclick="sys.update()">Update</button>
+        </div>
+        <textarea id="code" cols="80" rows="1"></textarea>
+        <button onclick="sys.showOpts()">Options</button>
+        <br><br>
+        <button onclick="sys.start()">Start</button>
+        <button onclick="sys.stop()">Stop</button>
+        <button onclick="sys.reset()">Reset</button>
+        <br><br>Variables: x, y, i, t, ti, mx, my<br>
+        <canvas id="canvas" width="256" height="256"></canvas>
+    </body>
+</html>

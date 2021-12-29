@@ -14,6 +14,7 @@ var canvas = {
     },
     rect: (x=0, y=0, w=256, h=256, c='#FFF')=>{
         ctx.fillStyle = c;
+        if (canvas.isOverwrite) ctx.clearRect(x, y, w, h)
         ctx.fillRect(x, y, w, h)
     },
     circle: (x=0, y=0, r=256, c='#FFF')=>{
@@ -31,7 +32,8 @@ var canvas = {
     },
     fill: (c)=>{
         ctx.fillStyle = c;
-        ctx.fillRect(x, y, ec.width, ec.height)
+        if (canvas.isOverwrite) ctx.clearRect(0, 0, ec.width, ec.height)
+        ctx.fillRect(0, 0, ec.width, ec.height)
     },
     bt: {
         create: (x=0, y=0, w=256, h=256, c="#FFF", id="button", f=()=>{})=>{
@@ -80,7 +82,8 @@ var canvas = {
                 });
             }
         }
-    }
+    },
+    isOverwrite: false
 };
 var sys = {
     on: {

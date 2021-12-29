@@ -4,13 +4,16 @@ function $(e) {
 
 var sys = {
     start: ()=>{
+        if (!sys.isPlay)
         int = setInterval(() => {
             sys.exec()
             sys.tick++
         }, 1000 / sys.fps);
+        sys.isPlay = true
     },
     stop: ()=>{
         clearInterval(int)
+        sys.isPlay = false
     },
     reset: ()=>{
         sys.tick = 0

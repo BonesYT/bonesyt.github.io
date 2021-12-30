@@ -26,7 +26,7 @@
             </label><br>
             <button onclick="sys.update()">Update</button>
         </div>
-        <textarea id="code" cols="80" rows="1"></textarea>
+        <textarea id="code" cols="80" rows="1" onchange="sys.setHash(ecode.value)"></textarea>
         <button onclick="sys.showOpts()">Options</button>
         <br><br>
         <button onclick="sys.start()">Start</button>

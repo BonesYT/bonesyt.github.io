@@ -1,7 +1,7 @@
 /* This is EasyMod.js
    By BonesYT (start: 19:48 03/01/2022 DD/MM/YYYY)
               (release: 11:58 04/01/2022 DD/MM/YYYY)
-              (update: undefined)
+              (update: u2 14:57 04/01/2022 DD/MM/YYYY)
    EasyMod.js basically adds functions to strings, numbers, etc.
    Please don't copy! */
 
@@ -445,6 +445,12 @@ BigInt.prototype.div = function (i) {
 }
 BigInt.prototype.pow = function (i) {
     return this ** BigInt(i)
+}
+BigInt.prototype.bas = function (i) {
+    return BigInt(i) ** this
+}
+BigInt.prototype.neg = function (i) {
+    return BigInt(i) - this
 }
 BigInt.prototype.abs = function (i) {
     var a = Number(this)

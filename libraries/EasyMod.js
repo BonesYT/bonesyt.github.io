@@ -693,11 +693,12 @@ Array.prototype.onlyLast = function () {
 }
 Array.prototype.gate = function () {
     var a = 0
+    var b = false
     this.forEach(v => {
         if (v) {
-            a++
+            if (!b) a++
         } else {
-            return a
+            b = true
         }
     })
     return a
@@ -724,11 +725,12 @@ Object.prototype.get = function (n) {
 Object.prototype.valueMap = Array.prototype.valueMap
 Object.prototype.gate = function () {
     var a = 0
+    var b = false
     Object.keys(this).forEach(v => {
         if (v) {
-            a++
+            if (!b) a++
         } else {
-            return a
+            b = true
         }
     })
     return a

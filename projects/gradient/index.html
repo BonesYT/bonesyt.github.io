@@ -4,8 +4,8 @@
         <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
         <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
         <script src="https://bonesyt.github.io/libraries/RGB.js"></script>
-        <script src="main.js"></script>
-        <title>Gradient Generatr</title>
+        <script defer src="main.js"></script>
+        <title>Gradient Generator</title>
     </head>
     <body>
         <h1>Color gradient generator</h1>
@@ -19,12 +19,14 @@
         Green <input type="number" id="gshift" value="20"><br>
         Blue <input type="number" id="bshift" value="20"><br>
         Shift length <input type="number" id="lshift" value="5"><br>
-        Type <select id="typeSelect" value="add">
+        Type <select id="typeShift" value="add">
             <option value="add">add</option>
             <option value="mul">mul</option>
             <option value="pow">pow</option>
         </select>
         <br><br>
         <button onclick="f.grad()">Make gradient</button>
+        <br><br>
+        <canvas id="canvas" width="1" height="1"></canvas>
     </body>
 </html>

@@ -31,6 +31,7 @@ var game = {
     j: false,
     t: 0,
     pa: false,
+    m: 0,
     tas: {
         r: false,
         p: false,
@@ -59,26 +60,39 @@ var func = {
         ctx.fillRect(game.x, game.y, tile, tile)
     },
     tick: ()=>{
-        game.x += game.xv
-        game.y += game.yv
-        game.yv += 2
-        game.xv /= 1.2
-        if (game.p.up & game.j) game.yv = -14
-        if (game.p.right) game.xv += 1.5
-        if (game.p.left) game.xv -= 1.5
+        switch (game.m) {
+            case 0:
+                game.x += game.xv
+                game.y += game.yv
+                game.yv += 2
+                game.xv /= 1.2
+                if (game.p.up & game.j) game.yv = -14
+                if (game.p.right) game.xv += 1.5
+                if (game.p.left) game.xv -= 1.5
+            break
+            case 1:
+                game.x += game.xv
+                game.y += game.yv
+                game.yv += 2
+                if (game.p.up & game.j) game.yv = -14
+                game.xv = 0
+                if (game.p.right) game.xv = 6
+                if (game.p.left) game.xv = -6
+            break
+        }
         if (func.coll(0,0,0,21)[1]) while (func.coll(0,0,0,21)[1]) {
             game.y--
             game.yv = 0
-            game.x -= game.xv
-            if (func.coll(0,-2,21)[1] | func.coll(21,-2)[1]) {
-                game.x += game.xv
-            } else {
-                while (!(func.coll(0,0,21)[1] | func.coll(21)[1])) {
-                    game.x += Math.sign(game.xv)
+                game.x -= game.xv
+                if (func.coll(0,-2,21)[1] | func.coll(21,-2)[1]) {
+                    game.x += game.xv
+                } else {
+                    while (!(func.coll(0,0,21)[1] | func.coll(21)[1])) {
+                        game.x += Math.sign(game.xv)
+                    }
+                    game.x -= Math.sign(game.xv) * 2
+                    game.xv = 0
                 }
-                game.x -= Math.sign(game.xv) * 2
-                game.xv = 0
-            }
         }
         if (func.coll(0,21)[1]) while (func.coll(0,21)[1]) {
             game.y++

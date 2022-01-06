@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
+        <script src="https://bonesyt.github.io/libraries/RGB.js"></script>
+        <script src="main.js"></script>
+        <title>Gradient Generatr</title>
+    </head>
+    <body>
+        <h1>Color gradient generator</h1>
+        <h3>Enter colors</h3>
+        <input type="color" id="input">
+        <button onclick="f.addc()">Enter color</button>
+        <button onclick="f.remc()">Remove last color</button>
+        <h2 id="colors">Colors:</h2>
+        <h3>Enter color shifting</h3>
+        Red <input type="number" id="rshift" value="20"><br>
+        Green <input type="number" id="gshift" value="20"><br>
+        Blue <input type="number" id="bshift" value="20"><br>
+        Shift length <input type="number" id="lshift" value="5"><br>
+        Type <select id="typeSelect" value="add">
+            <option value="add">add</option>
+            <option value="mul">mul</option>
+            <option value="pow">pow</option>
+        </select>
+        <br><br>
+        <button onclick="f.grad()">Make gradient</button>
+    </body>
+</html>

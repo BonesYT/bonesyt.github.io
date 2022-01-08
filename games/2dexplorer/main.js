@@ -305,6 +305,7 @@ var func = {
                     game.lda -= 75
                     func.d(`You got stone! You have ${game.i.stone} now.`)
                 }
+            break
             case 4:
                 game.lda += game.pow
                 new Audio('sfx/mine.mp3').play()
@@ -324,6 +325,7 @@ var func = {
                     game.lda -= 865
                     func.d(`You got diamond! You have ${game.i.diamond} now.`)
                 }
+            break
             case 6:
                 game.lda += game.pow
                 new Audio('sfx/mine.mp3').play()

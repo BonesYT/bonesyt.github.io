@@ -344,6 +344,34 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
+canvas.addEventListener('mousedown', e=>{
+    var x = e.offsetX
+    var y = e.offsetY
+    if (x>140&y>140&x<372&y<372) {
+        game.p.z = true
+    } else {
+        if (x-y>0&x+y<512) {
+            game.p.up = true
+        }
+        if (x-y>0&x+y>512) {
+            game.p.right = true
+        }
+        if (x-y<0&x+y>512) {
+            game.p.down = true
+        }
+        if (x-y<0&x+y<512) {
+            game.p.left = true
+        }
+    }
+})
+canvas.addEventListener('mouseup', ()=>{
+    game.p.up = false
+    game.p.right = false
+    game.p.down = false
+    game.p.left = false
+    game.p.z = false
+})
+
 func.map.create()
 func.map.gen()
 

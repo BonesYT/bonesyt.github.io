@@ -69,6 +69,7 @@ var func = {
         if (game.mx == 0 & game.my == 0) {
             ctx.drawImage(c, 0, 0, 32, 32, 96, 96, 32, 32)
             ctx.drawImage(c, 32, 0, 32, 32, 224, 96, 32, 32)
+            ctx.drawImage(c, 64, 0, 32, 32, 352, 96, 32, 32)
         }
         ctx.font = '25px Arial'
         ctx.fillStyle='#ffffff'
@@ -120,6 +121,7 @@ var func = {
             func.map.makesqr(2, 3, 11, 11, 7, 0, 7)
             game.map.b[0][0][3][3] = 1
             game.map.b[0][0][7][3] = 1
+            game.map.b[0][0][11][3] = 1
         },
         makesqr: (sx, sy, w, h, ax, ay, t)=>{
             for (var x = sx; x < sx + w; x++) {
@@ -127,6 +129,27 @@ var func = {
                     game.map.b[ax][ay][x][y] = t
                 }
             }
+        },
+        checkcomp: (sx, sy, w, h, ax, ay)=>{
+            var a = true
+            for (var x = sx; x < sx + w; x++) {
+                for (var y = sy; y < sy + h; y++) {
+                    if (game.map.b[ax][ay][x][y] != 0) a = false
+                }
+            }
+            return a
+        },
+        a: ()=>{
+            var a = func.map.checkcomp(5, 5, 7, 7, 1, 1)
+            if (a) a = func.map.checkcomp(5, 4, 8, 9, 1, 2)
+            if (a) a = func.map.checkcomp(3, 4, 11, 10, 2, 0)
+            if (a) a = func.map.checkcomp(3, 4, 11, 10, 0, 2)
+            if (a) a = func.map.checkcomp(2, 2, 12, 12, 2, 3)
+            if (a) a = func.map.checkcomp(2, 2, 10, 12, 5, 4)
+            if (a) a = func.map.checkcomp(3, 5, 7, 7, 2, 5)
+            if (a) a = func.map.checkcomp(4, 4, 7, 7, 7, 7)
+            if (a) a = func.map.checkcomp(2, 3, 11, 11, 7, 0)
+            return a
         }
     },
     key: ()=>{
@@ -179,6 +202,7 @@ var func = {
             func.mine(game.map.b[game.mx][game.my][game.x][game.y])
             game.x++
         }
+
         if (game.mx==0&game.my==0&game.x<5&game.x>1&game.y<5&game.y>1 & game.pt.z == 1) {
 
             if (game.i.wood>0|game.i.stone>0|game.i.iron>0|game.i.diamond>0|game.i.obsidian>0|game.i.ascended>0) {
@@ -203,6 +227,25 @@ var func = {
                 new Audio('sfx/sell.mp3').play()
             } else {
                 func.d('Green: You need at least 80 gems so i can upgrade your pickaxe!')
+            }
+
+        }
+        if (game.mx==0&game.my==0&game.x<13&game.x>9&game.y<5&game.y>1 & game.pt.z == 1) {
+
+            if (func.map.a()) {
+                func.d('Purple: We have rebuilt everything!')
+                func.map.makesqr(5, 5, 7, 7, 1, 1, 2)
+                func.map.makesqr(5, 4, 8, 9, 1, 2, 2)
+                func.map.makesqr(3, 4, 11, 10, 2, 0, 3)
+                func.map.makesqr(3, 4, 11, 10, 0, 2, 3)
+                func.map.makesqr(2, 2, 12, 12, 2, 3, 4)
+                func.map.makesqr(2, 2, 10, 12, 5, 4, 5)
+                func.map.makesqr(3, 5, 7, 7, 2, 5, 6)
+                func.map.makesqr(4, 4, 7, 7, 7, 7, 7)
+                func.map.makesqr(2, 3, 11, 11, 7, 0, 7)
+                new Audio('sfx/rebuild.mp3').play()
+            } else {
+                func.d('Purple: You can\'t reset blocks yet! You will need to mine everything first.')
             }
 
         }

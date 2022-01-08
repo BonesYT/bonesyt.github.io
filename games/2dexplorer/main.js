@@ -181,7 +181,7 @@ var func = {
         }
         if (game.mx==0&game.my==0&game.x<5&game.x>1&game.y<5&game.y>1 & game.pt.z == 1) {
 
-            if (game.i.wood > 0 | game.i.stone > 0) {
+            if (game.i.wood>0|game.i.stone>0|game.i.iron>0|game.i.diamond>0|game.i.obsidian>0|game.i.ascended>0) {
                 var a = Math.floor(game.i.wood * 16.5) + Math.floor(game.i.stone * 75) + Math.floor(game.i.iron * 220) +
                         Math.floor(game.i.diamond * 840) + Math.floor(game.i.obsidian * 2300) + Math.floor(game.i.ascended * 10350)
                 func.d(`Brown: Here's ${a} gems!`)

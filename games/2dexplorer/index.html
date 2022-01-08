@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script defer src="main.js"></script>
+        <script defer src="saveload.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
+        <title>2D Explorer</title>
+    </head>
+    <body>
+        <h5 style="margin:0">Version 1</h5>
+        <h3>Arrows/WASD to move, Z to sell/buy (get close to NPCs)</h3>
+        <canvas width="512" height="512"></canvas>
+        <h3 id="dialogue"></h3>
+        <br>
+        <div id="tasdiv" style="display:none">
+            <button id="start" onclick="func.TAS('')">Start TAS</button>
+            <button onclick="func.TAS(2)">Load TAS</button>
+            <br>
+            <textarea width="300" id="tasinput"></textarea>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
+        <script defer src="main.js"></script>
+        <script src="EasyMod.min.js"></script>
+        <title>JavaScript Graphing Calculator</title>
+    </head>
+    <body>
+        <h1>JavaScript Graphing Calculator</h1>
+        Type of graph <select id="type" onchange="ongraphchange()" value="X">
+            <option value="X">X</option>
+            <option value="lX">lX</option>
+            <option value="XY">XY</option>
+        </select>
+        <br>
+        <div id="colordiv" style="display:none">
+            Type of color <select id="color" value="Lab">
+                <option value="Lab">Lab</option>
+                <option value="red">red</option>
+                <option value="blue">blue</option>
+                <option value="gray">gray</option>
+            </select>
+            <br>
+            Color shift speed <input type="number" id="speed" value="10">
+            <br><br>
+        </div>
+        Width <input type="number" id="width" value="256" onchange="change()">
+        Height <input type="number" id="height" value="256" onchange="change()">
+        <h3>Graph view</h3>
+        X pos. <input type="number" id="sx" value="-15" onchange="change()">
+        Y pos. <input type="number" id="sy" value="-15" onchange="change()">
+        <br>
+        Width <input type="number" id="sw" value="60" onchange="change()">
+        Height <input type="number" id="sh" value="60" onchange="change()">
+        <br>
+        <button onclick="setpos()">Define center position</button>
+        <button onclick="functionfy()">Functionfy code</button>
+        <br><br>
+        <textarea id="code" cols="80" rows="7"></textarea><br>
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <button onclick="reset()">Reset timer</button>
+        <h3>Variables: x, y, t, ti, mx, my</h3>
+        <canvas id="canvas" onmousemove="setcursor(event)" onmouseenter="ins=true" onmouseleave="ins=false"></canvas>
+    </body>
+</html>

@@ -180,7 +180,7 @@ function ontick() {
     }
     if (ins) {
         if ($('type').value == 'XY') {
-            var yy = f(mouseX / width * sw + sx, 0, tick, ti, mx, my)
+            var yy = f(mouseX / width * sw + sx, mouseY / height * sh + sy, tick, ti, mx, my)
             ctx.fillStyle = '#000000A0'
             ctx.beginPath();
             ctx.arc(mouseX, mouseY, 5, 0, Math.PI * 2)

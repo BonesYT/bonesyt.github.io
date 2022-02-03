@@ -2,6 +2,13 @@ function $(e) {
     return document.getElementById(e)
 }
 
+Number.prototype.step = function () {
+    var a = (this.log10().modabs(1)).bas(10), b = 1
+    if (a >= 2) b = 2
+    if (a >= 5) b = 5
+    return this.lfloor()  * b
+}
+
 var playing = false,
     int = 0,
     tick = 0,
@@ -13,7 +20,8 @@ var playing = false,
     sx, sy, sw, sh,
     mouseX, mouseY,
     error, fail, fail2,
-    ins
+    ins,
+    stw, sth
 
 function start() {
     if (!playing) int = setInterval(ontick, 1000 / 20)
@@ -75,7 +83,25 @@ function ontick() {
         ctx.lineTo(width, (sy / sh + 1) * height)
         ctx.stroke()
         ctx.closePath()
+        stw = (sw / 3).step()
+        sth = (sh / 3).step()
+        ctx.strokeStyle = '#00000040'
+        ctx.beginPath()
+        for (var i = -7; i < 2; i++) {
+            ctx.moveTo(-(sx + i * stw - sx.sround(stw)) / sw * width, 0)
+            ctx.lineTo(-(sx + i * stw - sx.sround(stw)) / sw * width, height)
+        }
+        for (var i = -7; i < 2; i++) {
+            ctx.moveTo(0, ((sy + i * sth - sy.sround(sth)) / sh + 1) * height)
+            ctx.lineTo(width, ((sy + i * sth - sy.sround(sth)) / sh + 1) * height)
+        }
+        ctx.stroke()
+        ctx.closePath()
     }
+
+    ctx.closePath()
+    ctx.strokeStyle = '#00000090'
+    ctx.beginPath()
 
     try {
         for (var i = 0; i < ($('type').value == 'XY' ? width * height : width); i++) {
@@ -84,7 +110,7 @@ function ontick() {
             r = f(x, y, tick, ti, mx, my)
             var cr, cg, cb,
             a = r.mul(Number($('speed').value).div(100)), b
-            if ($('type').value == 'XY') {
+            if ($('type').value != 'X') {
                 switch ($('color').value) {
                     case 'red':
                         cr = a.min(1).max(0).mul(255)*1+30
@@ -116,6 +142,7 @@ function ontick() {
                     }
                 break
                 case 'lX':
+                    ctx.strokeStyle = `rgba(${cr},${cg},${cb},0.6)`
                     ctx.closePath()
                     ctx.beginPath()
                     ctx.moveTo(-(sx - x) / sw * width, height)
@@ -138,7 +165,8 @@ function ontick() {
         }
         fail2 = true
     }
-    if ($('type').value == 'X') {ctx.stroke()} else
+
+    if ($('type').value == 'X') {ctx.closePath();ctx.stroke()}
     if ($('type').value == 'XY') {
         ctx.putImageData(px, 0, 0)
         ctx.lineWidth = 3
@@ -149,7 +177,32 @@ function ontick() {
         ctx.lineTo(width, (sy / sh + 1) * height)
         ctx.stroke()
         ctx.closePath()
+        stw = (sw / 3).step()
+        sth = (sh / 3).step()
+        ctx.strokeStyle = '#00000040'
+        ctx.beginPath()
+        for (var i = -7; i < 2; i++) {
+            ctx.moveTo(-(sx + i * stw - sx.sround(stw)) / sw * width, 0)
+            ctx.lineTo(-(sx + i * stw - sx.sround(stw)) / sw * width, height)
+        }
+        for (var i = -7; i < 2; i++) {
+            ctx.moveTo(0, ((sy + i * sth - sy.sround(sth)) / sh + 1) * height)
+            ctx.lineTo(width, ((sy + i * sth - sy.sround(sth)) / sh + 1) * height)
+        }
+        ctx.stroke()
+        ctx.closePath()
     }
+
+    ctx.fillStyle = '#00000070'
+    ctx.textAlign = 'center'
+    for (var i = -7; i < 2; i++) {
+        ctx.fillText((-i * stw + sx.sround(stw)).toStringFix(), -(sx + i * stw - sx.sround(stw)) / sw * width, ((sy / sh + 1) * height).min(height - 10).max(15))
+    }
+    ctx.textAlign = 'left'
+    for (var i = -7; i < 2; i++) {
+        ctx.fillText((-i * sth + sy.sround(sth)).toStringFix(), (-sx / sw * width).max(4).min(width - 25), ((sy + i * sth - sy.sround(sth)) / sh + 1) * height)
+    }
+
     tick++
 
     if (EasyObj.key.press('ArrowUp')) {

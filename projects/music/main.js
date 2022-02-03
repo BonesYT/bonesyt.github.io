@@ -1,10 +1,9 @@
 songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic', 'Ultrimontalitic', 'Universal0', 'Ostale', 'Ultrismate 2', 'specinal',
          'Bitbase_drums', 'Bitlog', 'Close To The Final remix', 'Glitch', 'hardination', 'hyperfy', 'Laterental', 'Luigi Friday Night Funkin VR Concept Animation remake', 'Minalest',
          'MultiSong', 'OmegaSpeed 1', 'OmegaSpeed 2', 'OmegaSpeed 3',
-         /* Added in 12/22/2021 MM/DD/YYYY */
-         'AMOGUS GUS 4', 'Gigatical', 'jsabum song version 3', 'Megalovania (Ultrastic Remix)', 'Myticlria', 'Traveler', 'Unispeed',
-         /* Added in 01/21/2022 MM/DD/YYYY */
-         'Aritical', 'Binary WarmUp', 'Calmed', 'Counaction Ultra Remix', 'Majory Bounce', 'MultiSongJSAB', 'Ultra Amogus Mode', 'Upperultra']
+         /* Added in 12/22/2021 MM/DD/YYYY */ 'AMOGUS GUS 4', 'Gigatical', 'jsabum song version 3', 'Megalovania (Ultrastic Remix)', 'Myticlria', 'Traveler', 'Unispeed',
+         /* Added in 01/21/2022 MM/DD/YYYY */ 'Aritical', 'Binary WarmUp', 'Calmed', 'Counaction Ultra Remix', 'Majory Bounce', 'MultiSongJSAB', 'Ultra Amogus Mode', 'Upperultra',
+         /* Added in 02/03/2022 MM/DD/YYYY */ 'Mechinera', 'Megaisy', 'Myticlria 2', 'Superialer']
 songs.sort()
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []

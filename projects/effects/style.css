@@ -1,0 +1,11 @@
+@keyframes glow {
+	from {
+		filter: brightness(2.2);
+	}
+	to {
+		filter: brightness(1.6);
+	}
+}
+button[selected] {
+    animation: glow 1s ease-in-out infinite alternate;
+}

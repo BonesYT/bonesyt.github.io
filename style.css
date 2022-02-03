@@ -95,3 +95,34 @@ textarea, select {
 .lowmargin {
     margin: 7px;
 }
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 12px;
+    background-image: linear-gradient(
+      rgb(255,255,255) 0%,
+      rgb(147 175 205) 100%
+    );
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border: 2px #658499 solid;
+    border-radius: 8px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background-image: linear-gradient(
+      rgb(91 204 135) 0%,
+      rgb(56 158 81) 100%
+    );
+    border-radius: 50%;
+    cursor: pointer;
+    transition: filter 0.5s;
+    border: 2px green solid
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+    filter: brightness(1.28)
+}

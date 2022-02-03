@@ -263,7 +263,7 @@ function ongraphchange() {
         $('colordiv').style.display = 'block'
     }
 }
-function setcursor() {
+function setcursor(event) {
     mouseX = event.offsetX
     mouseY = event.offsetY
 }

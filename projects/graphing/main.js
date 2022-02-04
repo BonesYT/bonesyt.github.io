@@ -166,7 +166,7 @@ function ontick() {
         fail2 = true
     }
 
-    if ($('type').value == 'X') {ctx.closePath();ctx.stroke()}
+    if ($('type').value == 'X') ctx.stroke()
     if ($('type').value == 'XY') {
         ctx.putImageData(px, 0, 0)
         ctx.lineWidth = 3

@@ -11,7 +11,7 @@ var imgl = ['BADOOF','Discord[error]','DISGUISED','Lines','RGB spiral','sadcube'
     width, height,
     img, debug = document.location.href[0] == 'f', data, slidershow = false,
     f = ()=>{}, tick = 0, playing = false, int, err = false,
-    values = [0,0,0,0,0]
+    values = [0,0,0,0,0], before, change = true
 
 ;(()=>{
 var a
@@ -42,12 +42,13 @@ function selectimg(id) {
         img = new Image
         img.src = imgf[select]
     }
+    change = true
 }
 selectimg(4)
 
 function getPixel(x, y, typ='rgb') {
     var i = (x % canvas.width) + (y % canvas.height) * canvas.width
-    return [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]].conv(typ)
+    return [before[i * 4], before[i * 4 + 1], before[i * 4 + 2], before[i * 4 + 3]].conv(typ)
 }
 function setcursor(event) {
     mouseX = event.offsetX
@@ -77,6 +78,10 @@ function ontick() {
 
     data = ctx.getImageData(0, 0, canvas.width, canvas.height)
     var x, y, c, time = Date.now(), typ = $('color').value.toLowerCase()
+    if (change) {
+        before = data.data.clone()
+        change = false
+    }
 
     try {
         for (var i = 0; i < canvas.width * canvas.height; i++) {

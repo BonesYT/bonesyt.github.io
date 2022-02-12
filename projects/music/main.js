@@ -7,6 +7,7 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
 songs.sort()
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []
+ap = false
 
 document.makeElement = (tag, innerHTML)=>{
     var node = document.createElement(tag);
@@ -31,15 +32,20 @@ for (i=0; i<songs.length; i++) {
 }
 
 function playSong(id) {
-    var a = new Audio('songs/'+songnames[id])
-    playing.push(a)
-    a.play()
+    if (!ap | document.getElementById('multi').checked) {
+        var a = new Audio('songs/'+songnames[id])
+        playing.push(a)
+        a.play()
+        ap = true
+    }
 } 
 
 function stopAll() {
     playing.forEach(element => {
         element.pause()
     });
+    playing = []
+    ap = false
 }
 
 document.getElementById('amm').innerHTML = 'Ammount: ' + songs.length

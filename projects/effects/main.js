@@ -4,7 +4,7 @@ function $(e) {
 
 var imgl = ['BADOOF','Discord[error]','DISGUISED','Lines','RGB spiral','sadcube','Thumbnail44','Website preview','youtube (v2)','ytpost2','mrIncredible','oof','[TEST]'],
     imgf = imgl.map(v => `images/${v}.png`),
-    select = 4,
+    select = 11,
     mouseX, mouseY,
     canvas = $('canvas'),
     ctx = canvas.getContext('2d'),
@@ -73,7 +73,7 @@ function selectimg(id) {
 selectimg(4)
 
 function getPixel(x, y, typ='rgb') {
-    var i = (Math.floor(x) % canvas.width) + (Math.floor(y) % canvas.height) * canvas.width
+    var i = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
     return [before[i * 4], before[i * 4 + 1], before[i * 4 + 2], before[i * 4 + 3]].conv(typ)
 }
 function setcursor(event) {
@@ -104,7 +104,9 @@ function ontick() {
 
     data = ctx.getImageData(0, 0, canvas.width, canvas.height)
     var x, y, c, time = Date.now(), typ = $('color').value.toLowerCase()
-    if (change) {
+    if (change | canvas.width != width | canvas.height != height) {
+        width = canvas.width
+        height = canvas.height
         before = data.data.clone()
         change = false
     }
@@ -184,5 +186,5 @@ function updatesliders() {
 setInterval(updatesliders, 33)
 
 function loadex() {
-    $('code').innerHTML = exs[$('exopt').value]
+    $('code').value = exs[$('exopt').value]
 }

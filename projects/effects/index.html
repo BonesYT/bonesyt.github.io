@@ -6,6 +6,9 @@
         <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
         <title>Image Effect Maker</title>
         <script src="EasyMod.min.js"></script>
+        <script src="GIF/GIFEncoder.js"></script>
+        <script src="GIF/LZWEncoder.js"></script>
+        <script src="GIF/NeuQuant.js"></script>
         <script defer src="main.js"></script>
         <script defer src="convert.js"></script>
     </head>
@@ -29,6 +32,8 @@
             <option value="Shadow Cursor"></option>
             <option value="Waves"></option>
             <option value="Multi Effects"></option>
+            <option value="Pixelation"></option>
+            <option value="Edge Detect"></option>
 		</datalist>
         <button onclick="loadex()">Load example</button>
         <br>
@@ -37,18 +42,20 @@
         <br>
         <div id="sliders" style="display:none">
             <h3 style="margin:0">min: 0, max: 256</h3>
+            <h3 id="slidertextS" style="margin:0"></h3>
+            <input type="range" id="sliderS" min="0" max="256" value="48">
             <h3 id="slidertextA" style="margin:0"></h3>
-            <input type="range" id="sliderA" min="0" max="256" value="0">
+            <input type="range" id="sliderA" min="0" max="256" value="0"><button class="imgb" onclick="anim(0)"><img id="anim0" src="textures/play.png"></button>
             <h3 id="slidertextB" style="margin:0"></h3>
-            <input type="range" id="sliderB" min="0" max="256" value="0">
+            <input type="range" id="sliderB" min="0" max="256" value="0"><button class="imgb" onclick="anim(1)"><img id="anim1" src="textures/play.png"></button>
             <h3 id="slidertextC" style="margin:0"></h3>
-            <input type="range" id="sliderC" min="0" max="256" value="0">
+            <input type="range" id="sliderC" min="0" max="256" value="0"><button class="imgb" onclick="anim(2)"><img id="anim2" src="textures/play.png"></button>
             <h3 id="slidertextD" style="margin:0"></h3>
-            <input type="range" id="sliderD" min="0" max="256" value="0">
+            <input type="range" id="sliderD" min="0" max="256" value="0"><button class="imgb" onclick="anim(3)"><img id="anim3" src="textures/play.png"></button>
             <h3 id="slidertextE" style="margin:0"></h3>
-            <input type="range" id="sliderE" min="0" max="256" value="0">
+            <input type="range" id="sliderE" min="0" max="256" value="0"><button class="imgb" onclick="anim(4)"><img id="anim4" src="textures/play.png"></button>
             <h3 id="slidertextF" style="margin:0"></h3>
-            <input type="range" id="sliderF" min="0" max="256" value="0">
+            <input type="range" id="sliderF" min="0" max="256" value="0"><button class="imgb" onclick="anim(5)"><img id="anim5" src="textures/play.png"></button>
         </div>
         <button onclick="start()">Start</button>
         <button onclick="stop()">Stop</button>
@@ -57,5 +64,8 @@
         <h3>Variables: x, y, t, ti, mx, my, v, getPixel(x, y, rgb|hsv|hsl|cymk|lab)</h3>
         <canvas id="canvas" onmousemove="setcursor(event)"></canvas>
         <h2 id="fps"></h1>
+        <button onclick="save()">Save preset (Will copy to clipboard.)</button><br>
+        <button onclick="load()">Load preset (Will load from clipboard.)</button><br><br>
+        <button id="gif" onclick="makegif()">Make GIF File</button>
     </body>
 </html>

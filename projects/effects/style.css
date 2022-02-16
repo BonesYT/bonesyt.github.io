@@ -9,3 +9,10 @@
 button[selected] {
     animation: glow 1s ease-in-out infinite alternate;
 }
+button>img {
+	width: 16px;
+	height: auto;
+}
+.imgb {
+	padding: 0;
+}

@@ -241,7 +241,7 @@ function loadex() {
 
 function anim(id) {
     isanim[editing][id] = !isanim[editing][id]
-    if (isanim[id]) {
+    if (isanim[editing][id]) {
         $('anim' + id).src = 'textures/pause.png'
     } else {
         $('anim' + id).src = 'textures/play.png'

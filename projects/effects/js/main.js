@@ -10,25 +10,25 @@ var imgl = ['BADOOF','Discord[error]','DISGUISED','Lines','RGB spiral','sadcube'
     ctx = canvas.getContext('2d'),
     width, height,
     img, debug = document.location.href[0] == 'f', data, slidershow = false,
-    f = ()=>{}, tick = 0, playing = false, int, err = false,
-    values = [0,0,0,0,0], before, change = true, size = 3,
+    f = [()=>{}], fs = ['return v'], tick = 0, playing = false, int, err = false,
+    values = [[0,0,0,0,0,0]], before, change = true, size = 3,
     exs = {
-'Brightness': `v[0] += (a + d) * (e / 127.5 - 1);
+    'Brightness': `v[0] += (a + d) * (e / 127.5 - 1);
 v[1] += (b + d) * (e / 127.5 - 1);
 v[2] += (c + d) * (e / 127.5 - 1);
 return v`,
-'Shadow Cursor': `function z(v) {
+    'Shadow Cursor': `function z(v) {
     return v - Math.sqrt((x - mx) ** 2 + (y - my) ** 2)
 }
 v[0]=z(v[0]);
 v[1]=z(v[1]);
 v[2]=z(v[2]);
 return v`,
-'Waves': `return getPixel(
+    'Waves': `return getPixel(
     x+(y*a/255+c/(255/(Math.PI*2))).sin()*b/8,
     y+(x*d/255+f/(255/(Math.PI*2))).sin()*e/8
 )`,
-'Multi Effects': `var effects = [
+    'Multi Effects': `var effects = [
   ()=>{
     v[0] *= (a / 150)
   },()=>{
@@ -37,24 +37,33 @@ return v`,
 ]
 effects.forEach(v => {v()})
 return v`,
-'Pixelation': `v = getPixel(x.sfloor(a), y.sfloor(a))
+    'Pixelation': `v = getPixel(x.sfloor(a), y.sfloor(a))
 X = x%a
 Y = y%a
 if (X < b | Y < b) v = [v[0]/2,v[1]/2,v[2]/2,v[3]]
 if (X >= a - b | Y >= a - b) v = [v[0]*2,v[1]*2,v[2]*2,v[3]]
 return v`,
-'Edge Detect': `w = getPixel(x-a, y-b).map((u,i) => {
+    'Edge Detect': `w = getPixel(x-a, y-b).map((u,i) => {
    return Math.abs(u - v[i])
 })
 w[3] = v[3]
 return w`,
-'Invert': `function reverse(x, a, b) {
+    'Invert': `function reverse(x, a, b) {
   return b - (x - a)
 }
 v[0] = reverse(v[0], a, d)
 v[1] = reverse(v[1], b, e)
 v[2] = reverse(v[2], c, f)
-return v`
+return v`,
+    'Threshold': `
+function z(v) {
+    return v>a?255:0
+}
+v[0]=z(v[0]);
+v[1]=z(v[1]);
+v[2]=z(v[2]);
+return v,
+`
     }, exsdef = {
 'Brightness': [],
 'Shadow Cursor': [],
@@ -62,8 +71,10 @@ return v`
 'Multi Effects': [150],
 'Pixelation': [5],
 'Edge Detect': [1,1],
-'Invert': [0,0,0,255,255,255]
-    }, isanim = [false].repeat(6), speed = 48, gif, gifst = false
+'Invert': [0,0,0,255,255,255],
+'Threshold': [128]
+    }, isanim = [[false].repeat(6)], speed = [48], gif, gifst = false,
+    editing = 0, fn = ['Untitled'], color = ['RGB'], allow = [true]
 
 ;(()=>{
 var a
@@ -122,47 +133,44 @@ function ontick() {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
     }
 
-    try {
-        f = new Function('x','y','t','ti','mx','my','v','a','b','c','d','e','f', $('code').value)
-    } catch (e) {
-        if (err != e.toString()) console.log(e.toString())
-        err = e.toString()
-    }
-
-    data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-    var x, y, c, time = Date.now(), typ = $('color').value.toLowerCase()
+    var x, y, c, time = Date.now(), typ = color.map(v => {
+        return v.toLowerCase()
+    })
     if (change | canvas.width != width | canvas.height != height) {
         width = canvas.width
         height = canvas.height
-        before = data.data.clone()
         change = false
     }
 
+    data = ctx.getImageData(0, 0, width, height)
+
     size = typ.length
 
+    var i
     try {
-        for (var i = 0; i < canvas.width * canvas.height; i++) {
-            c = [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]]
-            if (typ != 'rgb') c = c.conv(typ)
-            c = f(i % canvas.width, (i / canvas.width).floor(), tick, time, mouseX, mouseY, c,
-                  values[0], values[1], values[2], values[3], values[4], values[5])
-            if (c.isArray) {
-                if (c.length != size + 1) c.push(255)
-                if (typ != 'rgb') c = c.conv(typ, 1)
-                data.data[i * 4 + 0] = c[0]
-                data.data[i * 4 + 1] = c[1]
-                data.data[i * 4 + 2] = c[2]
-                data.data[i * 4 + 3] = c[3]
-            } else {
-                data.data[i * 4 + 0] = ((c >> 16) & 0xff)
-                data.data[i * 4 + 1] = ((c >> 8 ) & 0xff)
-                data.data[i * 4 + 2] = ((c      ) & 0xff)
-                data.data[i * 4 + 3] = 255
+        for (var j = 0; j < f.length; j++) {
+            if (allow[j]) {
+                before = [...data.data]
+                for (i = 0; i < canvas.width * canvas.height; i++) {
+                    c = [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]]
+                    c = f[j](i % canvas.width, (i / canvas.width).floor(), tick, time, mouseX, mouseY, typ[j]=='rgb'?c:c.conv(typ[j]),
+                          values[j][0], values[j][1], values[j][2], values[j][3], values[j][4], values[j][5])
+                    if (typ[j] != 'rgb') c = c.conv(typ[j], 1)
+                    if (typeof c == 'number') {
+                        c = [(c >> 16) & 0xff,
+                             (c >> 8 ) & 0xff,
+                             (c      ) & 0xff, 255]
+                    }
+                    data.data[i * 4 + 0] = c[0]
+                    data.data[i * 4 + 1] = c[1]
+                    data.data[i * 4 + 2] = c[2]
+                    data.data[i * 4 + 3] = c[3]
+                }
             }
         }
         err = false
     } catch (e) {
-        if (err != e.toString()) console.log(e.toString())
+        if (err != e.toString()) console.log(e)
         err = e.toString()
     }
 
@@ -199,20 +207,21 @@ function sliders() {
     }
 }
 function updatesliders() {
-    values[0] = $('sliderA').value.toNumber()
-    values[1] = $('sliderB').value.toNumber()
-    values[2] = $('sliderC').value.toNumber()
-    values[3] = $('sliderD').value.toNumber()
-    values[4] = $('sliderE').value.toNumber()
-    values[5] = $('sliderF').value.toNumber()
-    speed = $('sliderS').value.toNumber()
-    $('slidertextA').innerHTML = 'Slider A: ' + values[0]
-    $('slidertextB').innerHTML = 'Slider B: ' + values[1]
-    $('slidertextC').innerHTML = 'Slider C: ' + values[2]
-    $('slidertextD').innerHTML = 'Slider D: ' + values[3]
-    $('slidertextE').innerHTML = 'Slider E: ' + values[4]
-    $('slidertextF').innerHTML = 'Slider F: ' + values[5]
+    values[editing][0] = $('sliderA').value.toNumber()
+    values[editing][1] = $('sliderB').value.toNumber()
+    values[editing][2] = $('sliderC').value.toNumber()
+    values[editing][3] = $('sliderD').value.toNumber()
+    values[editing][4] = $('sliderE').value.toNumber()
+    values[editing][5] = $('sliderF').value.toNumber()
+    speed[editing] = $('sliderS').value.toNumber()
+    $('slidertextA').innerHTML = 'Slider A: ' + values[editing][0]
+    $('slidertextB').innerHTML = 'Slider B: ' + values[editing][1]
+    $('slidertextC').innerHTML = 'Slider C: ' + values[editing][2]
+    $('slidertextD').innerHTML = 'Slider D: ' + values[editing][3]
+    $('slidertextE').innerHTML = 'Slider E: ' + values[editing][4]
+    $('slidertextF').innerHTML = 'Slider F: ' + values[editing][5]
     $('slidertextS').innerHTML = 'Slider Animation Velocity: ' + speed
+    color[editing] = $('color').value
 }
 setInterval(updatesliders, 33)
 
@@ -225,10 +234,13 @@ function loadex() {
     $('sliderD').value = a[3] || 0
     $('sliderE').value = a[4] || 0
     $('sliderF').value = a[5] || 0
+    updatef()
+    fn[editing] = $('exopt').value
+    list.updbt()
 }
 
 function anim(id) {
-    isanim[id] = !isanim[id]
+    isanim[editing][id] = !isanim[editing][id]
     if (isanim[id]) {
         $('anim' + id).src = 'textures/pause.png'
     } else {
@@ -236,55 +248,16 @@ function anim(id) {
     }
 }
 setInterval(() => {
-    for (var i = 0; i < 6; i++) {
-        if (isanim[i]) $('slider' + (i + 65).fromCharCode()).value = Math.sin(tick / 64 * (speed / 14) + i * (Math.PI * 2 / 6)) * 128 + 128
-    }
-}, 33)
-
-function save() {
-    ({
-        sliders: values,
-        animated: isanim,
-        slidvel: speed,
-        width: width,
-        height: height,
-        color: $('color').value,
-        effect: $('code').value
-    }).stringify().btoa().toClipboard()
-}
-function load() {
-    EasyObj.clipb.get()
-    setTimeout(()=>{
-        try {
-            var a = EasyObj.clipb.info.atob().parse()
-        } catch {
-            alert('This save code is invalid. (Decoding/Syntax Error) (try doing it again, might be because of the clipboard pop-up)')
-            return false
-        }
-        if (confirm('Are you sure you want to load this code? Any unsaved changes will be discarded.')) {
-            try {
-                $('sliderA').value = a.sliders[0]
-                $('sliderB').value = a.sliders[1]
-                $('sliderC').value = a.sliders[2]
-                $('sliderD').value = a.sliders[3]
-                $('sliderE').value = a.sliders[4]
-                $('sliderF').value = a.sliders[5]
-                isanim = a.animated
-                speed = a.slidvel
-                width = a.width
-                height = a.height
-                $('color').value = a.color
-                $('code').value = a.effect
-        
-                tick = 0
-                updatesliders()
-                ctx.clearRect(0, 0, width, height)
-            } catch {
-                alert('This save code is invalid. (Reference Error)')
+    for (var a = 0; a < f.length; a++) {
+        for (var i = 0; i < 6; i++) {
+            if (a == editing) {
+                if (isanim[a][i]) $('slider' + (i + 65).fromCharCode()).value = Math.sin(tick / 64 * (speed[editing] / 14) + i * (Math.PI * 2 / 6) + a) * 128 + 128
+            } else {
+                if (isanim[a][i]) values[a][i] = Math.sin(tick / 64 * (speed[editing] / 14) + i * (Math.PI * 2 / 6) + a) * 128 + 128
             }
         }
-    }, 33)
-}
+    }
+}, 33)
 
 function makegif() {
     if (gifst) {
@@ -309,5 +282,17 @@ function makegif() {
             tick = 0
             $('gif').innerHTML = 'Stop recording GIF'
         },1000)},1000)},1000)
+    }
+}
+
+function updatef() {
+    fs[editing] = $('code').value
+    try {
+        f = fs.map(v => {
+            return new Function('x','y','t','ti','mx','my','v','a','b','c','d','e','f', v)
+        })
+    } catch (e) {
+        if (err != e.toString()) console.log(e.toString())
+        err = e.toString()
     }
 }

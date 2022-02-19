@@ -5,12 +5,14 @@
         <link rel="stylesheet" href="style.css">
         <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
         <title>Image Effect Maker</title>
-        <script src="EasyMod.min.js"></script>
-        <script src="GIF/GIFEncoder.js"></script>
-        <script src="GIF/LZWEncoder.js"></script>
-        <script src="GIF/NeuQuant.js"></script>
-        <script defer src="main.js"></script>
-        <script defer src="convert.js"></script>
+        <script src="js/EasyMod.min.js"></script>
+        <script src="js/GIF/GIFEncoder.js"></script>
+        <script src="js/GIF/LZWEncoder.js"></script>
+        <script src="js/GIF/NeuQuant.js"></script>
+        <script defer src="js/main.js"></script>
+        <script src="js/convert.js"></script>
+        <script defer src="js/list.js"></script>
+        <script src="js/saveload.js"></script>
     </head>
     <body>
         <h1>Image Effect Maker</h1>
@@ -26,19 +28,27 @@
             <option value="CMYK">CMYK</option>
             <option value="Lab">Lab</option>
         </select><br>
-        Examples <input list="examples" id="exopt">
-		<datalist id="examples">
-			<option value="Brightness"></option>
-            <option value="Shadow Cursor"></option>
-            <option value="Waves"></option>
-            <option value="Multi Effects"></option>
-            <option value="Pixelation"></option>
-            <option value="Edge Detect"></option>
-            <option value="Invert"></option>
-		</datalist>
-        <button onclick="loadex()">Load example</button>
-        <br>
-        <textarea id="code" cols="80" rows="7">return v</textarea><br>
+        Examples <select id="exopt" value="Brightness">
+			<option value="Brightness">Brightness</option>
+            <option value="Shadow Cursor">Shadow Cursor</option>
+            <option value="Waves">Waves</option>
+            <option value="Multi Effects">Multi Effects</option>
+            <option value="Pixelation">Pixelation</option>
+            <option value="Edge Detect">Edge Detect</option>
+            <option value="Invert">Invert</option>
+            <option value="Threshold">Threshold</option>
+		</select>
+        <button onclick="loadex()">Load example</button><br>
+        <button onclick="list.name()">Rename effect</button>
+        <h1 id="effectid"></h1>
+        <button class="imgb" onclick="list.add()"><img class="img" src="textures/add.png"></button>
+        <button class="imgb" onclick="list.rem()"><img class="img" src="textures/remove.png"></button>
+        <button class="imgb" onclick="list.mr()"><img class="img" src="textures/moveLeft.png"></button>
+        <button class="imgb" onclick="list.ml()"><img class="img" src="textures/moveRight.png"></button>
+        <button class="imgb" onclick="list.allow()"><img class="img" src="textures/allow.png"></button>
+        <h3 style="margin-bottom:0">Effect list</h1>
+        <div id="effectlist"></div>
+        <textarea id="code" cols="80" rows="7" oninput="list.upd();updatef()">return v</textarea><br>
         <button onclick="sliders()">Hide/Show sliders</button>
         <br>
         <div id="sliders" style="display:none">
@@ -65,8 +75,11 @@
         <h3>Variables: x, y, t, ti, mx, my, v, getPixel(x, y, rgb|hsv|hsl|cymk|lab)</h3>
         <canvas id="canvas" onmousemove="setcursor(event)"></canvas>
         <h2 id="fps"></h1>
-        <button onclick="save()">Save preset (Will copy to clipboard.)</button><br>
-        <button onclick="load()">Load preset (Will load from clipboard.)</button><br><br>
+        <h3>Saving/Loading (is connected to your clipboard/copying and pasting)</h3>
+        <button onclick="save.Psave()">Save preset</button>
+        <button onclick="save.Pload()">Load preset</button><br>
+        <button onclick="save.Csave()">Save combination</button>
+        <button onclick="save.Cload()">Load combination</button><br><br>
         <button id="gif" onclick="makegif()">Make GIF File</button>
     </body>
 </html>

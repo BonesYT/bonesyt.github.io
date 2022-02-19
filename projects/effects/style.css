@@ -13,6 +13,16 @@ button>img {
 	width: 16px;
 	height: auto;
 }
+button>.img {
+	width: 30px;
+	height: auto;
+}
 .imgb {
 	padding: 0;
+}
+button[off] {
+	background-image: linear-gradient(
+		#272727 0%,
+		#161616 100%
+	);
 }

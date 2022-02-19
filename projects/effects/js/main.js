@@ -62,7 +62,7 @@ function z(v) {
 v[0]=z(v[0]);
 v[1]=z(v[1]);
 v[2]=z(v[2]);
-return v,
+return v
 `
     }, exsdef = {
 'Brightness': [],

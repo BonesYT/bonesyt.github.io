@@ -62,7 +62,7 @@ var list = {
     },
     mr() {
         if (editing != 0) {
-            var a = f[editing], b = fs[editing], c = fn[editing], d = values[editing], e = isanim[editing], F = speed[editing], g = color[editing]
+            var a = f[editing], b = fs[editing], c = fn[editing], d = values[editing], e = isanim[editing], F = speed[editing], g = color[editing], h = allow[editing]
             f.splice(editing, 1)
             fs.splice(editing, 1)
             fn.splice(editing, 1)

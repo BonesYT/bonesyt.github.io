@@ -32,7 +32,7 @@ save = {
                     $('code').value = a.effect
                     fn[editing] = a.name || 'Untitled'
                     
-                    list.updatebt()
+                    list.updbt()
                     tick = 0
                     updatesliders()
                     ctx.clearRect(0, 0, width, height)

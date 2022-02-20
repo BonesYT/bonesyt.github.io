@@ -35,6 +35,7 @@ save = {
                     list.updbt()
                     tick = 0
                     updatesliders()
+                    updatef()
                     ctx.clearRect(0, 0, width, height)
                 } catch {
                     alert('This save code is invalid. (Reference Error)')
@@ -88,6 +89,7 @@ save = {
                     updatef()
                     tick = 0
                     updatesliders()
+                    updatef()
                     ctx.clearRect(0, 0, width, height)
 
                 } catch {

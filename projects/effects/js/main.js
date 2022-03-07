@@ -112,7 +112,7 @@ selectimg(select)
 function getPixel(x, y, typ='rgb') {
     var i = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width,
         a = [before[i * 4], before[i * 4 + 1], before[i * 4 + 2], before[i * 4 + 3]]
-    return typ=='rgb'?a:a.conv(typ)
+    return typ=='rgb'?a:conv(a,typ)
 }
 function setcursor(event) {
     mouseX = event.offsetX
@@ -146,16 +146,17 @@ function ontick() {
 
     size = typ.length
 
-    var i
+    var i, q
     try {
         for (var j = 0; j < f.length; j++) {
             if (allow[j]) {
+                q = f[j]
                 before = [...data.data]
                 for (i = 0; i < canvas.width * canvas.height; i++) {
                     c = [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]]
-                    c = f[j](i % canvas.width, (i / canvas.width).floor(), tick, time, mouseX, mouseY, typ[j]=='rgb'?c:c.conv(typ[j]),
+                    c = q(i % canvas.width, Math.floor(i / canvas.width), tick, time, mouseX, mouseY, typ[j]=='rgb'?c:conv(c,typ[j]),
                           values[j][0], values[j][1], values[j][2], values[j][3], values[j][4], values[j][5])
-                    if (typ[j] != 'rgb') c = c.conv(typ[j], 1)
+                    if (typ[j] != 'rgb') c = conv(c, typ[j], 1)
                     if (typeof c == 'number') {
                         c = [(c >> 16) & 0xff,
                              (c >> 8 ) & 0xff,

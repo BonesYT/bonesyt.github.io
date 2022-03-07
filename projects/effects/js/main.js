@@ -3,7 +3,7 @@ function $(e) {
 }
 
 var imgl = ['BADOOF','Discord[error]','DISGUISED','Lines','RGB spiral','sadcube','Thumbnail44','Website preview','youtube (v2)','ytpost2','mrIncredible','oof','[TEST]'],
-    imgf = imgl.map(v => `images/${v}.png`),
+    imgf = imgl.map(v => `images/${v}.png`), imgc,
     select = 11,
     mouseX, mouseY,
     canvas = $('canvas'),
@@ -74,7 +74,8 @@ return v
 'Invert': [0,0,0,255,255,255],
 'Threshold': [128]
     }, isanim = [[false].repeat(6)], speed = [48], gif, gifst = false,
-    editing = 0, fn = ['Untitled'], color = ['RGB'], allow = [true]
+    editing = 0, fn = ['Untitled'], color = ['RGB'], allow = [true],
+    send = [], B,C,D,E,F
 
 ;(()=>{
 var a
@@ -101,7 +102,7 @@ function selectimg(id) {
             $('ib' + i).removeAttribute('selected')
         }
     }
-    if (imgl[id] != '[TEST]') {
+    if (imgl[id] != '[TEST]' & !$('iscustom').checked) {
         img = new Image
         img.src = imgf[select]
     }
@@ -110,10 +111,26 @@ function selectimg(id) {
 selectimg(select)
 
 function getPixel(x, y, typ='rgb') {
-    var i = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width,
-        a = [before[i * 4], before[i * 4 + 1], before[i * 4 + 2], before[i * 4 + 3]]
-    return typ=='rgb'?a:conv(a,typ)
+    B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
+    C = [before[B * 4], before[B * 4 + 1], before[B * 4 + 2], before[B * 4 + 3]]
+    return typ=='rgb'?C:conv(C,typ)
 }
+function sendPixel(x, y, info) {
+    B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
+    send[B] = info
+}
+function receivePixel(i=0) {
+    return send[i]
+}
+function setPixel(x, y, v, typ='rgb') {
+    B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
+    if (typ != 'rgb') v = conv(v, typ, 1)
+    data.data[B * 4] = v[0]
+    data.data[B * 4 + 1] = v[1]
+    data.data[B * 4 + 2] = v[2]
+    data.data[B * 4 + 3] = v[3]
+}
+
 function setcursor(event) {
     mouseX = event.offsetX
     mouseY = event.offsetY
@@ -152,9 +169,10 @@ function ontick() {
             if (allow[j]) {
                 q = f[j]
                 before = [...data.data]
+                send = []
                 for (i = 0; i < canvas.width * canvas.height; i++) {
                     c = [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]]
-                    c = q(i % canvas.width, Math.floor(i / canvas.width), tick, time, mouseX, mouseY, typ[j]=='rgb'?c:conv(c,typ[j]),
+                    c = q(i % canvas.width, Math.floor(i / canvas.width), i, tick, time, mouseX, mouseY, typ[j]=='rgb'?c:conv(c,typ[j]),
                           values[j][0], values[j][1], values[j][2], values[j][3], values[j][4], values[j][5])
                     if (typ[j] != 'rgb') c = conv(c, typ[j], 1)
                     if (typeof c == 'number') {
@@ -290,10 +308,29 @@ function updatef() {
     fs[editing] = $('code').value
     try {
         f = fs.map(v => {
-            return new Function('x','y','t','ti','mx','my','v','a','b','c','d','e','f', v)
+            return new Function('x','y','i','t','ti','mx','my','v','a','b','c','d','e','f', v)
         })
     } catch (e) {
         if (err != e.toString()) console.log(e.toString())
         err = e.toString()
     }
 }
+
+function file(e, t) {
+    if (!$('iscustom').checked & !t) {
+        img = new Image
+        img.src = imgf[select]
+    } else {
+	    if (t) {
+            imgc = new Image;
+	        imgc.src = URL.createObjectURL(e.target.files[0]);
+        } else {
+            if (!imgc) {
+                alert('Please select an image before enabling custom images.')
+                $('iscustom').checked=0
+                return
+            }
+            img = imgc
+        }
+    }
+};

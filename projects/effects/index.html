@@ -17,8 +17,12 @@
     <body>
         <h1>Image Effect Maker</h1>
         <h3>Here you can make your own effect using JavaScript!</h3>
-        <h3>Since JavaScript doesn't allow custom images because of security, here's 12 images:</h3>
+        <h3>Here's 12 default images:</h3>
         <div id="imglist"></div><br>
+        <h3>Enable this option for custom images:</h3>
+        <input type="checkbox" id="iscustom" onchange="file(event, 0)">
+        <input type="file" id="custom" accept="image/*" onchange="file(event, 1)">
+        <br><br>
         Width <input type="number" id="width" value="256"><br>
         Height <input type="number" id="height" value="256"><br>
         Input color type <select id="color" value="Lab">
@@ -72,7 +76,7 @@
         <button onclick="stop()">Stop</button>
         <button onclick="reset()">Reset timer</button>
         <button onclick="ontick()">Run</button>
-        <h3>Variables: x, y, t, ti, mx, my, v, getPixel(x, y, rgb|hsv|hsl|cymk|lab), a, b, c, d, e, f</h3>
+        <h3>Variables: x, y, i, t, ti, mx, my, v, getPixel(x, y, rgb|hsv|hsl|cymk|lab), a, b, c, d, e, f, sendPixel(x, y, info), receivePixel(as), setPixel(x, y, v, rgb|hsv|hsl|cymk|lab)</h3>
         <canvas id="canvas" onmousemove="setcursor(event)"></canvas>
         <h2 id="fps"></h1>
         <h3>Saving/Loading (is connected to your clipboard/copying and pasting)</h3>

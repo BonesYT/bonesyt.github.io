@@ -75,7 +75,7 @@ return v
 'Threshold': [128]
     }, isanim = [[false].repeat(6)], speed = [48], gif, gifst = false,
     editing = 0, fn = ['Untitled'], color = ['RGB'], allow = [true],
-    send = [], B,C,D,E,F
+    send = [], B,C,D,E,F, set = []
 
 ;(()=>{
 var a
@@ -125,10 +125,7 @@ function receivePixel(i=0) {
 function setPixel(x, y, v, typ='rgb') {
     B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
     if (typ != 'rgb') v = conv(v, typ, 1)
-    data.data[B * 4] = v[0]
-    data.data[B * 4 + 1] = v[1]
-    data.data[B * 4 + 2] = v[2]
-    data.data[B * 4 + 3] = v[3]
+    set.push([B, v])
 }
 
 function setcursor(event) {
@@ -169,7 +166,7 @@ function ontick() {
             if (allow[j]) {
                 q = f[j]
                 before = [...data.data]
-                send = []
+                send = []; set = []
                 for (i = 0; i < canvas.width * canvas.height; i++) {
                     c = [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]]
                     c = q(i % canvas.width, Math.floor(i / canvas.width), i, tick, time, mouseX, mouseY, typ[j]=='rgb'?c:conv(c,typ[j]),
@@ -185,6 +182,12 @@ function ontick() {
                     data.data[i * 4 + 2] = c[2]
                     data.data[i * 4 + 3] = c[3]
                 }
+                set.forEach(v => {
+                    data.data[v[0] * 4 + 0] = v[1][0]
+                    data.data[v[0] * 4 + 1] = v[1][1]
+                    data.data[v[0] * 4 + 2] = v[1][2]
+                    data.data[v[0] * 4 + 3] = v[1][3]
+                })
             }
         }
         err = false

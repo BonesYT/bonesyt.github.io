@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="main.js"></script>
+        <script src="EasyMod.js"></script>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
+        <title>TUOV Request to JSON Converter</title>
+    </head>
+    <body>
+        <h1>TUOV Request to JSON</h1>
+        <textarea id="input" cols="80" rows="10">var 1: VAR1 | Pitch[10] | image
+var 2: VAR2 | Pitch[20] | image
+var 3: VAR3 | Pitch[30] | image
+
+Group Name: groupname</textarea><br>
+        <button onclick="convert()">Convert to JSON / Check for errors</button><br>
+        <textarea id="output" cols="80" rows="10" readonly></textarea>
+    </body>
+</html>

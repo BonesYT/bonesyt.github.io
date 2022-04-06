@@ -71,9 +71,9 @@ var Equation
     }
 
     Equation.Variable = function (name) {
-        set('type', 'variable',this)
+        set('type', 'variable', this)
         Object.defineProperty(this,'name',{
-            value: num,
+            value: name,
             set var(val) {
                 return val + ''
             },
@@ -91,5 +91,14 @@ var Equation
     Equation.Parenthesis.prototype.addStart = Equation.prototype.addStart
     Equation.Parenthesis.prototype.add = Equation.prototype.add
     Equation.Parenthesis.prototype.remove = Equation.prototype.remove
+    Equation.Parenthesis.prototype.toString = function () {
+        return this.inner.map(v => {
+            switch (v.type) {
+                case 'value': return v.val + ''
+                case 'operator': return Equation.opersSym[Equation.opers.indexOf(v.oper)]
+                case 'variable': return v.name
+            }
+        }).join('')
+    }
 
 })()

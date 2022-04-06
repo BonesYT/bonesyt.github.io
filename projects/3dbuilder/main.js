@@ -100,6 +100,7 @@ function tick() {
                 p.area = A
     
                 for (var i = 0; i < A; i++) map.push(0)
+                p.order = [],p.order2 = []
             }
     
             p.keys.s=0,p.keysp.s=0

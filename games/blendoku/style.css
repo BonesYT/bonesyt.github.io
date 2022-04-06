@@ -1,0 +1,46 @@
+@font-face {
+    font-family: gameFont;
+    src: url(https://fonts.cdnfonts.com/s/9006/MonospaceTypewriter.woff);
+}
+body {
+    background-color: black;
+    text-align: center;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: gameFont;
+    color: white;
+    text-shadow: 0 0 8px #fff;
+    margin: 10px 0;
+}
+a {color: cyan}
+a:visited {color: #0fc}
+td {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+}
+tr {
+    width: 576px;
+    height: 36px;
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+.place {
+    outline: 4px dashed white;
+    outline-offset: -4px;
+}
+.select {
+    outline: 7px solid white;
+    outline-offset: -7px;
+}
+button {
+    font-family: gameFont;
+    color: white;
+    background-color: black;
+    outline: 3px white solid;
+    font-size: 18px;
+    white-space: pre-wrap
+}

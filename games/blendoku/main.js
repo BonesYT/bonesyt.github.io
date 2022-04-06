@@ -7,7 +7,7 @@ function Game() {
     this.bmoves = 0
     this.time = 0
     this.since = Date.now()
-    this.best = 0
+    this.best = 1e3
     this.skips = 0
     this.map = {
         colors: [],

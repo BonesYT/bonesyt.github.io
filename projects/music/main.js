@@ -7,7 +7,6 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
          /* Added in 02/03/2022 */ 'Mechinera', 'Megaisy', 'Myticlria 2', 'Superialer',
          /* Added in 02/19/2022 */ 'Eletronamia', 'Mirational',
          /* Added in 09/24/2022 */ 'Akordot Univert', 'Frequentic', 'Komberst', 'Misteiral', 'Superialer Remixer Beats Cover', 'Synth Chords', 'Ultrepeat', 'Ultinatium']
-songs.push('ULTIMATE BonesYT SONGS MERGE 2022') // built-in
 songs.sort() 
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []
@@ -26,20 +25,25 @@ document.placeElement = (node, id)=>{
 (() => {
 var a
 
-for (i=0; i<songs.length-1; i++) {
+for (i=0; i<songs.length; i++) {
     a = document.makeElement('button', songs[i])
     a.id = 'Song' + i
     document.placeElement(a, 'songs')
     document.getElementById('songs').appendChild(document.createElement('br'));
 }
-for (i=0; i<songs.length-1; i++) {
+for (i=0; i<songs.length; i++) {
     document.getElementById('Song' + i).addEventListener('click', eval('()=>playSong('+i+')'))
 }
 
 document.getElementById('songs').appendChild(document.createElement('br'))
 a = document.makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
 a.className = 'special'
-a.addEventListener('click', () => playSong(songs.length - 1))
+a.addEventListener('click', () => {
+    var a = new Audio('songs/UltimateMerge.mp3')
+    playing.push(a)
+    a.play()
+    ap = true
+})
 document.getElementById('songs').appendChild(a)
 
 })()

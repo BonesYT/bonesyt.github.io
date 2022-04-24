@@ -1,10 +1,13 @@
+// Date format: MM/DD/YYYY
 songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic', 'Ultrimontalitic', 'Universal0', 'Ostale', 'Ultrismate 2', 'specinal',
          'Bitbase_drums', 'Bitlog', 'Close To The Final remix', 'Glitch', 'hardination', 'hyperfy', 'Laterental', 'Luigi Friday Night Funkin VR Concept Animation remake', 'Minalest',
          'MultiSong', 'OmegaSpeed 1', 'OmegaSpeed 2', 'OmegaSpeed 3',
-         /* Added in 12/22/2021 MM/DD/YYYY */ 'AMOGUS GUS 4', 'Gigatical', 'jsabum song version 3', 'Megalovania (Ultrastic Remix)', 'Myticlria', 'Traveler', 'Unispeed',
-         /* Added in 01/21/2022 MM/DD/YYYY */ 'Aritical', 'Binary WarmUp', 'Calmed', 'Counaction Ultra Remix', 'Majory Bounce', 'MultiSongJSAB', 'Ultra Amogus Mode', 'Upperultra',
-         /* Added in 02/03/2022 MM/DD/YYYY */ 'Mechinera', 'Megaisy', 'Myticlria 2', 'Superialer',
-         /* Added in 02/19/2022 MM/DD/YYYY */ 'Eletronamia', 'Mirational']
+         /* Added in 12/22/2021 */ 'AMOGUS GUS 4', 'Gigatical', 'jsabum song version 3', 'Megalovania (Ultrastic Remix)', 'Myticlria', 'Traveler', 'Unispeed',
+         /* Added in 01/21/2022 */ 'Aritical', 'Binary WarmUp', 'Calmed', 'Counaction Ultra Remix', 'Majory Bounce', 'MultiSongJSAB', 'Ultra Amogus Mode', 'Upperultra',
+         /* Added in 02/03/2022 */ 'Mechinera', 'Megaisy', 'Myticlria 2', 'Superialer',
+         /* Added in 02/19/2022 */ 'Eletronamia', 'Mirational',
+         /* Added in 09/24/2022 */ 'Akordot Univert', 'Frequentic', 'Komberst', 'Misteiral', 'Superialer Remixer Beats Cover', 'Synth Chords', 'Ultrepeat', 'Ultinatium']
+songs.push('ULTIMATE BonesYT SONGS MERGE 2022') // built-in
 songs.sort()
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []
@@ -20,17 +23,26 @@ document.placeElement = (node, id)=>{
     document.getElementById(id).appendChild(node);
 }
 
-for (i=0; i<songs.length; i++) {
+(() => {
+var a
+
+for (i=0; i<songs.length-1; i++) {
     a = document.makeElement('button', songs[i])
     a.id = 'Song' + i
     document.placeElement(a, 'songs')
-    const testElement = document.getElementById('songs');
-    const lineBreak = document.createElement('br');
-    testElement.appendChild(lineBreak);
+    document.getElementById('songs').appendChild(document.createElement('br'));
 }
-for (i=0; i<songs.length; i++) {
-    document.getElementById('Song' + i).addEventListener('click', eval('()=>{playSong('+i+')}'))
+for (i=0; i<songs.length-1; i++) {
+    document.getElementById('Song' + i).addEventListener('click', eval('()=>playSong('+i+')'))
 }
+
+document.getElementById('songs').appendChild(document.createElement('br'))
+a = document.makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
+a.className = 'special'
+a.addEventListener('click', () => playSong(songs.length - 1))
+document.getElementById('songs').appendChild(a)
+
+})()
 
 function playSong(id) {
     if (!ap | document.getElementById('multi').checked) {

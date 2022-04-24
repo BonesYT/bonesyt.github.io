@@ -36,9 +36,10 @@ for (i=0; i<songs.length; i++) {
 }
 
 document.getElementById('songs').appendChild(document.createElement('br'))
-a = document.makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
+a = document.makeElement('button', '[Comming soon!]') // '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~'
 a.className = 'special'
 a.addEventListener('click', () => {
+    return
     var a = new Audio('songs/UltimateMerge.mp3')
     playing.push(a)
     a.play()

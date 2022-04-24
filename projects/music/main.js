@@ -8,7 +8,7 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
          /* Added in 02/19/2022 */ 'Eletronamia', 'Mirational',
          /* Added in 09/24/2022 */ 'Akordot Univert', 'Frequentic', 'Komberst', 'Misteiral', 'Superialer Remixer Beats Cover', 'Synth Chords', 'Ultrepeat', 'Ultinatium']
 songs.push('ULTIMATE BonesYT SONGS MERGE 2022') // built-in
-songs.sort()
+songs.sort() 
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []
 ap = false

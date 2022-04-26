@@ -1,3 +1,4 @@
+var $ = e => document.getElementById(e)
 // Date format: MM/DD/YYYY
 songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic', 'Ultrimontalitic', 'Universal0', 'Ostale', 'Ultrismate 2', 'specinal',
          'Bitbase_drums', 'Bitlog', 'Close To The Final remix', 'Glitch', 'hardination', 'hyperfy', 'Laterental', 'Luigi Friday Night Funkin VR Concept Animation remake', 'Minalest',
@@ -19,7 +20,7 @@ document.makeElement = (tag, innerHTML)=>{
     return node
 }
 document.placeElement = (node, id)=>{
-    document.getElementById(id).appendChild(node);
+    $(id).appendChild(node);
 }
 
 (() => {
@@ -29,13 +30,13 @@ for (i=0; i<songs.length; i++) {
     a = document.makeElement('button', songs[i])
     a.id = 'Song' + i
     document.placeElement(a, 'songs')
-    document.getElementById('songs').appendChild(document.createElement('br'));
+    $('songs').appendChild(document.createElement('br'));
 }
 for (i=0; i<songs.length; i++) {
-    document.getElementById('Song' + i).addEventListener('click', eval('()=>playSong('+i+')'))
+    $('Song' + i).addEventListener('click', eval('()=>playSong('+i+')'))
 }
 
-document.getElementById('songs').appendChild(document.createElement('br'))
+$('songs').appendChild(document.createElement('br'))
 a = document.makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
 a.className = 'special'
 a.addEventListener('click', () => {
@@ -45,12 +46,12 @@ a.addEventListener('click', () => {
     a.play() 
     ap = true
 })
-document.getElementById('songs').appendChild(a)
+$('songs').appendChild(a)
 
 })()
 
 function playSong(id) {
-    if (!ap | document.getElementById('multi').checked) {
+    if (!ap | $('multi').checked) {
         var a = new Audio('songs/'+songnames[id])
         playing.push(a)
         a.play()
@@ -88,4 +89,4 @@ function rewind() {
     })
 }
 
-document.getElementById('amm').innerHTML = 'Ammount: ' + songs.length
+$('amm').innerHTML = 'Ammount: ' + songs.length

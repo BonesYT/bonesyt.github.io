@@ -68,7 +68,7 @@ function stop() {
     ap = false
     pause = false; pausetxt()
 }
-function pause() {
+function Pause() {
     pause = !pause
     playing.forEach(v => {
         pause ? v.pause() : v.play()

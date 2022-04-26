@@ -42,7 +42,7 @@ a.addEventListener('click', () => {
     return
     var a = new Audio('songs/UltimateMerge.mp3')
     playing.push(a)
-    a.play()
+    a.play() 
     ap = true
 })
 document.getElementById('songs').appendChild(a)

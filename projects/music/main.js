@@ -10,7 +10,7 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
 songs.sort() 
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []
-ap = false
+ap = false, pause = false
 
 document.makeElement = (tag, innerHTML)=>{
     var node = document.createElement(tag);
@@ -36,7 +36,7 @@ for (i=0; i<songs.length; i++) {
 }
 
 document.getElementById('songs').appendChild(document.createElement('br'))
-a = document.makeElement('button', '[Coming soon!]') // '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~'
+a = document.makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
 a.className = 'special'
 a.addEventListener('click', () => {
     return
@@ -55,15 +55,37 @@ function playSong(id) {
         playing.push(a)
         a.play()
         ap = true
+        pause = false; pausetxt()
     }
 } 
 
-function stopAll() {
-    playing.forEach(element => {
-        element.pause()
-    });
+function stop() {
+    playing.forEach(v => {
+        v.pause()
+    })
     playing = []
     ap = false
+    pause = false; pausetxt()
+}
+function pause() {
+    pause = !pause
+    playing.forEach(v => {
+        pause ? v.pause() : v.play()
+    })
+    pausetxt()
+}
+function pausetxt() {
+    $('pause').src = pause ? 'textures/play.png' : 'textures/pause.png'
+}
+function forward() {
+    playing.forEach(v => {
+        v.currentTime += 5
+    })
+}
+function rewind() {
+    playing.forEach(v => {
+        v.currentTime -= 5
+    })
 }
 
 document.getElementById('amm').innerHTML = 'Ammount: ' + songs.length

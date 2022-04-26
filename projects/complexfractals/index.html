@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Complex Fractal Generator</title>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+		<link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
+        <script src="complex.min.js"></script>
+        <script defer src="main.js"></script>
+    </head>
+    <body>
+        <h1>Complex Fractal Generator</h1>
+        <h3>Credits to infusion for <a href="https://github.com/infusion/Complex.js/" target="_blank">complex.js</a></h3>
+        <h3 id="oper"></h3>
+        Width <input type="number" id="width" value="256" min="1" max="2048"><br>
+        Height <input type="number" id="height" value="256" min="1" max="2048"><br>
+        Quality Shift <input type="number" id="qual" value="0.4" min="-2" max="0"><br>
+        Quality Delay <input type="number" id="quald" value="10" min="1.05" max="100"><br>
+        Enable memory <input type="checkbox" id="memory" checked on><br>
+        <textarea id="code" cols="80" rows="8">z.pow(2).add(c)</textarea><br>
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <button onclick="reset()">Reset timer</button>
+        <button onclick="ontick()">Run</button>
+        <h3>Variables: c, z, t, ti, x, y, i, m, mx, my, X, Y, MX, MY, I, it</h3>
+        Iterations <input type="number" id="iter" value="100"><br>
+        Color Speed <input type="number" id="colsp" value="1"><br>
+        Moving Speed <input type="number" id="movesp" value="1"><br>
+        <canvas id="canvas" onmousemove="setcursor(event)" onmouseenter="int=true" onmouseleave="int=false"></canvas>
+    </body>
+</html>

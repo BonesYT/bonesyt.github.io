@@ -12,7 +12,11 @@ var config = {
     layerup: false,
     int: {bars: []},
     ach: 0,
-    upgradelayer: [0,0,0,0,0,1,1]
+    upgradelayer: [0,0,0,0,0,1,1],
+    news: {
+        text: '',
+        pos: -820
+    }
 }
 
 console.log('Only use console for testing. Please don\'t cheat.')
@@ -210,4 +214,16 @@ function playSFX(src) {
     var a = new Audio(src)
     a.volume = game.stats.vol.sfx
     a.play()
+}
+
+function newstick() {
+    config.news.pos -= 3
+    if (config.news.pos < -820) {
+        config.news.text = config.news.msg[Math.floor(Math.random() * config.news.msg.length)]
+            .replace('$points', ts(game.points))
+            .replace('$progL1', $('normalpb-text-prestige').innerHTML)
+        $('newstext').innerHTML = config.news.text
+        config.news.pos += 1640
+    }
+    $('newstext').style.transform = `translateX(${config.news.pos}px)`
 }

@@ -1,0 +1,20 @@
+@font-face {
+    font-family: gameFont;
+    src: url(https://fonts.cdnfonts.com/s/9006/MonospaceTypewriter.woff);
+}
+body {
+    background-color: black;
+    text-align: center;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: gameFont;
+    color: white
+}
+button {
+    font-family: gameFont;
+    color: white;
+    background-color: black;
+    outline: 3px white solid;
+    font-size: 18px;
+    white-space: pre-wrap
+}

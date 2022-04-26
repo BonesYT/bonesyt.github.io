@@ -11,7 +11,6 @@ body {
 	    rgb(224, 123, 8) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .scr-options {
@@ -20,7 +19,6 @@ body {
 	    rgb(224, 123, 8) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 	text-align: center;
 }
@@ -30,7 +28,6 @@ body {
 	    rgb(224, 123, 8) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .scr-stats {
@@ -39,7 +36,6 @@ body {
 	    rgb(224, 123, 8) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .scr-guide {
@@ -49,7 +45,6 @@ body {
 	);
 	text-align: center;
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .menu-button {

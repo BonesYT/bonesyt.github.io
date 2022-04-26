@@ -19,7 +19,6 @@ body {
 	    rgb(23, 97, 35) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 	text-align: center;
 }
@@ -29,7 +28,6 @@ body {
 	    rgb(187, 154, 13) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .scr-stats {
@@ -38,7 +36,6 @@ body {
 	    rgb(221, 75, 7) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .scr-guide {
@@ -48,7 +45,6 @@ body {
 	);
 	text-align: center;
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .menu-progress {

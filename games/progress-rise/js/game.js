@@ -554,6 +554,11 @@ function AutoStart(i, l=0) {
                 }
             }, 33)
         break
+        case 5: //others haha
+            config.int.news = setInterval(() => {
+                newstick()
+            }, 33)
+        break
     }
 }
 
@@ -588,3 +593,4 @@ var statsCheck = {
 }
 
 AutoStart(4)
+AutoStart(5)

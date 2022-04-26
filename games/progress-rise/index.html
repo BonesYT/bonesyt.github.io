@@ -9,6 +9,7 @@
         <script defer src="js/game.js"></script>
         <script defer src="js/elements.js"></script>
         <script defer src="js/saveload.js"></script>
+        <script defer src="js/ticker.js"></script>
         <link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
         <title id="title">Progress Rise Beta</title>
     </head>
@@ -35,171 +36,176 @@
             <button class="menu-button menu-options" onclick="tab('options')">Options</button>
         </div>
         <div class="gamescreen">
-            <div id="progress" class="tabcontent scr-progress">
-                <div class="center a0"></div>
-                <div class="center">
-                    <button class="glow-text" id="ascend" onclick="ascendAnim(0)">Ascend</button>
-                    <button class="glow-text" id="give-scalebar" onclick="giveScaleBar()">Give to ScaleBar</button>
-                    <h1 id="prestige-gain"></h1>
-                </div>
-                <h1 id="points">[Points]</h1>
-                <button id="next-bar" onclick="NextBar(0)">Buy next bar</button>
-                <div id="progressbar-place-0">
-                    <div id="progressbar-copy" class="progress" style="display:none">
-                        <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="images/increment.png" class="pb-img"></button>
-                        <div class="pb-container select" id="prog-cont" style="background-image: linear-gradient(rgb(161, 255, 161) 0%,rgb(68, 255, 132) 100%);outline: 4px solid rgb(8, 77, 32);">
-                            <div class="pb-prog select" id="prog-bar" style="width:20%;background-image: linear-gradient(rgb(40, 183, 89) 0%,rgb(24, 106, 52) 100%);">
-                                <h5 class="pb-text select" id="prog-text"></h5>
+            <div class="news">
+                <h1 id="newstext">News text</h1>
+            </div>
+            <div id="tabs">
+                <div id="progress" class="tabcontent scr-progress">
+                    <div class="center a0"></div>
+                    <div class="center">
+                        <button class="glow-text" id="ascend" onclick="ascendAnim(0)">Ascend</button>
+                        <button class="glow-text" id="give-scalebar" onclick="giveScaleBar()">Give to ScaleBar</button>
+                        <h1 id="prestige-gain"></h1>
+                    </div>
+                    <h1 id="points">[Points]</h1>
+                    <button id="next-bar" onclick="NextBar(0)">Buy next bar</button>
+                    <div id="progressbar-place-0">
+                        <div id="progressbar-copy" class="progress" style="display:none">
+                            <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="images/increment.png" class="pb-img"></button>
+                            <div class="pb-container select" id="prog-cont" style="background-image: linear-gradient(rgb(161, 255, 161) 0%,rgb(68, 255, 132) 100%);outline: 4px solid rgb(8, 77, 32);">
+                                <div class="pb-prog select" id="prog-bar" style="width:20%;background-image: linear-gradient(rgb(40, 183, 89) 0%,rgb(24, 106, 52) 100%);">
+                                    <h5 class="pb-text select" id="prog-text"></h5>
+                                </div>
                             </div>
+                            <div class="pb-level select" id="prog-level" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); outline: rgb(8, 77, 32) solid 4px;">Level 3777343434</div>
+                            <button class="pb-buy select" id="prog-buy" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); border-color: rgb(8, 77, 32)"></button>
                         </div>
-                        <div class="pb-level select" id="prog-level" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); outline: rgb(8, 77, 32) solid 4px;">Level 3777343434</div>
-                        <button class="pb-buy select" id="prog-buy" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); border-color: rgb(8, 77, 32)"></button>
                     </div>
                 </div>
-            </div>
-            <div id="progress-2" class="tabcontent scr-progress" style="display:none">
-                <h1 id="points-2">[Sky Points]</h1>
-                <h3 id="boost" style="margin-top: 0">[Boost]</h3>
-                <h1 id="waited-points" style="margin-top: 5px">[Waited points]</h1>
-                <button id="scalebar-unlocker" onclick="UnlockMore(0)">Unlock ScaleBar | Cost: 3200 SP</button>
-                <button id="show0" class="button" onclick="tab('progress-2-tab', 'tab-progress2')">Progress Bars</button>
-                <button id="show1" class="button" onclick="tab('progress-2-scalebar', 'tab-progress2')">ScaleBar</button>
-                <br><br>
-                <div id="progress-2-tab" class="tab-progress2">
-                    <button class="button" onclick="SelectBars(1, true)">Select all bars</button>
-                    <button class="button" onclick="SelectBars(1, false)">Deselect all bars</button>
-                    <button class="button" onclick="ConfirmSelect(1)">Increase all selected bars</button>
+                <div id="progress-2" class="tabcontent scr-progress" style="display:none">
+                    <h1 id="points-2">[Sky Points]</h1>
+                    <h3 id="boost" style="margin-top: 0">[Boost]</h3>
+                    <h1 id="waited-points" style="margin-top: 5px">[Waited points]</h1>
+                    <button id="scalebar-unlocker" onclick="UnlockMore(0)">Unlock ScaleBar | Cost: 3200 SP</button>
+                    <button id="show0" class="button" onclick="tab('progress-2-tab', 'tab-progress2')">Progress Bars</button>
+                    <button id="show1" class="button" onclick="tab('progress-2-scalebar', 'tab-progress2')">ScaleBar</button>
                     <br><br>
-                    <button id="next-bar-2" onclick="NextBar(1)">Unlock next bar</button>
-                    <button id="maxall" onclick="maxAll(1)">Max All</button>
-                    <div id="progressbar-place-1"></div>
-                </div>
-                <div id="progress-2-scalebar" class="tab-progress2" style="display: none">
-                    <h1>ScaleBar</h1>
-                    <h3>Give Surface Points to increase Surface Layer speed!</h3>
-                    <h3 id="boost-sb">ScaleBar boosts L1 bars' speed by</h3>
-                    <div id="scalebar">
-                        <div class="pb-container select" style="background-image: linear-gradient(rgb(161, 213, 255) 0%,rgb(68, 118, 255) 100%);outline: 4px solid rgb(8, 21, 77);">
-                            <div class="pb-prog select" id="sb-bar" style="width:20%;background-image: linear-gradient(rgb(40, 85, 183) 0%,rgb(20, 40, 150) 100%);">
-                                <h5 class="pb-text select" id="sb-text"></h5>
+                    <div id="progress-2-tab" class="tab-progress2">
+                        <button class="button" onclick="SelectBars(1, true)">Select all bars</button>
+                        <button class="button" onclick="SelectBars(1, false)">Deselect all bars</button>
+                        <button class="button" onclick="ConfirmSelect(1)">Increase all selected bars</button>
+                        <br><br>
+                        <button id="next-bar-2" onclick="NextBar(1)">Unlock next bar</button>
+                        <button id="maxall" onclick="maxAll(1)">Max All</button>
+                        <div id="progressbar-place-1"></div>
+                    </div>
+                    <div id="progress-2-scalebar" class="tab-progress2" style="display: none">
+                        <h1>ScaleBar</h1>
+                        <h3>Give Surface Points to increase Surface Layer speed!</h3>
+                        <h3 id="boost-sb">ScaleBar boosts L1 bars' speed by</h3>
+                        <div id="scalebar">
+                            <div class="pb-container select" style="background-image: linear-gradient(rgb(161, 213, 255) 0%,rgb(68, 118, 255) 100%);outline: 4px solid rgb(8, 21, 77);">
+                                <div class="pb-prog select" id="sb-bar" style="width:20%;background-image: linear-gradient(rgb(40, 85, 183) 0%,rgb(20, 40, 150) 100%);">
+                                    <h5 class="pb-text select" id="sb-text"></h5>
+                                </div>
                             </div>
+                            <div class="pb-level select" id="sb-level" style="background-image: linear-gradient(rgb(161, 213, 255) 0%, rgb(68, 118, 255) 100%); outline: rgb(8, 21, 77) solid 4px;">Level []</div>
                         </div>
-                        <div class="pb-level select" id="sb-level" style="background-image: linear-gradient(rgb(161, 213, 255) 0%, rgb(68, 118, 255) 100%); outline: rgb(8, 21, 77) solid 4px;">Level []</div>
                     </div>
                 </div>
-            </div>
-            <div id="options" class="tabcontent scr-options" style="display:none">
-                <h1>Volume</h1>
-                <button onclick="mute()" id="pause">mute/unmute</button>
-                <br>
-                Music Volume <input type="range" id="vol-music" min="0" max="1.25" step="0.05" value="1">
-                <br>
-                SFX Volume <input type="range" id="vol-sfx" min="0" max="1" step="0.05" value="1">
-                <h1>Save/Load</h1>
-                <h3>Progress Rise automatically saves every 10 seconds.</h3>
-                <h3>It's recommended to export often, just in case.</h3>
-                <button onclick="save(true)" id="save">Save</button>
-                <button onclick="save()" id="export">Export</button>
-                <button onclick="load()" id="import">Import</button>
-                <button onclick="wipe(true)" id="wipe">WIPE SAVE</button>
-                <br>
-                <textarea id="savecode" style="margin-top: 15px; width: 300px; height: 180px"></textarea>
-                <br>
-                <label>
-                    Theme
-                    <button onclick="setTheme('color')" class="button">Colorful</button>
-                    <button onclick="setTheme('light')" class="button">Light</button>
-                    <button onclick="setTheme('dark')" class="button">Dark</button>
-                    <button onclick="setTheme('cold')" class="button">Cold</button>
-                    <button onclick="setTheme('hot')" class="button">Hot</button>
-                    <button onclick="setTheme('neon')" class="button">Neon</button>
-                </label>
-            </div>
-            <div id="upgrades" class="tabcontent scr-upgrades" style="display:none">
-                <h1 class="layershow">Surface Layer Upgrades</h1>
-                <button class="upg-button upg-0" id="upg-0" onclick="upgrade(0)"></button>
-                <button class="upg-button upg-1" id="upg-1" onclick="upgrade(1)"></button>
-                <button class="upg-button upg-1" id="upg-2" onclick="upgrade(2)"></button>
-                <button class="upg-button upg-2" id="upg-3" onclick="upgrade(3)"></button>
-                <button class="upg-button upg-2" id="upg-4" onclick="upgrade(4)"></button>
-                <div class="layershow">
-                    <h1>Sky Layer Upgrades</h1>
-                    <button class="upg-button upg-3" id="upg-5" onclick="upgrade(5)"></button>
-                    <button class="upg-button upg-3" id="upg-6" onclick="upgrade(6)"></button>
-                    <button class="upg-button upg-4" id="upg-7" onclick="upgrade(7)"></button>
-                    <button class="upg-button upg-4" id="upg-8" onclick="upgrade(8)"></button>
-                    <button class="upg-button upg-2" id="upg-9" onclick="upgrade(9)"></button>
-                    <button class="upg-button upg-1" id="upg-10" onclick="upgrade(10)"></button>
-                    <button class="upg-button upg-1" id="upg-11" onclick="upgrade(11)"></button>
-                    <button class="upg-button upg-1" id="upg-12" onclick="upgrade(12)"></button>
-                    <button class="upg-button upg-0" id="upg-13" onclick="upgrade(13)"></button>
+                <div id="options" class="tabcontent scr-options" style="display:none">
+                    <h1>Volume</h1>
+                    <button onclick="mute()" id="pause">mute/unmute</button>
+                    <br>
+                    Music Volume <input type="range" id="vol-music" min="0" max="1.25" step="0.05" value="1">
+                    <br>
+                    SFX Volume <input type="range" id="vol-sfx" min="0" max="1" step="0.05" value="1">
+                    <h1>Save/Load</h1>
+                    <h3>Progress Rise automatically saves every 10 seconds.</h3>
+                    <h3>It's recommended to export often, just in case.</h3>
+                    <button onclick="save(true)" id="save">Save</button>
+                    <button onclick="save()" id="export">Export</button>
+                    <button onclick="load()" id="import">Import</button>
+                    <button onclick="wipe(true)" id="wipe">WIPE SAVE</button>
+                    <br>
+                    <textarea id="savecode" style="margin-top: 15px; width: 300px; height: 180px"></textarea>
+                    <br>
+                    <label>
+                        Theme
+                        <button onclick="setTheme('color')" class="button">Colorful</button>
+                        <button onclick="setTheme('light')" class="button">Light</button>
+                        <button onclick="setTheme('dark')" class="button">Dark</button>
+                        <button onclick="setTheme('cold')" class="button">Cold</button>
+                        <button onclick="setTheme('hot')" class="button">Hot</button>
+                        <button onclick="setTheme('neon')" class="button">Neon</button>
+                    </label>
                 </div>
-            </div>
-            <div id="statistics" class="tabcontent scr-stats" style="display:none">
-                <h1 class="title">Statistics</h1>
-                <h3 id="stats-tpoints"></h3>
-                <h3 class="layershow" id="stats-tpoints-2"></h3>
-                <h3 id="stats-bars"></h3>
-                <h3 class="layershow" id="stats-bars-2"></h3>
-                <h3 id="stats-allbars"></h3>
-                <h3 id="stats-upgbought"></h3>
-                <h3 class="layershow" id="stats-waited"></h3>
-                <h3 class="layershow" id="stats-scaletotal"></h3>
-                <h3 id="stats-since"></h3>
-                <h3 id="stats-time"></h3>
-            </div>
-            <div id="guide" class="tabcontent scr-guide" style="display:none">
-                <div class="guide-item">
-                    <h1>Getting Started</h1>
-                    <h3>Progress Rise is a game about progress bars increasing. Your main goal is to complete every progress bar.</h3>  <br>
-                    <h3>Go to the 'Progress bars' page to start!</h3>
-                </div>
-                <div class="guide-item">
-                    <h1>Tips</h1>
-                    <h3>Click on a button and hold enter! This will make you click it aprox. 30 times per second! You can
-                        also click other buttons while holding enter.</h3>
-                </div>
-                <div class="guide-item">
-                    <h1>Progress Bars</h1>
-                    <h3>On the progress bars page, click on the circular buttons to increase their value.</h3>  <br>
-                    <h3>Once a bar fills up, its level increases! And it goes back to zero.</h3>  <br>
-                    <h3>You can upgrade the progress bars by pressing the buttons on the right. Do it to increase production.</h3>  <br>
-                    <h3>Press the "Buy next progress bar" button if you have enough points. It will create a new progress bar!</h3>  <br>
-                    <h3>Fact: Increasing the 2nd, 3rd, 4th, etc. bars will increase the speed of the bar above them!</h3>
-                </div>
-                <div class="guide-item">
-                    <h1>Upgrades</h1>
-                    <h3>Upgrades are a way to make progress faster.</h3>  <br>
-                    <h3>If you have enough points, you can buy them. They will be useful to make progress.</h3>
-                </div>
-                <div class="guide-item layershow">
-                    <h1>Sky Layer</h1>
-                    <h3>Sky layer! Now, instead of increasing when you press the button, it selects the progress bar!</h3>  <br>
-                    <h3>If you have waited points, press the increase all bars button, it'll divide the points into the ammount selected and will give to the progress bars.</h3>  <br>
-                </div>
-                <div class="guide-item layershow">
-                    <h1>ScaleBar</h1>
-                    <h3>The ScaleBar is a progress bar that increases the 1st layer's speed. Every level, its requirement for the next level multiplies.</h3>  <br>
-                </div>
-            </div>
-            <div id="achievements" class="tabcontent src-achievements" style="display:none">
-                <div class="ach-page">
-                    <div>
-                        <h1>Achievements</h1>
-                        <button onclick="tab('ach-normal', 'tab-ach')">Normal Achievements</button>
-                        <button onclick="tab('ach-secret', 'tab-ach')">Secret Achievements</button>
+                <div id="upgrades" class="tabcontent scr-upgrades" style="display:none">
+                    <h1 class="layershow">Surface Layer Upgrades</h1>
+                    <button class="upg-button upg-0" id="upg-0" onclick="upgrade(0)"></button>
+                    <button class="upg-button upg-1" id="upg-1" onclick="upgrade(1)"></button>
+                    <button class="upg-button upg-1" id="upg-2" onclick="upgrade(2)"></button>
+                    <button class="upg-button upg-2" id="upg-3" onclick="upgrade(3)"></button>
+                    <button class="upg-button upg-2" id="upg-4" onclick="upgrade(4)"></button>
+                    <div class="layershow">
+                        <h1>Sky Layer Upgrades</h1>
+                        <button class="upg-button upg-3" id="upg-5" onclick="upgrade(5)"></button>
+                        <button class="upg-button upg-3" id="upg-6" onclick="upgrade(6)"></button>
+                        <button class="upg-button upg-4" id="upg-7" onclick="upgrade(7)"></button>
+                        <button class="upg-button upg-4" id="upg-8" onclick="upgrade(8)"></button>
+                        <button class="upg-button upg-2" id="upg-9" onclick="upgrade(9)"></button>
+                        <button class="upg-button upg-1" id="upg-10" onclick="upgrade(10)"></button>
+                        <button class="upg-button upg-1" id="upg-11" onclick="upgrade(11)"></button>
+                        <button class="upg-button upg-1" id="upg-12" onclick="upgrade(12)"></button>
+                        <button class="upg-button upg-0" id="upg-13" onclick="upgrade(13)"></button>
                     </div>
                 </div>
-                <div class="ach-screen">
-                    <div id="ach-desc"><h1>[Click on any achievement to read its description!]</h1></div>
-                    <div id="ach-normal" class="tab-ach">
-                        <table><tbody id="table"></tbody></table>
-                    </div>
-                    <div id="ach-secret" class="tab-ach" style="display:none"></div>
+                <div id="statistics" class="tabcontent scr-stats" style="display:none">
+                    <h1 class="title">Statistics</h1>
+                    <h3 id="stats-tpoints"></h3>
+                    <h3 class="layershow" id="stats-tpoints-2"></h3>
+                    <h3 id="stats-bars"></h3>
+                    <h3 class="layershow" id="stats-bars-2"></h3>
+                    <h3 id="stats-allbars"></h3>
+                    <h3 id="stats-upgbought"></h3>
+                    <h3 class="layershow" id="stats-waited"></h3>
+                    <h3 class="layershow" id="stats-scaletotal"></h3>
+                    <h3 id="stats-since"></h3>
+                    <h3 id="stats-time"></h3>
                 </div>
-            </div>
-            <div id="whitescreen" style="display:none">
-                <h1 id="whitescreentext">Layer up!</h1>
+                <div id="guide" class="tabcontent scr-guide" style="display:none">
+                    <div class="guide-item">
+                        <h1>Getting Started</h1>
+                        <h3>Progress Rise is a game about progress bars increasing. Your main goal is to complete every progress bar.</h3>  <br>
+                        <h3>Go to the 'Progress bars' page to start!</h3>
+                    </div>
+                    <div class="guide-item">
+                        <h1>Tips</h1>
+                        <h3>Click on a button and hold enter! This will make you click it aprox. 30 times per second! You can
+                            also click other buttons while holding enter.</h3>
+                    </div>
+                    <div class="guide-item">
+                        <h1>Progress Bars</h1>
+                        <h3>On the progress bars page, click on the circular buttons to increase their value.</h3>  <br>
+                        <h3>Once a bar fills up, its level increases! And it goes back to zero.</h3>  <br>
+                        <h3>You can upgrade the progress bars by pressing the buttons on the right. Do it to increase production.</h3>  <br>
+                        <h3>Press the "Buy next progress bar" button if you have enough points. It will create a new progress bar!</h3>  <br>
+                        <h3>Fact: Increasing the 2nd, 3rd, 4th, etc. bars will increase the speed of the bar above them!</h3>
+                    </div>
+                    <div class="guide-item">
+                        <h1>Upgrades</h1>
+                        <h3>Upgrades are a way to make progress faster.</h3>  <br>
+                        <h3>If you have enough points, you can buy them. They will be useful to make progress.</h3>
+                    </div>
+                    <div class="guide-item layershow">
+                        <h1>Sky Layer</h1>
+                        <h3>Sky layer! Now, instead of increasing when you press the button, it selects the progress bar!</h3>  <br>
+                        <h3>If you have waited points, press the increase all bars button, it'll divide the points into the ammount selected and will give to the progress bars.</h3>  <br>
+                    </div>
+                    <div class="guide-item layershow">
+                        <h1>ScaleBar</h1>
+                        <h3>The ScaleBar is a progress bar that increases the 1st layer's speed. Every level, its requirement for the next level multiplies.</h3>  <br>
+                    </div>
+                </div>
+                <div id="achievements" class="tabcontent src-achievements" style="display:none">
+                    <div class="ach-page">
+                        <div>
+                            <h1>Achievements</h1>
+                            <button onclick="tab('ach-normal', 'tab-ach')">Normal Achievements</button>
+                            <button onclick="tab('ach-secret', 'tab-ach')">Secret Achievements</button>
+                        </div>
+                    </div>
+                    <div class="ach-screen">
+                        <div id="ach-desc"><h1>[Click on any achievement to read its description!]</h1></div>
+                        <div id="ach-normal" class="tab-ach">
+                            <table><tbody id="table"></tbody></table>
+                        </div>
+                        <div id="ach-secret" class="tab-ach" style="display:none"></div>
+                    </div>
+                </div>
+                <div id="whitescreen" style="display:none">
+                    <h1 id="whitescreentext">Layer up!</h1>
+                </div>
             </div>
         </div>
     </body>

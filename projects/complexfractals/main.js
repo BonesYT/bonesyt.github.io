@@ -42,73 +42,84 @@ function huetorgb(i) {
 }
 
 function ontick() {
-    function tomem(x,y,add=0) {
-        //max = Math.max(max, Math.ceil(Math.log10(size/(1/zoom))))
-        return x.toFixed(max)+','+y.toFixed(max)
-    }
-    width =1* $('width').value
-    height =1* $('height').value
-    it =1* $('iter').value
-    cs =1* $('colsp').value
-    f = Function('z','c','t','ti','x','y','i','m','mx','my','X','Y','MX','MY','I','it', 'return ' + $('code').value)
+    try {
 
-    canvas.width = width
-    canvas.height = height
-
-    var a = width * height, sx, sy, x, y, c, z, i, I, rgb, d,
-        ti = Date.now()
-
-    size = Math.min(width, height)
-
-    var mx = mouseX / (zoom * size) + px,
-        my = mouseY / (zoom * size) + px,
-        m = new Complex(mx, my)
-
-    var img = ctx.getImageData(0, 0, width, height)
-
-    c = new Complex
-    z = new Complex
-
-    var A = Math.ceil(
-                 Math.log(size/(1/zoom))
-                /Math.log($('quald').value)
-                -$('qual').value
-            )
-    if (!mupd & A > max) {
-        max = A
-        mupd = true
-    }
-
-    for (i = 0; i < a; i++) {
-        sx = i % width
-        sy = Math.floor(i / width)
-
-        x = sx / (zoom * size) + px
-        y = sy / (zoom * size) + py
-        c.re = x, c.im = y
-        z.re = x, z.im = y
-        d = Math.sqrt(x ** 2 + y ** 2)
-
-        if ($('memory').checked) I = memory[tomem(x,y)]
-        if (I == undefined | !$('memory').checked) for (I = 0; I < it & d < 2; I++) {
-            z = f(z, c, t, ti, x, y, i, m, mx, my, sx, sy, mouseX, mouseY, I, it)
-            d = Math.sqrt(z.re ** 2 + z.im ** 2)
+        function tomem(x,y,add=0) {
+            //max = Math.max(max, Math.ceil(Math.log10(size/(1/zoom))))
+            return x.toFixed(max)+','+y.toFixed(max)
         }
+        width =1* $('width').value
+        height =1* $('height').value
+        it =1* $('iter').value
+        cs =1* $('colsp').value
+        f = Function('z','c','t','ti','x','y','i','m','mx','my','X','Y','MX','MY','I','it', 'return ' + $('code').value)
+    
+        canvas.width = width
+        canvas.height = height
+    
+        var a = width * height, sx, sy, x, y, c, z, i, I, rgb, d,
+            ti = Date.now()
+    
+        size = Math.min(width, height)
+    
+        var mx = mouseX / (zoom * size) + px,
+            my = mouseY / (zoom * size) + px,
+            m = new Complex(mx, my)
+    
+        var img = ctx.getImageData(0, 0, width, height)
+    
+        c = new Complex
+        z = new Complex
+    
+        var A = Math.ceil(
+                     Math.log(size/(1/zoom))
+                    /Math.log($('quald').value)
+                    -$('qual').value
+                )
+        if (!mupd & A > max) {
+            max = A
+            mupd = true
+        }
+    
+        for (i = 0; i < a; i++) {
+            sx = i % width
+            sy = Math.floor(i / width)
+    
+            x = sx / (zoom * size) + px
+            y = sy / (zoom * size) + py
+            c.re = x, c.im = y
+            z.re = x, z.im = y
+            d = Math.sqrt(x ** 2 + y ** 2)
+    
+            if ($('memory').checked) I = memory[tomem(x,y)]
+            if (I == undefined | !$('memory').checked) for (I = 0; I < it & d < 2; I++) {
+                z = f(z, c, t, ti, x, y, i, m, mx, my, sx, sy, mouseX, mouseY, I, it)
+                d = Math.sqrt(z.re ** 2 + z.im ** 2)
+            }
+    
+            rgb = huetorgb(I * cs)
+            if (I >= it - 1) rgb = [0,0,0]
+    
+            if ($('memory').checked & mupd) memory[tomem(x,y)] = I
+    
+            img.data[i * 4    ] = rgb[0]
+            img.data[i * 4 + 1] = rgb[1]
+            img.data[i * 4 + 2] = rgb[2]
+            img.data[i * 4 + 3] = 255
+        }
+    
+        mupd = false
+        ctx.putImageData(img, 0, 0)
+        t++
 
-        rgb = huetorgb(I * cs)
-        if (I >= it - 1) rgb = [0,0,0]
+    } catch (e) {
 
-        if ($('memory').checked & mupd) memory[tomem(x,y)] = I
+        ctx.fillStyle = '#000'
+        ctx.fillRect(0, 0, width, height)
+        ctx.font = '24px Arial'
+        ctx.fillText(e.stack, 5, 5)
 
-        img.data[i * 4    ] = rgb[0]
-        img.data[i * 4 + 1] = rgb[1]
-        img.data[i * 4 + 2] = rgb[2]
-        img.data[i * 4 + 3] = 255
     }
-
-    mupd = false
-    ctx.putImageData(img, 0, 0)
-    t++
 }
 
 function control() {

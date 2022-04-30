@@ -9,7 +9,7 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
          /* Added in 02/19/2022 */ 'Eletronamia', 'Mirational',
          /* Added in 04/24/2022 */ 'Akordot Univert', 'Frequentic', 'Komberst', 'Misteiral', 'Superialer Remixer Beats Cover', 'Synth Chords', 'Ultrepeat', 'Ultinatium',
          /* Added in 04/30/2022 */ 'AMOGUS GUS 1', 'AMOGUS GUS 2', 'AMOGUS GUS 3', 'Baby Laughing Music Remix', 'Baby Laughing Music Remix 2', 'Chai Kingdom - Super Mario Land Remix', 'DIFICULTATION', 'Ending', 'ERROR',
-                                   'Extarmity', 'graditental', 'Megalovania remix', 'Multi Mode', 'oofdance', 'ProgressRise - Surface', 'ProgressRise - The Sky', 'Scartissan', 'Super Idol Remix', 'TooFull', 'TUOV S2 - Escape', 'ultrahard', 'veryCool'
+                                   'Extarmity', 'graditental', 'Megalovania remix', 'Multi Mode', 'oofdance', 'ProgressRise - Surface', 'ProgressRise - The Sky', 'Scartissan', 'Super Idol Remix', 'TooFull', 'TUOV S2 - Escape', 'ultrahard'
         ]
 songs.sort() 
 songnames = songs.map((v)=>{return v + '.mp3'})

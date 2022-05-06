@@ -60,13 +60,13 @@ function huetorgb(i, a=255) {
     return [r, g, b, a]
 }
 function grad(pos, ...colors) {
-    pos %= colors[colors.length-1][4]
     colors.push(colors[0])
     colors = colors.map((v,i) => {
         var a=typeof v=='number'?[Math.floor(v/65536)%256,Math.floor(v/256)%256,Math.floor(v)%256,255]:v
         if (a.length < 4) a.push(255)
         return a.length < 5 ? a.concat(i) : a
     })
+    pos %= colors[colors.length-1][4]
     var i = colors.findIndex(v => v[4] > pos) - 1,
         p = (pos - colors[i][4]) / ( colors[i + 1][4] - colors[i][4])
     return colors[i].slice(0, 4).map((v,j) => {
@@ -74,9 +74,9 @@ function grad(pos, ...colors) {
     })
 }
 function gradv(pos, ...values) {
-    pos %= values[values.length-1][1]
     values.push(values[0])
     values = values.map((v,i) => typeof v == 'number' ? [v, i] : v)
+    pos %= values[values.length-1][1]
     var i = values.findIndex(v => v[1] > pos) - 1,
         p = (pos - values[i][1]) / ( values[i + 1][1] - values[i][1])
     return values[i][0] * (1 - p) + values[i + 1][0] * p

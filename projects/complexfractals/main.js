@@ -154,7 +154,7 @@ function ontick() {
         var M = $('memory').checked,
             C = Number($('itcomp').value),
             FM = $('enabm').checked,
-            oo = o ? 800 : 50,
+            oo = press.o ? 2000 : 50,
             on = f(z,c,t,ti,x,y,i,m,mouseR,mouseI,sx,sy,mouseX,mouseY,I,it,jr,ji),
             ob
         on = on.constructor == Object

@@ -1,31 +1,110 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Complex Fractal Generator</title>
+        <title>Complex Fractal Editor</title>
         <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <link rel="stylesheet" href="style.css">
 		<link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
         <script src="complex.min.js"></script>
+        <script src="https://bonesyt.github.io/libraries/audioToArray.js"></script>
         <script defer src="main.js"></script>
+        <script src="https://www.webrtc-experiment.com/RecordRTC.js"></script>
+        <script src="https://www.webrtc-experiment.com/screenshot.js"></script>
     </head>
     <body>
-        <h1>Complex Fractal Generator</h1>
-        <h3>Credits to infusion for <a href="https://github.com/infusion/Complex.js/" target="_blank">complex.js</a></h3>
+        <h1>Complex Fractal Editor</h1>
+        <h3>Credits to infusion for <a href="https://github.com/infusion/Complex.js" target="_blank">complex.js</a>, and muaz-khan for <a href="https://github.com/muaz-khan/RecordRTC" target="_blank">RecordRTC.js</a></h3>
         <h3 id="oper"></h3>
-        Width <input type="number" id="width" value="256" min="1" max="2048"><br>
-        Height <input type="number" id="height" value="256" min="1" max="2048"><br>
-        Quality Shift <input type="number" id="qual" value="0.4" min="-2" max="0"><br>
-        Quality Delay <input type="number" id="quald" value="10" min="1.05" max="100"><br>
-        Iteration compression <input type="number" id="itcomp" value="1" min="1" max="1000"><br>
-        Enable memory <input type="checkbox" id="memory" checked on><br>
-        <textarea id="code" cols="80" rows="8">z.pow(2).add(c)</textarea><br>
-        <button onclick="start()">Start</button>
-        <button onclick="stop()">Stop</button>
-        <button onclick="reset()">Reset timer</button>
-        <button onclick="ontick()">Run</button>
-        <h3>Variables: c, z, t, ti, x, y, i, m, mx, my, X, Y, MX, MY, I, it</h3>
-        Iterations <input type="number" id="iter" value="100"><br>
-        Color Speed <input type="number" id="colsp" value="1"><br>
-        Moving Speed <input type="number" id="movesp" value="1"><br>
-        <canvas id="canvas" onmousemove="setcursor(event)" onmouseenter="int=true" onmouseleave="int=false"></canvas>
+        <h3>Controls: Arrows to move, QZ to zoom, J for julia set at pointer, I to show iteration path at pointer, O (same as I but with sounds)</h3>
+
+        <div id="opts">
+            Built-in examples <select id="ex" onchange="example()">
+
+                <option value="n"></option>
+                <option value="0">Iteration compression (fract)</option>
+                <option value="1">Custom gradient (color)</option>
+                <option value="2">Keyframes automation (map)</option>
+                <option value="3">Inner coloring (color)</option>
+                <option value="4">Pointer julia (fract)</option>
+
+            </select><br><br>
+            <button onclick="tab(0)" class="tabbt">Display config</button><br><br>
+            <div id="t0" class="hidden">
+
+                Width <input type="number" id="width" value="256" min="1" max="2048"><br>
+                Height <input type="number" id="height" value="256" min="1" max="2048"><br>
+                Quality Shift <input type="number" id="qual" value="0.4" min="-2" max="0"><br>
+                Quality Delay <input type="number" id="quald" value="10" min="1.05" max="100"><br>
+                Iteration compression <input type="number" id="itcomp" value="1" min="1" max="1000"><br>
+                Enable memory <input type="checkbox" id="memory"><br>
+
+            </div>
+            <button onclick="tab(3)" class="tabbt">Extra formulas</button><br></br>
+            <div id="t3" class="hidden">
+
+                <h3 class="short">Mapping</h3>
+                <textarea id="mcode" cols="80" rows="6">// Vars: c,t,ti,re,im,m,mr,mi,x,y,i,mx,my,it
+return c
+// Note: there is a checkbox at the right side, check it to enable.
+                </textarea>
+                <input type="checkbox" id="enabm">
+                <h3 class="short" id="color">Coloring (outer)</h3>
+                <textarea id="cocode" cols="80" rows="6">/* Vars: z,c,t,ti,re,im,m,mr,mi,x,y,id,mx,my,i,it,speed,off
+   Functs: huetorgb(h, alpha), grad(pos, [r,g,b,?pos], [r,g,b,?pos], ...), gradv(pos, val1, val2, val3, ...), fade(from, to, fade) */
+return huetorgb(i * speed + off)
+// only return number or [red, green, blue, alpha]
+                </textarea>
+
+                <textarea id="cicode" cols="80" rows="6" class="hidden">return 0</textarea><br>
+
+                <button onclick="colorsw()">Switch</button>
+                <button onclick="colorco()">Copy to other</button>
+                <h3 class="short">Fractal</h3>
+
+            </div>
+            <textarea id="code" cols="80" rows="8">z.pow(2).add(c)</textarea><br>
+            <button onclick="start()">Start</button>
+            <button onclick="stop()">Stop</button>
+            <button onclick="reset()">Reset timer</button>
+            <button onclick="ontick()">Run</button>
+            <h3>Variables: c, z, t, ti, re, im, m, mr, mi, x, y, id, mx, my, i, it, jr, ji</h3>
+    
+            <button onclick="tab(2)" class="tabbt">Julia config</button><br><br>
+            <div id="t2" class="hidden">
+                Activate Julia <input type="checkbox" id="isjulia"><br>
+                Julia Real <input type="number" id="jureal" value="-1.5" class="short"><br>
+                Julia Imag <input type="number" id="juimag" value="0" class="short">
+            </div>
+    
+            <button onclick="tab(1)" class="tabbt">Fractal config</button><br><br>
+            <div id="t1" class="hidden">
+                Position Real <input type="number" id="px" value="0" class="short">
+                Imag <input type="number" id="py" value="0" class="short"><br>
+                Magnitude <input type="number" id="zo" value="0.25" min="1e-300">
+                <br>
+                Iterations <input type="number" id="iter" value="25"><br>
+                Bailout <input type="number" id="bail" value="4"><br>
+                Color Speed <input type="number" id="colsp" value="5"><br>
+                Color Shift <input type="number" id="colsh" value="0"><br>
+                Moving Speed <input type="number" id="movesp" value="1"><br>
+            </div>
+
+            <button onclick="tab(4)" class="tabbt">Data config</button><br><br>
+            <div id="t4" class="hidden">
+                <h3 class="short">Save</h3>
+                Fractal <input type="checkbox" id="savef" checked><br>
+                Mapping <input type="checkbox" id="savem" checked><br>
+                Color (out) <input type="checkbox" id="saveo" checked><br>
+                Color (in) <input type="checkbox" id="savei" checked><br>
+                Fract. Config <input type="checkbox" id="savec" checked><br>
+                <button onclick="save()">Save</button>
+                <button onclick="load()">Load</button><br>
+                <textarea id="scode" cols="80" rows="5"></textarea>
+            </div>
+        </div>
+
+        <canvas id="canvas" onmousemove="setcursor(event)" onmouseenter="ins=true" onmouseleave="ins=false"></canvas><br>
+
+        <button onclick="render()" id="render">Render animation</button>
     </body>
 </html>

@@ -57,6 +57,7 @@ button, input[type=file] {
     border-radius: 6px;
     font-size: 18px;
     padding: 6px 11px;
+    border-color: #777;
 }
 button:hover {
     color: rgb(255, 255, 255);

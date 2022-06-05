@@ -1,89 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <title>Effect Menu</title>
         <link rel="stylesheet" href="style.css">
         <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
-        <title>Image Effect Maker</title>
-        <script src="js/EasyMod.min.js"></script>
-        <script src="js/GIF/GIFEncoder.js"></script>
-        <script src="js/GIF/LZWEncoder.js"></script>
-        <script src="js/GIF/NeuQuant.js"></script>
-        <script defer src="js/main.js"></script>
-        <script src="js/convert.js"></script>
-        <script defer src="js/list.js"></script>
-        <script src="js/saveload.js"></script>
     </head>
     <body>
-        <h1>Image Effect Maker</h1>
-        <h3>Here you can make your own effect using JavaScript!</h3>
-        <h3>Here's 12 default images:</h3>
-        <div id="imglist"></div><br>
-        <h3>Enable this option for custom images:</h3>
-        <input type="checkbox" id="iscustom" onchange="file(event, 0)">
-        <input type="file" id="custom" accept="image/*" onchange="file(event, 1)">
-        <br><br>
-        Width <input type="number" id="width" value="256"><br>
-        Height <input type="number" id="height" value="256"><br>
-        Input color type <select id="color" value="Lab">
-            <option value="RGB">RGB</option>
-            <option value="HSV">HSV</option>
-            <option value="HSL">HSL</option>
-            <option value="CMYK">CMYK</option>
-            <option value="Lab">Lab</option>
-        </select><br>
-        Examples <select id="exopt" value="Brightness">
-			<option value="Brightness">Brightness</option>
-            <option value="Shadow Cursor">Shadow Cursor</option>
-            <option value="Waves">Waves</option>
-            <option value="Multi Effects">Multi Effects</option>
-            <option value="Pixelation">Pixelation</option>
-            <option value="Edge Detect">Edge Detect</option>
-            <option value="Invert">Invert</option>
-            <option value="Threshold">Threshold</option>
-		</select>
-        <button onclick="loadex()">Load example</button><br>
-        <button onclick="list.name()">Rename effect</button>
-        <h1 id="effectid"></h1>
-        <button class="imgb" onclick="list.add()"><img class="img" src="textures/add.png"></button>
-        <button class="imgb" onclick="list.rem()"><img class="img" src="textures/remove.png"></button>
-        <button class="imgb" onclick="list.mr()"><img class="img" src="textures/moveLeft.png"></button>
-        <button class="imgb" onclick="list.ml()"><img class="img" src="textures/moveRight.png"></button>
-        <button class="imgb" onclick="list.allow()"><img class="img" src="textures/allow.png"></button>
-        <h3 style="margin-bottom:0">Effect list</h1>
-        <div id="effectlist"></div>
-        <textarea id="code" cols="80" rows="7" oninput="list.upd();updatef()">return v</textarea><br>
-        <button onclick="sliders()">Hide/Show sliders</button>
-        <br>
-        <div id="sliders" style="display:none">
-            <h3 style="margin:0">min: 0, max: 256</h3>
-            <h3 id="slidertextS" style="margin:0"></h3>
-            <input type="range" id="sliderS" min="0" max="256" value="48">
-            <h3 id="slidertextA" style="margin:0"></h3>
-            <input type="range" id="sliderA" min="0" max="256" value="0"><button class="imgb" onclick="anim(0)"><img id="anim0" src="textures/play.png"></button>
-            <h3 id="slidertextB" style="margin:0"></h3>
-            <input type="range" id="sliderB" min="0" max="256" value="0"><button class="imgb" onclick="anim(1)"><img id="anim1" src="textures/play.png"></button>
-            <h3 id="slidertextC" style="margin:0"></h3>
-            <input type="range" id="sliderC" min="0" max="256" value="0"><button class="imgb" onclick="anim(2)"><img id="anim2" src="textures/play.png"></button>
-            <h3 id="slidertextD" style="margin:0"></h3>
-            <input type="range" id="sliderD" min="0" max="256" value="0"><button class="imgb" onclick="anim(3)"><img id="anim3" src="textures/play.png"></button>
-            <h3 id="slidertextE" style="margin:0"></h3>
-            <input type="range" id="sliderE" min="0" max="256" value="0"><button class="imgb" onclick="anim(4)"><img id="anim4" src="textures/play.png"></button>
-            <h3 id="slidertextF" style="margin:0"></h3>
-            <input type="range" id="sliderF" min="0" max="256" value="0"><button class="imgb" onclick="anim(5)"><img id="anim5" src="textures/play.png"></button>
-        </div>
-        <button onclick="start()">Start</button>
-        <button onclick="stop()">Stop</button>
-        <button onclick="reset()">Reset timer</button>
-        <button onclick="ontick()">Run</button>
-        <h3>Variables: x, y, i, t, ti, mx, my, v, getPixel(x, y, rgb|hsv|hsl|cymk|lab), a, b, c, d, e, f, sendPixel(x, y, info), receivePixel(as), setPixel(x, y, v, rgb|hsv|hsl|cymk|lab)</h3>
-        <canvas id="canvas" onmousemove="setcursor(event)"></canvas>
-        <h2 id="fps"></h1>
-        <h3>Saving/Loading (is connected to your clipboard/copying and pasting)</h3>
-        <button onclick="save.Psave()">Save preset</button>
-        <button onclick="save.Pload()">Load preset</button><br>
-        <button onclick="save.Csave()">Save combination</button>
-        <button onclick="save.Cload()">Load combination</button><br><br>
-        <button id="gif" onclick="makegif()">Make GIF File</button>
+        <h1>Choose a media type below:</h1>
+        <a href="image/">Image Effect Editor</a><br>
+        <a href="audio/">Audio Effect Editor</a><br><br>
+        <a href="help.html">Editor Help</a>
     </body>
 </html>

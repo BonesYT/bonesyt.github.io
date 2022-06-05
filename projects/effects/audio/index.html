@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
+        <title>Audio Effect Maker</title>
+        <script src="../globjs/EasyMod.min.js"></script>
+        <script defer src="js/main.js"></script>
+        <script src="js/convert.js"></script>
+        <script defer src="js/list.js"></script>
+        <script src="../globjs/saveload.js"></script>
+    </head>
+    <body>
+        <a href="../">To Main</a>
+        <h1>Audio Effect Maker</h1>
+        <h3>Here you can make your own audio effect using JavaScript!</h3>
+        <h3>Here's 12 default audio:</h3>
+        <div id="audlist"></div><br>
+        <h3>Enable this option for custom audio:</h3>
+        <input type="checkbox" id="iscustom" onchange="file(event, 0)">
+        <input type="file" id="custom" accept="audio/*" onchange="file(event, 1)">
+        <br><br>
+        Examples <select id="exopt" value="Brightness">
+            <option value="Amplitude">Amplitude</option>
+            <option value="Pitch Shift">Pitch Shift</option>
+            <option value="Delay">Delay</option>
+            <option value="Reverse">Reverse</option>
+            <option value="Amplitude Modulation">Amplitude Modulation</option>
+            <option value="Distortion">Distortion</option>
+            <option value="Quality">Quality</option>
+		</select>
+        <button onclick="loadex()">Load example</button><br>
+        <button onclick="list.name()">Rename effect</button>
+        <h1 id="effectid"></h1>
+        <button class="imgb" onclick="list.add()"><img class="img" src="../txtr/add.png"></button>
+        <button class="imgb" onclick="list.rem()"><img class="img" src="../txtr/remove.png"></button>
+        <button class="imgb" onclick="list.mr()"><img class="img" src="../txtr/moveLeft.png"></button>
+        <button class="imgb" onclick="list.ml()"><img class="img" src="../txtr/moveRight.png"></button>
+        <button class="imgb" onclick="list.allow()"><img class="img" src="../txtr/allow.png"></button>
+        <h3 style="margin-bottom:0">Effect list</h1>
+        <div id="effectlist"></div>
+        <textarea id="code" cols="80" rows="7" oninput="list.upd();updatef();saved=false">return v</textarea><br>
+        <button onclick="sliders()">Hide/Show sliders</button>
+        <br>
+        <div id="sliders" style="display:none">
+            <h3>Click on the texts to change value.</h3>
+            <h3 onclick="setslid(6)" oninput="save=false" id="slidertextS" style="margin:0"></h3>
+            <input type="range" id="sliderS" min="0" max="256" value="48">
+            <h3 onclick="setslid(0)" oninput="save=false" id="slidertextA" style="margin:0"></h3>
+            <input type="range" id="sliderA" min="0" max="256" value="0"><button id="animbtA" class="imgb" onclick="anim(0)"><img id="anim0" src="../txtr/play.png"></button>
+            <h3 onclick="setslid(1)" oninput="save=false" id="slidertextB" style="margin:0"></h3>
+            <input type="range" id="sliderB" min="0" max="256" value="0"><button id="animbtB" class="imgb" onclick="anim(1)"><img id="anim1" src="../txtr/play.png"></button>
+            <h3 onclick="setslid(2)" oninput="save=false" id="slidertextC" style="margin:0"></h3>
+            <input type="range" id="sliderC" min="0" max="256" value="0"><button id="animbtC" class="imgb" onclick="anim(2)"><img id="anim2" src="../txtr/play.png"></button>
+            <h3 onclick="setslid(3)" oninput="save=false" id="slidertextD" style="margin:0"></h3>
+            <input type="range" id="sliderD" min="0" max="256" value="0"><button id="animbtD" class="imgb" onclick="anim(3)"><img id="anim3" src="../txtr/play.png"></button>
+            <h3 onclick="setslid(4)" oninput="save=false" id="slidertextE" style="margin:0"></h3>
+            <input type="range" id="sliderE" min="0" max="256" value="0"><button id="animbtE" class="imgb" onclick="anim(4)"><img id="anim4" src="../txtr/play.png"></button>
+            <h3 onclick="setslid(5)" oninput="save=false" id="slidertextF" style="margin:0"></h3>
+            <input type="range" id="sliderF" min="0" max="256" value="0"><button id="animbtF" class="imgb" onclick="anim(5)"><img id="anim5" src="../txtr/play.png"></button>
+        </div>
+        <button onclick="render()">Render</button><br>
+        <button onclick="controls.play()"><img id="play" src="../txtr/playaud.png"></button>
+        <button onclick="controls.stop()"><img src="../txtr/stop.png"></button>
+        <button onclick="controls.for()"><img src="../txtr/forward.png"></button>
+        <button onclick="controls.rew()"><img src="../txtr/rewind.png"></button>
+        <h3>Variables: v, i, t, dur, sr, a,b,c,d,e,f, getSample(x, channel), setSample(val, x, channel), sendSample(x, channel, info), recieveSample(x, channel), allCh(v, (val,channel)=>{code})</h3>
+        <h2 id="fps"></h1>
+        <h3>Saving/Loading (is connected to your clipboard/copying and pasting)</h3>
+        <button onclick="save.Psave()">Save preset</button>
+        <button onclick="save.Pload()">Load preset</button><br>
+        <button onclick="save.Csave()">Save combination</button>
+        <button onclick="save.Cload()">Load combination</button><br><br>
+        <button onclick="makewav()">Make WAV File</button>
+    </body>
+</html>

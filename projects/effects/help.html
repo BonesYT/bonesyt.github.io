@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Complex Fractal Editor Help</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            body{text-align:left}
+            h1{font-size:30px;}
+            h2{white-space:pre-wrap;font-size:15px}
+        </style>
+    </head>
+    <body>
+        <a href="index.html">To Main</a>
+        <h1>Help for Media Effect Editor</h1>
+        <h1>Variables (Image)</h1>
+        <h2>
+    x, y, i, t, ti, mx, my, v, getPixel(x, y, rgb|hsv|hsl|cymk|lab), a, b, c, d, e, f, sendPixel(x, y, info), receivePixel(as), setPixel(x, y, v, rgb|hsv|hsl|cymk|lab)
+    x = x position
+    y = y position
+    i = position ID
+    t = tick (load number)
+    ti = your time in ms
+    mx = mouse x position
+    my = mouse y position
+    v = pixel color data (depends on color space selected. do v[0] to v[3] to get red, green, blue, alpha in RGB.)
+
+    getPixel(x, y, colorspace (optional)) = gets color data on a specific pixel.
+    setPixel(x, y, v, colorspace (optional)) = replaces color at pixel to "v" variable.
+    sendPixel(x, y, info) = sends data to the pixel. will be stored in memory.
+    recievePixel(x, y) = recieves sent data for the pixel.
+
+    a, b, c, d, e, f = slider values
+        </h2>
+        <h1>Variables (Audio)</h1>
+        <h2>
+    v = sample data (do v[0] to get first channel (left), v[1] for second (right)) (also goes between -1 and 1)
+    i = sample/pixel position (at 48000 sample rate, every 48000 will be 1 second)
+    t = your time in ms
+    dur = audio duration in seconds (do "sr * dur" to get amount of samples)
+    sr = sample rate (audio quality)
+
+    getSample(id, channel) = gets sample value. (enter channel as -1 or blank to get all channels.)
+    setSample(value, id, channel) = sets sample value. (enter channel as -1 or blank to set the value on all channels.)
+    sendSample(id, channel, info) = sends data to the sample. will be stored in memory. (enter channel as -1 or blank for all channels.)
+    recieveSample(id, channel) = recieves sent data for the sample. (enter channel as -1 or blank for all channels.)
+
+    a, b, c, d, e, f = slider values
+        </h2>
+        <h1>Code object properties</h1>
+        <h2>
+    Construct:
+    {
+        a: 4,
+        b: 5
+    } // a and b are properties, 4 and 5 are their values.
+
+    effect = effect formula.
+    . Do () => {return whatever}
+    sliders = sliders info:
+    . name = Slider caption
+    . min = minimum value
+    . max = maximum falue
+    . step = value stepping (0 to disable, 1 (default) to never have decimals)
+    . restHidden = hides slider with this and all below it
+    . enum = Enumerate sliders for strings as numbers.
+    . . Do ["left", "middle", "right"]. Will not affect the slider variable in the code.
+    . example:
+    sliders: [
+        {name: "first slider", min: 0, max: 255, step: 2}
+        {name: "second slider", min: 0, max: 255}
+        {restHidden: true}
+    ]
+        </h2>
+        <h1>Global functions</h1>
+        <h2>
+    blend(x, y, z) = used for gradient between x and y (z is from 0 to 1)
+    allCh(array, v => code) = mapping array with function
+        </h2>
+        <h1>JavaScript value types</h1>
+        <h2>
+    strings:
+    . "test"
+    . 'test two'
+    . `things ${variable}`
+    . do \" \' or \` to let JS know its not the end of the string.
+    numbers:
+    . 0, 1, 2, 4, -1, -2, 3.4, 1e+200, 1e210, -2e10, 3e-4, Infinity, NaN
+    booleans: true, false
+    functions:
+    . default: function name(x, y, z) {/*code*/}, function (x, y, z) {/*code*/}
+    . arrow: (x, y, z) => {/*code*/}, x => x * 2
+    array:
+    . [3, 4, 5, 6, 7, "string lol"]
+    comments:
+    . // single line code
+    . /* multiline comment */
+        </h2>
+    </body>
+</html>

@@ -1,13 +1,15 @@
 save = {
     Psave() {
         ({
+            media: media,
             sliders: values[editing],
             animated: isanim[editing],
             slidvel: speed[editing],
-            color: color[editing],
+            color: media=='audio'?void 0:color[editing],
             effect: $('code').value,
             name: fn[editing]
         }).stringify().btoa().toClipboard()
+        saved=true
     },
     Pload() {
         EasyObj.clipb.get()
@@ -18,8 +20,12 @@ save = {
                 alert('This save code is invalid. (Decoding/Syntax Error) (try doing it again, might be because of the clipboard pop-up)')
                 return false
             }
-            if (confirm('Are you sure you want to load this code? Any unsaved changes will be discarded.')) {
-                try {
+            try {
+                if (a.media != media) {
+                    alert(`Error: This effect is not a ${media} type.`)
+                    return
+                }
+                if (confirm('Are you sure you want to load this code? Any unsaved changes will be discarded.')) {
                     $('sliderA').value = a.sliders[0]
                     $('sliderB').value = a.sliders[1]
                     $('sliderC').value = a.sliders[2]
@@ -28,23 +34,24 @@ save = {
                     $('sliderF').value = a.sliders[5]
                     isanim[editing] = a.animated
                     speed[editing] = a.slidvel
-                    $('color').value = a.color
+                    if (media=='image') $('color').value = a.color
                     $('code').value = a.effect
                     fn[editing] = a.name || 'Untitled'
                     
                     list.updbt()
-                    tick = 0
                     updatesliders()
+                    updslidmod()
                     updatef()
-                    ctx.clearRect(0, 0, width, height)
-                } catch {
-                    alert('This save code is invalid. (Reference Error)')
                 }
+            } catch (e) {
+                alert('This save code is invalid. (Reference/Type Error)')
+                console.log(e)
             }
         }, 33)
     },
     Csave() {
         ({
+            media: media,
             eff: {
                 names: fn,
                 codes: fs
@@ -54,12 +61,13 @@ save = {
                 animated: isanim,
                 velocity: speed
             },
-            width: width,
-            height: height,
-            colors: color,
-            img: select,
-            tick: tick,
+            width: media=='audio'?void 0:width,
+            height: media=='audio'?void 0:height,
+            colors: media=='audio'?void 0:color,
+            media: select,
+            tick: media=='audio'?void 0:tick,
         }).stringify().btoa().toClipboard()
+        saved=true
     },
     Cload() {
         EasyObj.clipb.get()
@@ -70,13 +78,19 @@ save = {
                 alert('This save code is invalid. (Decoding/Syntax Error) (try doing it again, might be because of the clipboard pop-up)')
                 return false
             }
-            if (confirm('Are you sure you want to load this code? Any unsaved changes will be discarded.')) {
-                try {
-                    tick = a.tick
-                    select = a.img
-                    color = a.colors
-                    width = a.width
-                    height = a.height
+            try {
+                if (a.media != media) {
+                    alert(`Error: This save is not a ${media} type.`)
+                    return
+                }
+                if (confirm('Are you sure you want to load this code? Any unsaved changes will be discarded.')) {
+                    if (media=='image') {
+                        tick = a.tick
+                        color = a.colors
+                        width = a.width
+                        height = a.height
+                    }
+                    select = a.media ?? a.img
                     fn = a.eff.names
                     fs = a.eff.codes
                     values = a.slid.val
@@ -86,15 +100,14 @@ save = {
             
                     list.upd()
                     list.updbt()
-                    updatef()
-                    tick = 0
                     updatesliders()
+                    updslidmod()
                     updatef()
-                    ctx.clearRect(0, 0, width, height)
 
-                } catch {
-                    alert('This save code is invalid. (Reference Error)')
                 }
+            } catch (e) {
+                alert('This save code is invalid. (Reference/Type Error)')
+                console.log(e)
             }
         }, 33)
     }

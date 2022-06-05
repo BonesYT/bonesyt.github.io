@@ -15,9 +15,11 @@ var list = {
         list.upd()
         list.updbt()
         updatef()
+        save=false
     },
     rem() {
         if (f.length > 1) {
+            $('code').value = fs[editing + 1 == f.length ? editing - 1 : editing + 1]
             if (confirm('Are you sure you want to delete this effect? You cannot undo this action.')) {
                 f.splice(editing, 1)
                 fs.splice(editing, 1)
@@ -32,6 +34,7 @@ var list = {
             list.upd()
             list.updbt()
             updatef()
+            save=false
         } else {
             alert('You cannot have no effects! Instead, just press the power button.')
         }
@@ -56,6 +59,7 @@ var list = {
             speed.splice(editing, 0, F)
             color.splice(editing, 0, g)
             allow.splice(editing, 0, h)
+            save=false
         }
         list.updbt()
         updatef()
@@ -80,6 +84,7 @@ var list = {
             speed.splice(editing, 0, F)
             color.splice(editing, 0, g)
             allow.splice(editing, 0, h)
+            save=false
         }
         list.updbt()
         updatef()
@@ -107,9 +112,9 @@ var list = {
         $('color').value = color[editing]
         for (var i = 0; i < 6; i++) {
             if (isanim[editing][i]) {
-                $('anim' + i).src = 'textures/pause.png'
+                $('anim' + i).src = '../txtr/pause.png'
             } else {
-                $('anim' + i).src = 'textures/play.png'
+                $('anim' + i).src = '../txtr/play.png'
             }
         }
     },
@@ -137,6 +142,7 @@ var list = {
     allow() {
         allow[editing] = !allow[editing]
         list.updbt()
+        save=false
     }
 }
 

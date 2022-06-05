@@ -3,13 +3,14 @@ function $(e) {
 }
 
 var imgl = ['BADOOF','Discord[error]','DISGUISED','Lines','RGB spiral','sadcube','Thumbnail44','Website preview','youtube (v2)','ytpost2','mrIncredible','oof','[TEST]'],
-    imgf = imgl.map(v => `images/${v}.png`), imgc,
+    imgf = imgl.map(v => `examples/${v}.png`), imgc,
     select = 11,
     mouseX, mouseY,
     canvas = $('canvas'),
     ctx = canvas.getContext('2d'),
     width, height,
-    img, debug = document.location.href[0] == 'f', data, slidershow = false,
+    slidnames = [], min=[[],[],[],[],[],[]], max=[[],[],[],[],[],[]], slidenum = [],
+    img, debug = document.location.href[0] == 'f', data, before, before2, slidershow = false,
     f = [()=>{}], fs = ['return v'], tick = 0, playing = false, int, err = false,
     values = [[0,0,0,0,0,0]], before, change = true, size = 3,
     exs = {
@@ -75,7 +76,7 @@ return v
 'Threshold': [128]
     }, isanim = [[false].repeat(6)], speed = [48], gif, gifst = false,
     editing = 0, fn = ['Untitled'], color = ['RGB'], allow = [true],
-    send = [], B,C,D,E,F, set = []
+    send = [], B,C,D,E,F, set = [], media = 'image', saved = true, j
 
 ;(()=>{
 var a
@@ -111,16 +112,18 @@ function selectimg(id) {
 selectimg(select)
 
 function getPixel(x, y, typ='rgb') {
+    var a = j == 0 ? data.data : before
     B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
-    C = [before[B * 4], before[B * 4 + 1], before[B * 4 + 2], before[B * 4 + 3]]
+    C = [j[B * 4], j[B * 4 + 1], j[B * 4 + 2], j[B * 4 + 3]]
     return typ=='rgb'?C:conv(C,typ)
 }
 function sendPixel(x, y, info) {
     B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
     send[B] = info
 }
-function receivePixel(i=0) {
-    return send[i]
+function receivePixel(x=0, y=0) {
+    B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
+    return send[B]
 }
 function setPixel(x, y, v, typ='rgb') {
     B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
@@ -157,20 +160,20 @@ function ontick() {
     }
 
     data = ctx.getImageData(0, 0, width, height)
+    before2 = [], before = undefined
 
     size = typ.length
 
     var i, q
     try {
-        for (var j = 0; j < f.length; j++) {
+        for (j = 0; j < f.length; j++) {
             if (allow[j]) {
                 q = f[j]
-                before = [...data.data]
                 send = []; set = []
                 for (i = 0; i < canvas.width * canvas.height; i++) {
                     c = [data.data[i * 4], data.data[i * 4 + 1], data.data[i * 4 + 2], data.data[i * 4 + 3]]
                     c = q(i % canvas.width, Math.floor(i / canvas.width), i, tick, time, mouseX, mouseY, typ[j]=='rgb'?c:conv(c,typ[j]),
-                          values[j][0], values[j][1], values[j][2], values[j][3], values[j][4], values[j][5])
+                          values[j][0], values[j][1], values[j][2], values[j][3], values[j][4], values[j][5]).effect()
                     if (typ[j] != 'rgb') c = conv(c, typ[j], 1)
                     if (typeof c == 'number') {
                         c = [(c >> 16) & 0xff,
@@ -181,6 +184,10 @@ function ontick() {
                     data.data[i * 4 + 1] = c[1]
                     data.data[i * 4 + 2] = c[2]
                     data.data[i * 4 + 3] = c[3]
+                    before2.push(c[0])
+                    before2.push(c[1])
+                    before2.push(c[2])
+                    before2.push(c[3])
                 }
                 set.forEach(v => {
                     data.data[v[0] * 4 + 0] = v[1][0]
@@ -188,6 +195,8 @@ function ontick() {
                     data.data[v[0] * 4 + 2] = v[1][2]
                     data.data[v[0] * 4 + 3] = v[1][3]
                 })
+                before = before2
+                before2 = []
             }
         }
         err = false
@@ -228,6 +237,10 @@ function sliders() {
         $('sliders').style.display = 'none'
     }
 }
+function getslid(i) {
+    return slidenum[i] ? slidenum[i][Math.floor(values[editing][i])]
+                       : values[editing][i]
+}
 function updatesliders() {
     values[editing][0] = $('sliderA').value.toNumber()
     values[editing][1] = $('sliderB').value.toNumber()
@@ -236,16 +249,69 @@ function updatesliders() {
     values[editing][4] = $('sliderE').value.toNumber()
     values[editing][5] = $('sliderF').value.toNumber()
     speed[editing] = $('sliderS').value.toNumber()
-    $('slidertextA').innerHTML = 'Slider A: ' + values[editing][0]
-    $('slidertextB').innerHTML = 'Slider B: ' + values[editing][1]
-    $('slidertextC').innerHTML = 'Slider C: ' + values[editing][2]
-    $('slidertextD').innerHTML = 'Slider D: ' + values[editing][3]
-    $('slidertextE').innerHTML = 'Slider E: ' + values[editing][4]
-    $('slidertextF').innerHTML = 'Slider F: ' + values[editing][5]
+    $('slidertextA').innerHTML = slidnames[0] + ': ' + getslid(0)
+    $('slidertextB').innerHTML = slidnames[1] + ': ' + getslid(1)
+    $('slidertextC').innerHTML = slidnames[2] + ': ' + getslid(2)
+    $('slidertextD').innerHTML = slidnames[3] + ': ' + getslid(3)
+    $('slidertextE').innerHTML = slidnames[4] + ': ' + getslid(4)
+    $('slidertextF').innerHTML = slidnames[5] + ': ' + getslid(5)
     $('slidertextS').innerHTML = 'Slider Animation Velocity: ' + speed
-    color[editing] = $('color').value
+}
+function updslidmod() {
+    var a = f[editing]().sliders,
+        l = 'ABCDEF',
+        h = false, i
+
+    min = Array(f.length).fill(0).map(v=>Array(6).fill(0))
+    max = Array(f.length).fill(0).map(v=>Array(6).fill(256))
+
+    if (a) {
+        for (i = 0; i < 6; i++) {
+            if (a[i]) {
+                slidnames[i] = a[i].name || 'Slider ' + l[i]
+                $('slider'+l[i]).min = a[i].min ?? 0
+                $('slider'+l[i]).max = a[i].max ?? 256
+                $('slider'+l[i]).step = a[i].step ?? 1
+                if (a[i].restHidden) h = true
+                min[editing][i] = a[i].min ?? 0
+                max[editing][i] = a[i].max ?? 256
+            } else {
+                slidnames[i] = 'Slider ' + l[i]
+                $('slider'+l[i]).min = 0
+                $('slider'+l[i]).max = 256
+                $('slider'+l[i]).step = 1
+            }
+            if (h) {
+                $('slider'+l[i]).style.display = 'none'
+                $('slidertext'+l[i]).style.display = 'none'
+                $('animbt'+l[i]).style.display = 'none'
+            } else {
+                $('slider'+l[i]).style.display = ''
+                $('slidertext'+l[i]).style.display = ''
+                $('animbt'+l[i]).style.display = ''
+            }
+        }
+    } else {
+        for (var i = 0; i < 6; i++) {
+            slidnames[i] = 'Slider ' + l[i]
+            $('slider'+l[i]).style.display = ''
+            $('slidertext'+l[i]).style.display = ''
+            $('animbt'+l[i]).style.display = ''
+        }
+    }
+    for (let s = 0; s < f.length; s++, s == editing ? s++ : 0) {
+        a = f[s]().sliders
+        if (!a) continue
+        for (var i = 0; i < 6; i++) {
+            if (a[i]) {
+                min[s][i] = a[i].min ?? 0
+                max[s][i] = a[i].max ?? 256
+            }
+        }
+    }
 }
 setInterval(updatesliders, 33)
+addEventListener('load',()=>setInterval(updslidmod, 33))
 
 function loadex() {
     $('code').value = exs[$('exopt').value]
@@ -264,16 +330,26 @@ function loadex() {
 function anim(id) {
     isanim[editing][id] = !isanim[editing][id]
     if (isanim[editing][id]) {
-        $('anim' + id).src = 'textures/pause.png'
+        $('anim' + id).src = '../txtr/pause.png'
     } else {
-        $('anim' + id).src = 'textures/play.png'
+        $('anim' + id).src = '../txtr/play.png'
     }
+    saved=false
 }
+function blend(x, y, z) {
+    return x * (1 - z) + y * z
+}
+function allCh(input, f=(v,i,a)=>{}) {
+    return input.map(f)
+}
+
 setInterval(() => {
+    var b, i
     for (var a = 0; a < f.length; a++) {
-        for (var i = 0; i < 6; i++) {
+        for (i = 0; i < 6; i++) {
+            b = blend(min[a][i], max[a][i], Math.sin(tick / 64 * (speed[editing] / 14) + i * (Math.PI * 2 / 6) + a) / 2 + 0.5)
             if (a == editing) {
-                if (isanim[a][i]) $('slider' + (i + 65).fromCharCode()).value = Math.sin(tick / 64 * (speed[editing] / 14) + i * (Math.PI * 2 / 6) + a) * 128 + 128
+                if (isanim[a][i]) $('slider' + (i + 65).fromCharCode()).value = Math.sin(tick / 64 * (speed[editing] / 14) + i * (Math.PI * 2 / 6) + a) * 0.5 + 0.5
             } else {
                 if (isanim[a][i]) values[a][i] = Math.sin(tick / 64 * (speed[editing] / 14) + i * (Math.PI * 2 / 6) + a) * 128 + 128
             }
@@ -285,7 +361,7 @@ function makegif() {
     if (gifst) {
         gifst = false
         gif.finish()
-        gif.download(prompt('4/4: Enter file name') || 'Custom Effects GIF')
+        gif.download(prompt('4/4: Enter file name') || 'Custom Image Effects')
         $('gif').innerHTML = 'Make GIF File'
     } else {
         gif = new GIFEncoder()
@@ -307,11 +383,19 @@ function makegif() {
     }
 }
 
+function setslid(i) {
+    i == 6
+    ? $('sliderS').value = prompt('What would you like to set this slider to?') || 48
+    : $('slider' + 'ABCDEF'[i]).value = prompt('What would you like to set this slider to?') || 0
+}
+
 function updatef() {
-    fs[editing] = $('code').value
     try {
         f = fs.map(v => {
-            return new Function('x','y','i','t','ti','mx','my','v','a','b','c','d','e','f', v)
+            var a = v
+            if (a[0] != '{') a = `return{effect:()=>{\n${a}\n}}`
+            else a = 'return ' + a
+            return new Function('x','y','i','t','ti','mx','my','v','a','b','c','d','e','f', a)
         })
     } catch (e) {
         if (err != e.toString()) console.log(e.toString())
@@ -336,4 +420,6 @@ function file(e, t) {
             img = imgc
         }
     }
-};
+}
+
+window.onbeforeunload = () => !saved || undefined

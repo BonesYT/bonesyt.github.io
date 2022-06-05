@@ -52,6 +52,11 @@ body {
 	border-color: rgb(48, 72, 119);
 	color: black;
 }
+.min-button {
+	background-color: rgb(28, 102, 199);
+	border-color: rgb(23, 46, 92);
+	color: black;
+}
 .menu-progress-2 {
 	background-color: rgb(116, 246, 255);
 	border-color: rgb(47, 149, 189);

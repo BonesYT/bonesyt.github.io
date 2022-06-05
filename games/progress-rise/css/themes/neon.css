@@ -50,10 +50,9 @@ body {
 .tabcontent {
 	background-color: black;
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
-.menu-button {
+.menu-button, .min-button {
 	background-color: black;
 	border-radius: 0;
 	border-width: 2px;

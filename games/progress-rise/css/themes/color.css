@@ -10,7 +10,6 @@ body {
 	    rgb(21, 100, 213) 100%
 	);
 	background-attachment: fixed;
-	height: auto;
 	min-height: 100%;
 }
 .scr-options {
@@ -50,6 +49,11 @@ body {
 .menu-progress {
 	background-color: rgb(27, 192, 123);
 	border-color: rgb(25, 95, 66)
+}
+.min-button {
+	background-color: rgb(171, 238, 201);
+	border-color: rgb(40, 110, 61);
+	color: black;
 }
 .menu-progress-2 {
 	background-color: rgb(116, 246, 255);

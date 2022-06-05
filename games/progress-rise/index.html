@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="main">
-            <img src="images/logo.png" class="logo">
+            <img id="logo" src="images/logo.png" class="logo">
             <h1 class="layershow">Layers</h1>
             <button class="menu-button menu-progress" onclick="tab('progress')">Progress bars</button>
             <div class="layershow" style="display: none">
@@ -37,7 +37,7 @@
         </div>
         <div class="gamescreen">
             <div class="news">
-                <h1 id="newstext">News text</h1>
+                <h1 id="newstext" onclick="lol()">News text</h1>
             </div>
             <div id="tabs">
                 <div id="progress" class="tabcontent scr-progress">
@@ -51,12 +51,12 @@
                     <button id="next-bar" onclick="NextBar(0)">Buy next bar</button>
                     <div id="progressbar-place-0">
                         <div id="progressbar-copy" class="progress" style="display:none">
-                            <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="images/increment.png" class="pb-img"></button>
                             <div class="pb-container select" id="prog-cont" style="background-image: linear-gradient(rgb(161, 255, 161) 0%,rgb(68, 255, 132) 100%);outline: 4px solid rgb(8, 77, 32);">
                                 <div class="pb-prog select" id="prog-bar" style="width:20%;background-image: linear-gradient(rgb(40, 183, 89) 0%,rgb(24, 106, 52) 100%);">
                                     <h5 class="pb-text select" id="prog-text"></h5>
                                 </div>
                             </div>
+                            <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="images/increment.png" class="pb-img"></button>
                             <div class="pb-level select" id="prog-level" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); outline: rgb(8, 77, 32) solid 4px;">Level 3777343434</div>
                             <button class="pb-buy select" id="prog-buy" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); border-color: rgb(8, 77, 32)"></button>
                         </div>
@@ -208,5 +208,6 @@
                 </div>
             </div>
         </div>
+        <button class="min-button" onclick="min()" id="minbutton">⇦</button>
     </body>
 </html>

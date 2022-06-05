@@ -16,7 +16,8 @@ var config = {
     news: {
         text: '',
         pos: -820
-    }
+    },
+    min: false
 }
 
 console.log('Only use console for testing. Please don\'t cheat.')
@@ -153,6 +154,28 @@ function setTheme(theme) {
     game.stats.theme = theme
 }
 
+function min() {
+    var a = document.querySelector('.main')
+    var b = document.querySelector('.gamescreen')
+    var c = document.querySelectorAll('.menu-button'),
+        d = [game.stats.layer==0?'Progress Bars':'SURFACE Layer','SKY Layer','Upgrades','Statistics','Achivements','Guide','Options'],
+        e = [game.stats.layer==0?'PB':'L1','L2','Upg','Sta','Ach','Gui','Opt']
+    if (config.min) {
+        a.className = a.className.substr(0, a.className.length - 4)
+        b.className = b.className.substr(0, b.className.length - 4)
+        $('minbutton').innerHTML = '⇦'
+        c.forEach((v,i) => v.innerHTML = d[i])
+        $('logo').src = 'images/logo.png'
+    } else {
+        a.className += ' min'
+        b.className += ' min'
+        $('minbutton').innerHTML = '⇨'
+        c.forEach((v,i) => v.innerHTML = e[i])
+        $('logo').src = 'images/logomin.png'
+    }
+    config.min = !config.min
+}
+
 //ExpantaNum JSON fix (Infinity turns into null if you use JSON.stringify)
 function nullfix(i, o) {
     try {
@@ -214,16 +237,4 @@ function playSFX(src) {
     var a = new Audio(src)
     a.volume = game.stats.vol.sfx
     a.play()
-}
-
-function newstick() {
-    config.news.pos -= 3
-    if (config.news.pos < -820) {
-        config.news.text = config.news.msg[Math.floor(Math.random() * config.news.msg.length)]
-            .replace('$points', ts(game.points))
-            .replace('$progL1', $('normalpb-text-prestige').innerHTML)
-        $('newstext').innerHTML = config.news.text
-        config.news.pos += 1640
-    }
-    $('newstext').style.transform = `translateX(${config.news.pos}px)`
 }

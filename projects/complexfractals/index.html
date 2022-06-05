@@ -12,6 +12,7 @@
         <script src="https://www.webrtc-experiment.com/screenshot.js"></script>
     </head>
     <body>
+        <a href="help.html">Help</a>
         <h1>Complex Fractal Editor</h1>
         <h3>Credits to infusion for <a href="https://github.com/infusion/Complex.js" target="_blank">complex.js</a>, and muaz-khan for <a href="https://github.com/muaz-khan/RecordRTC" target="_blank">RecordRTC.js</a></h3>
         <h3 id="oper"></h3>
@@ -67,7 +68,7 @@ return huetorgb(i * speed + off)
             <button onclick="stop()">Stop</button>
             <button onclick="reset()">Reset timer</button>
             <button onclick="ontick()">Run</button>
-            <h3>Variables: c, z, t, ti, re, im, m, mr, mi, x, y, id, mx, my, i, it, jr, ji</h3>
+            <h3>Variables: c, z, t, ti, re, im, m, mr, mi, x, y, id, mx, my, i, it, jr, ji, b</h3>
     
             <button onclick="tab(2)" class="tabbt">Julia config</button><br><br>
             <div id="t2" class="hidden">
@@ -80,13 +81,15 @@ return huetorgb(i * speed + off)
             <div id="t1" class="hidden">
                 Position Real <input type="number" id="px" value="0" class="short">
                 Imag <input type="number" id="py" value="0" class="short"><br>
-                Magnitude <input type="number" id="zo" value="0.25" min="1e-300">
-                <br>
+                Magnitude <input type="number" id="zo" value="0.25" min="1e-300"><br>
+                Starting point Real <input type="number" id="sr" value="0">
+                Imag <input type="number" id="si" value="0"><br>
                 Iterations <input type="number" id="iter" value="25"><br>
                 Bailout <input type="number" id="bail" value="4"><br>
                 Color Speed <input type="number" id="colsp" value="5"><br>
                 Color Shift <input type="number" id="colsh" value="0"><br>
                 Moving Speed <input type="number" id="movesp" value="1"><br>
+                <button onclick="onchurn()" id="churn">Churn graph</button>
             </div>
 
             <button onclick="tab(4)" class="tabbt">Data config</button><br><br>

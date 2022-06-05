@@ -1,6 +1,6 @@
 $ = e => document.getElementById(e)
 
-var width, height,
+var width = 256, height = 256, size = 256,
     mouseX, mouseY, mouseR, mouseI, mouseX2, mouseY2,
     zoom = 0.25, px = -2, py = -2,
     canvas = $('canvas'),
@@ -8,9 +8,10 @@ var width, height,
     it, cs, ca, ju = false, bail,
     f, fm, fc, fci, t = 0, play = false,
     press = {}, ins = false, max = 0, audio, dif,
+    motion = true, sr, si,
     
     memory = {}, mupd = false,
-    optab = [0,0,0], wave, int, isin = 0
+    optab = [0,0,0], wave, int, isin = 0,
 
     r = {
         start:void 0,
@@ -18,7 +19,18 @@ var width, height,
         step:0,
         v:void 0,
         is:false
-    }
+    },
+    churn = {
+        on: false,
+        maxiter: 0,
+        iter: 0,
+        anim: false,
+        data: [], // [[real, imag], ...]
+        tuto: true,
+        stab: false,
+        qual: 1
+    },
+    saved = true
 
 ;(()=>{
 
@@ -35,9 +47,10 @@ var width, height,
     'code', 'mcode', 'cocode', 'cicode',
     'memory',
     'isjulia', 'jureal', 'juimag',
-    'iter', 'bail', 'ex'
+    'iter', 'bail', 'ex',
+    'sr', 'si', 'width', 'height'
 ].forEach(v => {
-    $(v).addEventListener('onchange', () => memory = {})
+    $(v).addEventListener('input', () => (memory = {}, churngen(), motion = true, saved = false))
 })
 
 
@@ -95,6 +108,13 @@ function its(x, y) { // the opposite of above
     ]
 }
 
+function sti2(x, y) { // sti but center is 0
+    return [
+        x / (zoom * size),
+        y / (zoom * size)
+    ]
+}
+
 function ontick() {
     try {
 
@@ -121,7 +141,7 @@ function ontick() {
         canvas.width = width
         canvas.height = height
     
-        var a = width * height, sx, sy, x, y, c, z, i, I, rgb, d, b
+        var a = width * height, sx, sy, x, y, c, z, i, I, II, rgb, d, b
             ti = Date.now()
     
         size = Math.min(width, height)
@@ -131,11 +151,10 @@ function ontick() {
         ju = $('isjulia').checked
         var m = new Complex(mouseR, mouseI),
             jr =1* $('jureal').value, ji =1* $('juimag').value
+
+        sr =1* $('sr').value, si =1* $('si').value
     
         var img = ctx.getImageData(0, 0, width, height)
-    
-        c = new Complex
-        z = new Complex
     
         var A = Math.ceil(
                      Math.log(size/(1/zoom))
@@ -147,74 +166,125 @@ function ontick() {
             mupd = true
         }
 
-        function dist() {
-            d = Math.sqrt(z.re ** 2 + z.im ** 2)
+        c = new Complex
+        z = new Complex
+
+        function dist(z) {
+            return Math.sqrt(z.re ** 2 + z.im ** 2)
+        }
+        function cbail(z) { // check bailout
+            return cb ? f(z,c,t,ti,x,y,i,m,mouseR,mouseI,sx,sy,mouseX,mouseY,I,it,jr,ji,b).bailout : dist(z) < bail / 2
         }
 
         var M = $('memory').checked,
             C = Number($('itcomp').value),
             FM = $('enabm').checked,
             oo = press.o ? 2000 : 50,
-            on = f(z,c,t,ti,x,y,i,m,mouseR,mouseI,sx,sy,mouseX,mouseY,I,it,jr,ji),
-            ob
-        on = on.constructor == Object
-    
-        for (i = 0; i < a; i++) {
-            sx = i % width
-            sy = Math.floor(i / width)
-    
-            x = sx / (zoom * size) + px
-            y = sy / (zoom * size) + py
-            if (ju) {
-                z.re = x, z.im = y
-                c.re = jr, c.im = ji
-                if (FM) z = fm(c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, it)
-            } else {
-                c.re = x, c.im = y
-                if (FM) c = fm(c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, it)
-                z = c
-            }
-            if (on) {
-                ob = f(z,c,t,ti,x,y,i,m,mouseR,mouseI,sx,sy,mouseX,mouseY,I,it,jr,ji).onpixel
-                if (ob) {
-                    z = ob.z ?? z
-                    c = ob.c ?? c
-                }
-            }
-            dist()
-    
-            if (M) I = memory[tomem(x,y)]
-            if (I == undefined | !M) {
-                for (I = 0; I < it & d < bail / 2; I++) {
-                    b = f(z, c, t, ti, x, y, i, m, mouseR, mouseI, sx, sy, mouseX, mouseY, I, it, jr, ji)
-                    z = C == '1' ? b.def || b : b.multi
-                    dist()
-                }
-                if (C != '1') {
-                    while (d >= bail / 2) {
-                        z = f(z, c, t, ti, x, y, i, m, mouseR, mouseI, sx, sy, mouseX, mouseY, I, it, jr, ji).undo
-                        dist()
-                    }
-                }
-            }
-    
-            rgb = I == it
-            ? rgb = fci(z, c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, I, it, cs, ca)
-            : rgb = fc(z, c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, I, it, cs, ca)
+            OB = f(z,c,t,ti,x,y,i,m,mouseR,mouseI,sx,sy,mouseX,mouseY,I,it,jr,ji,b),
+            ob, on = OB.__proto__ == Object.prototype, cb = OB.bailout != undefined
 
-            if (typeof rgb == "number") rgb = [Math.floor(rgb/65536)%256,Math.floor(rgb/256)%256,Math.floor(rgb)%256,255]
-    
-            if (M & mupd) memory[tomem(x,y)] = I
-    
-            img.data[i * 4    ] = rgb[0]
-            img.data[i * 4 + 1] = rgb[1]
-            img.data[i * 4 + 2] = rgb[2]
-            img.data[i * 4 + 3] = rgb[3]
+        if (churn.on) {
+            churn.iter = churn.maxiter
+            churngen()
         }
     
-        mupd = false
-        ctx.putImageData(img, 0, 0)
-        t++
+        if (motion) {
+
+            for (i = 0; i < a; i++) {
+                sx = i % width
+                sy = Math.floor(i / width)
+        
+                x = sx / (zoom * size) + px
+                y = sy / (zoom * size) + py
+
+                if (ju) {
+                    z.re = x, z.im = y
+                    c.re = jr, c.im = ji
+                    if (FM) z = fm(c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, it)
+                } else {
+                    c.re = x, c.im = y
+                    if (FM) c = fm(c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, it)
+                    z = new Complex(sr, si)
+                }
+
+                if (on) {
+                    ob = f(z,c,t,ti,x,y,i,m,mouseR,mouseI,sx,sy,mouseX,mouseY,I,it,jr,ji).onpixel
+                    if (ob) {
+                        z = ob.z ?? z
+                        c = ob.c ?? c
+                    }
+                }
+
+                dist(z)
+        
+                if (M) I = memory[tomem(x,y)]
+                if (I == undefined | !M) {
+
+                    for (I = 0; I < it & cbail(z); I++) {
+                        b = f(z, c, t, ti, x, y, i, m, mouseR, mouseI, sx, sy, mouseX, mouseY, I, it, jr, ji, b)
+                        z = C == '1' ? b.def || b : b.multi
+                        d = dist(z)
+                    }
+
+                    if (C != '1') {
+                        while (!cbail(z)) {
+                            z = f(z, c, t, ti, x, y, i, m, mouseR, mouseI, sx, sy, mouseX, mouseY, I, it, jr, ji, b).undo
+                            d = dist(z)
+                        }
+                    }
+
+                    if (churn.on) {
+                        var cx=0,cy=0, cc,zz, cq=churn.qual
+                        function ite() {
+                            zz=new Complex(sr, si)
+                            for (II = 0; II < churn.iter; II++) {
+                                b = f(zz, cc, t, ti, x, y, i, m, mouseR, mouseI, sx, sy, mouseX, mouseY, II, it, jr, ji, b)
+                                zz = on ? b.def : b
+                            }
+                            churn.data[
+                                Math.floor(sx * cq + cx) % Math.floor(width * cq) + Math.floor(sy * cq + cy) * Math.floor(width * cq)
+                            ] = [zz.re, zz.im]
+                        }
+
+                        if (cq > 1) {
+                            for (var ci=0; ci<cq**2; ci++) {
+                                cx = ci%3, cy = Math.floor(ci/3)
+                                cc = c.add(sti2(cx/cq, cy/cql))
+                                ite()
+                            }
+                        } else if (sx % 1/cq == 0 & sy % 1/cq == 0) {
+                            cc = new Complex(c)
+                            ite()
+                        }
+                    }
+
+                }
+        
+                rgb = I == it
+                ? rgb = fci(z, c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, I, it, cs, ca)
+                : rgb = fc(z, c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, I, it, cs, ca)
+    
+                if (typeof rgb == "number") rgb = [Math.floor(rgb/65536)%256,Math.floor(rgb/256)%256,Math.floor(rgb)%256,255]
+        
+                if (M & mupd) memory[tomem(x,y)] = I
+        
+                img.data[i * 4    ] = rgb[0]
+                img.data[i * 4 + 1] = rgb[1]
+                img.data[i * 4 + 2] = rgb[2]
+                img.data[i * 4 + 3] = rgb[3]
+            }
+        
+            mupd = false
+            ctx.putImageData(img, 0, 0)
+            t++
+
+            copy = ctx.getImageData(0, 0, width, height)
+
+            motion = false
+
+        } else {
+            ctx.putImageData(copy, 0, 0)
+        }
 
         // iteration path
         if (press.i | press.o & !r.is) {
@@ -228,9 +298,9 @@ function ontick() {
                 z.re = mouseR, z.im = mouseI
                 c.re = jr, c.im = ji
             } else {
-                z.re = mouseR, z.im = mouseI
-                if (FM) c = fm(c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, it)
+                z = new Complex(sr, si)
                 c.re = mouseR, c.im = mouseI
+                if (FM) c = fm(c, t, ti, x, y, m, mouseR, mouseI, sx, sy, i, mouseX, mouseY, it)
             }
 
             wave = []
@@ -277,6 +347,25 @@ function ontick() {
             ctx.strokeText(`Zoom: ${(zoom * 4).toStringFix()}`, 5, 20, 2)
         }
 
+        if (churn.on) {
+            churn.data.forEach((v,i) => {
+                x = i % (width * churn.qual)
+                y = Math.floor(i / (width * churn.qual))
+
+                a = its(v[0], v[1])
+
+                ctx.fillStyle = `rgb(0,${
+                    (v[0] / bail + 0.5) * 256
+                },${
+                    (v[1] / bail + 0.5) * 256
+                })`
+
+                ctx.beginPath()
+                ctx.arc(a[0], a[1], 4, 0, 2 * Math.PI)
+                ctx.fill()
+            })
+        }
+
     } catch (e) {
 
         ctx.fillStyle = '#000'
@@ -290,27 +379,27 @@ function ontick() {
 }
 
 function control() {
-    if (press.arrowleft) {
+    if (press.arrowleft) {motion=true
         px -= 1 / zoom / 16 * $('movesp').value
         $('px').value = px + (1/zoom)/2
-    } if (press.arrowright) {
+    } if (press.arrowright) {motion=true
         px += 1 / zoom / 16 * $('movesp').value
         $('px').value = px + (1/zoom)/2
-    } if (press.arrowup) {
+    } if (press.arrowup) {motion=true
         py -= 1 / zoom / 16 * $('movesp').value
         $('py').value = py + (1/zoom)/2
-    } if (press.arrowdown) {
+    } if (press.arrowdown) {motion=true
         py += 1 / zoom / 16 * $('movesp').value
         $('py').value = py + (1/zoom)/2
     }
 
-    if (press.q) {
+    if (press.q) {motion=true
         var z = 1/zoom
         zoom *= 1.07 ** $('movesp').value
         px += (z - 1/zoom) / 2
         py += (z - 1/zoom) / 2
         $('zo').value = zoom
-    } if (press.z) {
+    } if (press.z) {motion=true
         var z = 1/zoom
         zoom /= 1.07 ** $('movesp').value
         px += (z - 1/zoom) / 2
@@ -318,7 +407,7 @@ function control() {
         $('zo').value = zoom
     }
 
-    if (press.j) {
+    if (press.j) {motion=true
         $('isjulia').checked = true
         $('jureal').value = mouseR
         $('juimag').value = mouseI
@@ -371,6 +460,7 @@ return c.pow(p)`
 }`
     }
     $('ex').value = 'n'
+    saved = false
 
 }
 
@@ -491,6 +581,52 @@ function render() {
     r.step = (r.step + 1) % 4
 }
 
+function onchurn() {
+    if (churn.on) {
+        churn.on = false
+        $('churn').innerHTML = 'Churn graph'
+        motion = true
+    } else {
+        if (churn.tuto) var A = confirm('Churn graph: Places dots at pixels on the fractal, and make them move depending on the formula and '
+                                      + 'their Z position. Each dot will have different colors.\nPress OK to not show this again.')
+        churn.tuto = false
+        var a = prompt('Make this an animation? 0 for false, 1 for true.', 0)
+        if (!a) return
+        a = a == '1' ? true : false
+        var i = prompt(a ? 'Set maximum churn iteration for the animation. Blank for 10'
+                         : 'Set churn iteration count. Blank for 100', a ? 10 : 100)
+        if (!i) return
+        i *= 1 // convert to number
+        var c = prompt('Enter dot quality/frequency. x = x² per pixel. Enter blank for default (1).', 1)
+        if (!c) return
+        c *= 1
+        var s = prompt('Make stable part of the fractal highlighted? 0 for false, 1 for true.', 0)
+        if (!s) return
+        s = s == '1' ? true : false
+        
+        if (c >= 1) c = Math.floor(c)
+        else c = 1 / Math.floor(1 / c)
+
+        churn.on = true
+        churn.anim = a
+        churn.maxiter = i
+        churn.qual = c
+        churn.stab = s
+        motion = true
+        
+        churngen()
+        $('churn').innerHTML = 'Disable churn graph'
+    }
+}
+function churngen() {
+    churn.data = []
+    var x
+    for (var y = 0; y < height * churn.qual; y++)
+    for (x = 0; x < width * churn.qual; x++) {
+        churn.data.push(sti(x / churn.qual, y / churn.qual))
+    }
+}
+
 floatFix = function (x, i=12) { // fixes precision
     return Math.round(x * 10 ** i) / 10 ** i
 }
@@ -555,6 +691,7 @@ function save() {
     }
 
     $('scode').value = btoa(JSON.stringify(o))
+    saved = true
 }
 
 function load() {
@@ -585,3 +722,5 @@ function load() {
         alert(`There was an error importing save code.\n\n${e.stack}`)
     }
 }
+
+window.onbeforeunload = () => !saved || undefined

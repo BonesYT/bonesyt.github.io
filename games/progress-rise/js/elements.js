@@ -10,10 +10,10 @@ function placeBars(layer = 0) {
         e.style.display = 'block'
         e.id = `prog-${layer}-${config.bars[layer]}`
         var c = e.querySelectorAll('.select')
-        c[0].id = `prog-button-${layer}-${config.bars[layer]}`
-        c[1].id = `prog-cont-${layer}-${config.bars[layer]}`
-        c[2].id = `prog-bar-${layer}-${config.bars[layer]}`
-        c[3].id = `prog-text-${layer}-${config.bars[layer]}`
+        c[0].id = `prog-cont-${layer}-${config.bars[layer]}`
+        c[1].id = `prog-bar-${layer}-${config.bars[layer]}`
+        c[2].id = `prog-text-${layer}-${config.bars[layer]}`
+        c[3].id = `prog-button-${layer}-${config.bars[layer]}`
         c[4].id = `prog-level-${layer}-${config.bars[layer]}`
         c[5].id = `prog-buy-${layer}-${config.bars[layer]}`
 

@@ -14,7 +14,7 @@ var list = {
         list.upd()
         list.updbt()
         updatef()
-        save=false
+        saved=false
     },
     rem() {
         if (f.length > 1) {
@@ -32,7 +32,7 @@ var list = {
             list.upd()
             list.updbt()
             updatef()
-            save=false
+            saved=false
         } else {
             alert('You cannot have no effects! Instead, just press the power button.')
         }
@@ -55,7 +55,7 @@ var list = {
             isanim.splice(editing, 0, e)
             speed.splice(editing, 0, F)
             allow.splice(editing, 0, h)
-            save=false
+            saved=false
         }
         list.updbt()
         updatef()
@@ -78,7 +78,7 @@ var list = {
             isanim.splice(editing, 0, e)
             speed.splice(editing, 0, F)
             allow.splice(editing, 0, h)
-            save=false
+            saved=false
         }
         list.updbt()
         updatef()
@@ -135,7 +135,7 @@ var list = {
     allow() {
         allow[editing] = !allow[editing]
         list.updbt()
-        save=false
+        saved=false
     }
 }
 

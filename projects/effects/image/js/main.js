@@ -114,7 +114,7 @@ selectimg(select)
 function getPixel(x, y, typ='rgb') {
     var a = j == 0 ? data.data : before
     B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
-    C = [j[B * 4], j[B * 4 + 1], j[B * 4 + 2], j[B * 4 + 3]]
+    C = [a[B * 4], a[B * 4 + 1], a[B * 4 + 2], a[B * 4 + 3]]
     return typ=='rgb'?C:conv(C,typ)
 }
 function sendPixel(x, y, info) {

@@ -10,7 +10,7 @@ var imgl = ['BADOOF','Discord[error]','DISGUISED','Lines','RGB spiral','sadcube'
     ctx = canvas.getContext('2d'),
     width, height,
     slidnames = [], min=[[],[],[],[],[],[]], max=[[],[],[],[],[],[]], slidenum = [],
-    img, debug = document.location.href[0] == 'f', data, before, before2, slidershow = false,
+    img, debug = document.location.href[0] == 'f', data, data2, before, before2, slidershow = false,
     f = [()=>{}], fs = ['return v'], tick = 0, playing = false, int, err = false,
     values = [[0,0,0,0,0,0]], before, change = true, size = 3,
     exs = {
@@ -112,9 +112,10 @@ function selectimg(id) {
 selectimg(select)
 
 function getPixel(x, y, typ='rgb') {
-    var a = j == 0 ? data.data : before
+    var a = j == 0 ? data2.data : before
     B = (Math.floor(x) % width) + (Math.floor(y) % height) * canvas.width
     C = [a[B * 4], a[B * 4 + 1], a[B * 4 + 2], a[B * 4 + 3]]
+    console.log(a, j, before, B, C)
     return typ=='rgb'?C:conv(C,typ)
 }
 function sendPixel(x, y, info) {
@@ -159,7 +160,7 @@ function ontick() {
         change = false
     }
 
-    data = ctx.getImageData(0, 0, width, height)
+    data = ctx.getImageData(0, 0, width, height), data2 = ctx.getImageData(0, 0, width, height)
     before2 = [], before = undefined
 
     size = typ.length
@@ -194,6 +195,10 @@ function ontick() {
                     data.data[v[0] * 4 + 1] = v[1][1]
                     data.data[v[0] * 4 + 2] = v[1][2]
                     data.data[v[0] * 4 + 3] = v[1][3]
+                    before2[v[0] * 4 + 0] = v[1][0]
+                    before2[v[0] * 4 + 1] = v[1][1]
+                    before2[v[0] * 4 + 2] = v[1][2]
+                    before2[v[0] * 4 + 3] = v[1][3]
                 })
                 before = before2
                 before2 = []

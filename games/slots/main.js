@@ -291,7 +291,7 @@ async function spin() {
             game.won = c
     
             waud.pause()
-            sfx('win/BigEnd')
+            sfx('win/bigEnd')
     
             $('bigwin').style.top = '115%'
             setTimeout(() => {

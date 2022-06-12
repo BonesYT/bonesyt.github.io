@@ -1,0 +1,255 @@
+@font-face {
+    font-family: game;
+    src: url('gothic.ttf');
+}
+body {
+    background-color: black;
+    margin: 0;
+    overflow: hidden;
+    font-family: game;
+    color: white;
+}
+
+.black {
+    background: black;
+}
+.blacktxt {
+    color: white;
+    font-size: 144px;
+    transition: font-size 0.5s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+.blacktxt:hover {
+    font-size: 240px;
+}
+
+.gamescreen {
+    background-image: linear-gradient(
+        rgb(173 183 204),
+        rgb(118 99 133)
+    );
+    width: 100%;
+    max-height: 100%;
+    aspect-ratio: 16 / 9;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.slots {
+    position: absolute;
+    width: 68%;
+    height: 58%;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow:none;
+    white-space: nowrap;
+}
+.reel {
+    outline: solid black 0.75vw;
+    border-radius: 1vh;
+    width: 28%;
+    height: 100%;
+    margin: 0 2.4%;
+    background: linear-gradient(to right,
+      #526d924a,
+      #0000 20% 80%,
+      #526d924a               
+    ), linear-gradient(
+      #c1cbd4, 
+      white,
+      #8d96a2
+    );
+    transition: filter 0.2s;
+}
+.reel[bright] {
+    filter: brightness(1.5)
+}
+
+.cred,#cred,.won,#won,.playimg,#play,.but1,#bet,.betdesc {
+    position: absolute;
+}
+
+.playimg {
+    width: 100%;
+    filter: none;
+    transition: filter 0.4s;
+}
+.playimg:hover {
+    filter: brightness(1.5);
+}
+#play {
+    width: 15%;
+    height: 15%;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.statsbox {
+    background: linear-gradient(
+        black,
+        rgb(52, 59, 65)
+    );
+    outline: white 0.6vw solid;
+    border-radius: 1.5vw;
+}
+
+.cred {
+    width: 38%;
+    height: 13.5%;
+    bottom: 3%;
+    left: 1.8%;
+    color: cyan;
+}
+#cred {
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+    margin: 0;
+    font-size: 5vw;
+}
+
+.won {
+    width: 38%;
+    height: 17%;
+    bottom: 3%;
+    right: 1.8%
+}
+#won {
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%);
+    margin: 0;
+    font-size: 8vw;
+    background-image: linear-gradient(
+        #ffa600 0%,
+        #ffed47 40%,
+        #fff 60%,
+        #ffeb3b 80%
+      );
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; 
+    background-clip: text;
+}
+
+.but {
+    background: linear-gradient(
+        #ccdfe5,
+        white,
+        #d8e3ee
+    );
+    outline: black 0.5vw solid;
+    border-radius: 2vw;
+    width: 12%;
+    height: 21.33333%;
+    transform: translate(-50%, -50%);
+    filter: brightness(1);
+    transition: filter 0.5s, width 0.5s, height 0.5s;
+    position: absolute;
+}
+.but1 {
+    left: 7.8%;
+    top: 62%;
+}
+.but:hover {
+    width: 13.5%;
+    height: 24%;
+}
+.but1:active {filter: brightness(0.8)}
+.but1[disabled] {filter: brightness(0.5)}
+.textbut {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-size: 5.5vw;
+    cursor: pointer;
+    user-select: none;
+    color: black;
+    position: absolute
+}
+.betdesc {
+    margin: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5vw;
+    color: black;
+}
+
+[disabled] {
+    filter: brightness(0.6);
+}
+
+@keyframes size {
+    from {width: 80%};
+    to   {width: 95%};
+}
+#bigwin {
+    top: -15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 90%;
+    height: auto;
+    animation: size 0.5s ease-in-out infinite alternate;
+    transition: top 1s;
+    display: none;
+}
+#bigwin[on] {
+    display: block;
+}
+
+.txt {
+    position: absolute;
+    margin: 0;
+    -webkit-text-stroke: 0.2vw #000;
+}
+.txt1 {
+    top: 78%;
+    left: 1.2%;
+    transform: translateY(-50%);
+    font-size: 5vw;
+}
+.txt2 {
+    top: 72.5%;
+    right: 1.2%;
+    transform: translateY(-50%);
+    font-size: 8vw;
+    color: #fff0c7;
+}
+.txt3 {
+    top: 0%;
+    left: 50%;
+    width: 51vw;
+    transform: translateX(-50%);
+    font-size: 3vw;
+    background: linear-gradient(
+        white,
+        #b2d5a4 70%,
+        #dd5ee9
+    );
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; 
+    background-clip: text;
+    -webkit-text-stroke: 0.1vw #0d1716;
+}
+
+.but2 {
+    left: 92.2%;
+    top: 14%;
+    background: linear-gradient(
+        #971a1a,
+        #d33535,
+        #971a1a
+    );
+}
+.but2 > .textbut {
+    color: black;
+    font-size: 4vw;
+}

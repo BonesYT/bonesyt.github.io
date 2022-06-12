@@ -8,6 +8,7 @@ h1, h2, h3 {
     font-variant: small-caps;
     font-weight: 800;
     -webkit-background-clip: text;
+    background-clip: text;
 }
 .wt {
     color: white;

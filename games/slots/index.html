@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <title>BYT Slots: Cash Machine</title>
+        <script defer src="class.js"></script>
+        <script defer src="main.js"></script>
+    </head>
+    <body>
+        <div class="black"><h1 class="blacktxt">Play!</h1></div>
+
+        <div class="gamescreen">
+            <div class="slots">
+                <canvas id="r0" class="reel" width="595" height="1020"></canvas>
+                <canvas id="r1" class="reel" width="595" height="1020"></canvas>
+                <canvas id="r2" class="reel" width="595" height="1020"></canvas>
+            </div>
+            <div class="displays">
+                <div class="cred statsbox"><h1 id="cred">[Credits]</h1></div>
+                <div class="won statsbox"><h1 id="won">[Win Value]</h1></div>
+            </div>
+            <div class="buttons">
+                <div class="but1 but dis" onclick="setbet()">
+                    <h1 id="bet" class="textbut">C</h1>
+                    <h1 class="betdesc">BET</h1>
+                </div>
+                <div class="but2 but dis" onclick="wipe()"><h1 class="textbut">Wipe</h1></div>
+                <div id="play" onclick="spin()"><img class="playimg dis" src="txtr/spin.png"></div>
+            </div>
+            <div class="others">
+                <h1 class="txt1 txt">Credits</h1>
+                <h1 class="txt2 txt">Win</h1>
+                <h1 class="txt3 txt">Cash Machine - Win what you see!</h1>
+                <img src="txtr/bigwin.png" id="bigwin">
+            </div>
+        </div>
+    </body>
+</html>

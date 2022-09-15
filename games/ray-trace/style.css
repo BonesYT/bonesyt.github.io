@@ -1,0 +1,15 @@
+body {
+    background-color: black;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 6px #92aac5;
+    font-family: Nexa-Bold;
+}
+canvas {
+    outline: 4px white solid;
+    border-radius: 5px;
+}
+@font-face {
+    font-family: Nexa-Bold;
+    src: url('https://db.onlinewebfonts.com/t/c9f309b3d47969ecac64a77a6c672594.ttf');
+}

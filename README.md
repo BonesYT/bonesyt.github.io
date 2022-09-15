@@ -11,10 +11,11 @@ Ostrich Note: Ostrichings disguisions.
 
 
 
+0xFFFF
+:disguised_face: :disguised_face:.:disguised_face: :index_pointing_at_the_viewer::face_holding_back_tears:
 
 
-
-
+wtf my channel
 
 
 
@@ -22,3 +23,5 @@ Ostrich Note: Ostrichings disguisions.
 
 
 NIEN NINE NEIN ENIN NINE NINE 🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸🥸 (There are 20 disguisions here in total. 🥸)
+
+Acoisa.

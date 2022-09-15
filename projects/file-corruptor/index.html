@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
+        <title>File Corruptor</title>
+        <script defer src="js/main.js"></script>
+        <script src="js/corruptor.js"></script>
+        <script src="js/charsets.js"></script>
+        <script src="js/preset.js"></script>
+        <script>window.TextEncoder=window.TextDecoder=null</script>
+        <script src="https://cdn.jsdelivr.net/gh/inexorabletash/text-encoding/lib/encoding-indexes.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/inexorabletash/text-encoding/lib/encoding.js"></script>
+        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
+        <style>
+            span {
+                display: inline-block;
+                width: 50px;
+                text-align: center;
+            }
+            span.stats {
+                width: 100%;
+                display: grid;
+                font-size: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <h1>File Corruptor</h1>
+        <h3>(Only use for experimental purposes!)</h3>
+        <h3>This project is for simulating file corruption. Choose a file and a mode.</h3>
+
+        Input File <input type="file" id="input" oninput="ready = true, upd()"><br>
+        <h3 id="size"></h3>
+
+        <button class="tab" id="br" select>Byte replacement</button>
+        <button class="tab" id="bs">Byte shift</button>
+        <button class="tab" id="bh">Byte shuffle</button>
+        <button class="tab" id="ba">Byte add/del</button>
+        <button class="tab" id="cp">Copy Paste</button>
+        <br>
+        <div class="tabdiv">
+
+            <div class="tab" id="br" select>
+
+                Random Chance <input type="range" id="rnd" min="0" max="100" step="0.001" value="3"><span id="Vrnd"></span><br>
+                Byte Minimum <input type="range" id="min" min="0" max="255" step="1" value="0" class="rcg"><span id="Vmin"></span><br>
+                Byte Maximum <input type="range" id="max" min="0" max="255" step="1" value="255" class="rcg"><span id="Vmax"></span>
+
+            </div>
+            <div class="tab" id="bs">
+
+                Random Chance <input type="range" id="shfrnd" min="0" max="100" step="0.001" value="3"><span id="Vshfrnd"></span><br>
+                Shift Minimum <input type="range" id="shfmin" min="-128" max="128" step="1" value="2"><span id="Vshfmin"></span><br>
+                Shift Maximum <input type="range" id="shfmax" min="-128" max="128" step="1" value="-2"><span id="Vshfmax"></span>
+
+            </div>
+            <div class="tab" id="bh">
+
+                Random Chance <input type="range" id="selrnd" min="0" max="100" step="0.001" value="3"><span id="Vselrnd"></span><br>
+                Select Minimum <input type="range" id="selmin" min="-500" max="500" step="1" value="-64"><span id="Vselmin"></span><br>
+                Select Maximum <input type="range" id="selmax" min="-500" max="500" step="1" value="64"><span id="Vselmax"></span>
+
+            </div>
+            <div class="tab" id="ba">
+
+                Random Chance <input type="range" id="adrnd" min="0" max="100" step="0.001" value="3"><span id="Vadrnd"></span><br>
+                Rnd Add/Del <input type="range" id="ad2rnd" min="0" max="100" step="0.001" value="0"><span id="Vad2rnd"></span><br>
+                Add Byte Minimum <input type="range" id="amin" min="0" max="255" step="1" value="0" class="rcg"><span id="Vamin"></span><br>
+                Add Byte Maximum <input type="range" id="amax" min="0" max="255" step="1" value="255" class="rcg"><span id="Vamax"></span><br>
+                Del Length Minimum <input type="range" id="dmin" min="1" max="20" step="1" value="1"><span id="Vdmin"></span><br>
+                Del Length Maximum <input type="range" id="dmax" min="1" max="20" step="1" value="3"><span id="Vdmax"></span>
+
+            </div>
+            <div class="tab" id="cp">
+
+                Random Chance <input type="range" id="cprnd" min="0" max="100" step="0.001" value="3"><span id="Vcprnd"></span><br>
+                Rnd Rep/Add <input type="range" id="rarnd" min="0" max="100" step="0.001" value="0"><span id="Vrarnd"></span><br>
+                Select Minimum <input type="range" id="smin" min="0" max="64" step="1" value="5"><span id="Vsmin"></span><br>
+                Select Maximum <input type="range" id="smax" min="0" max="64" step="1" value="12"><span id="Vsmax"></span><br>
+                Clipboard Length Minimum <input type="range" id="cmin" min="0" max="32" step="1" value="5"><span id="Vcmin"></span><br>
+                Clipboard Length Maximum <input type="range" id="cmax" min="0" max="32" step="1" value="12"><span id="Vcmax"></span>
+
+            </div>
+
+        </div>
+
+        Charset <select id="charset" value="windows-1252">
+            <option value="utf-8">UTF-8</option>
+            <option value="utf-16be">UTF-16 BE</option>
+            <option value="utf-16le">UTF-16 LE</option>
+            <option value="windows-1252" selected>ANSI</option>
+            <option value="us-ascii">ASCII</option>
+        </select><br>
+
+        <div class="tabdiv">
+            <span id="input-size" class="stats">Input file size: (unknown)</span>
+            <span id="output-size" class="stats">Output file size: (unknown)</span>
+            <span id="byte-count" class="stats">Average modified bytes: (unknown)</span>
+        </div>
+
+        <button onclick="start()" id="output">Start!</button>
+
+        <h2>Preset</h2>
+        <button onclick="exp()">Export</button>
+        <button onclick="imp()">Import</button><br>
+        <textarea id="preset" cols="30" rows="10" placeholder="Preset save code will appear here. To import, paste code in box below and press &quot;Import&quot;."></textarea>
+
+    </body>
+</html>

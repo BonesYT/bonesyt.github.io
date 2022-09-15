@@ -1,3 +1,10 @@
+@keyframes select {
+    from {
+        filter: brightness(1.95)
+    } to {
+        filter: brightness(.8)
+    }
+}
 body {
     background-image: url('background.png');
     background-size: cover;
@@ -152,3 +159,17 @@ input[type=file]::-webkit-file-upload-button {
     padding: 3px 8px;
     font-weight: 1000;
 }
+.tabdiv {
+    background-color: #0004;
+    outline: 4px solid white;
+    border-radius: 10px;
+    display:inline-block;
+    width: 100%;
+    margin: 12px 0;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+button[select] {
+    animation: select 1s alternate infinite ease-in-out
+}
+div.tab[select] {display: inherit}
+div.tab         {display: none}

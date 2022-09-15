@@ -1,0 +1,28 @@
+body {
+    background: black;
+    color: white
+}
+tr {
+    height: 32px;
+}
+td {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+span {
+    font-size: 20px;
+    text-align: center;
+    vertical-align: center;
+}
+.hh {
+    width: 128px;
+}
+/*.chr {
+    width: 512px;
+    height: 512px;
+}
+.chr > span {
+    font-variant-numeric: lining-nums;
+    color: white;
+}*/

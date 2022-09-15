@@ -17,7 +17,7 @@ function placeBars(layer = 0) {
         c[4].id = `prog-level-${layer}-${config.bars[layer]}`
         c[5].id = `prog-buy-${layer}-${config.bars[layer]}`
 
-        c[0].addEventListener('click', new Function(`barIncrement(${config.bars[layer]}, ${layer})`))
+        c[3].addEventListener('click', new Function(`barIncrement(${config.bars[layer]}, ${layer})`))
         c[5].addEventListener('click', new Function(`barBuy(${config.bars[layer]}, ${layer})`))
 
         document.placeElement(e, 'progressbar-place-'+layer)

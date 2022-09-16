@@ -152,11 +152,11 @@ async function corrupt(I) {
 }
 async function start() {
 
+    const ob = $('output')
     try {
 
         if (loading) {alert('A file is still being changed.'); return}
         if (!ready) {alert('Please select a file first!'); return}
-        const ob = $('output')
         loading = true
     
         ob.innerHTML = 'Uploading...'

@@ -45,7 +45,7 @@ async function corrupt(I) {
 
         if (i % 8192 == 0) {
             ob.innerHTML = `Setting byte ${i} of ${s}...`
-            await new Promise(r => setTimeout(r(), 80))
+            await new Promise(r => setTimeout(r(), 150))
         }
 
     }
@@ -53,7 +53,7 @@ async function corrupt(I) {
         return Math.random() * (y - x) + x
     }
 
-    let o = '', i
+    let o = '', i, C = 0
     switch (mode) {
 
         case 0: // Replace
@@ -62,6 +62,7 @@ async function corrupt(I) {
                 await progupd(i)
 
                 if (Math.random() < set.rnd) {
+                    C++
                     rnd(set.max, set.min)
                     o += fromCharCode(rnd(set.min, set.max + 1))
                 } else o += I[i]
@@ -73,6 +74,7 @@ async function corrupt(I) {
                 await progupd(i)
 
                 if (Math.random() < set.rnd) {
+                    C++
                     o += fromCharCode(I.charCodeAt(i) + rnd(set.min, set.max + 1) & 255)
                 } else o += I[i]
 
@@ -87,6 +89,7 @@ async function corrupt(I) {
 
                 if (Math.random() < set.rnd) {
                     
+                    C += 2
                     t = Math.floor(i + rnd(Math.max(set.min, -i), Math.min(set.max, s - i)))
                     ;[o[i], o[t]] = [o[t], o[i]] // swap 2 items, i literally never knew thats possible
 
@@ -96,6 +99,7 @@ async function corrupt(I) {
             o = o.join('')
 
         break; case 3: // Add/Del
+            let sk
             for (i = 0; i < I.length; i++) {
 
                 await progupd(i)
@@ -104,8 +108,10 @@ async function corrupt(I) {
 
                     if (Math.random() >= set.adrnd) { // +
                         o += I[i] + fromCharCode(rnd(set.amin, set.amax + 1))
+                        C++
                     } else { // -
-                        i += Math.floor(rnd(set.dmin, set.dmax)) - 1
+                        i += sk = Math.floor(rnd(set.dmin, set.dmax)) - 1
+                        C += sk
                     }
 
                 } else o += I[i]
@@ -125,8 +131,10 @@ async function corrupt(I) {
                     if (Math.random() >= set.adrnd) { // =
                         o += c
                         i += c.length - 1
+                        C += c.length
                     } else { // +
                         o += I[i] + c
+                        C += (I[i] + c).length
                     }
 
                 } else o += I[i]
@@ -136,41 +144,55 @@ async function corrupt(I) {
 
     }
 
-    return o
+    return {
+        out: o,
+        count: C
+    }
 
 }
 async function start() {
 
-    if (loading) {alert('A file is still being changed.'); return}
-    if (!ready) {alert('Please select a file first!'); return}
-    const ob = $('output')
-    loading = true
+    try {
 
-    ob.innerHTML = 'Uploading...'
+        if (loading) {alert('A file is still being changed.'); return}
+        if (!ready) {alert('Please select a file first!'); return}
+        const ob = $('output')
+        loading = true
+    
+        ob.innerHTML = 'Uploading...'
+    
+        const cs = $('charset').value
+        I = await upload()
+        const s = I[1],
+              na = I[2]
+        I = new TextDecoder(cs).decode(
+            await I[0].arrayBuffer()
+        )
+    
+        o = await corrupt(I, s)
+        $('byte-modif').innerHTML = 'Modifications: ' + bitMeas(o.count)
+        o = o.out
+    
+        let n = na.split('.')
+        if (n[n.length - 2]) n[n.length - 2] += ' (Corrupted)'
+        else n.unshift('Corrupted')
+        n = n.join('.')
+    
+        ob.innerHTML = 'Downloading...'
+    
+        const b = await blob(o, cs)
+        download(n, b)
+        $('output-size').innerHTML = 'Output file size: ' + bitMeas(b.size)
 
-    const cs = $('charset').value
-    I = await upload()
-    const s = I[1],
-          na = I[2]
-    I = new TextDecoder(cs).decode(
-        await I[0].arrayBuffer()
-    )
+    } catch (e) {
 
-    o = await corrupt(I, s)
+        alert('Uh oh... Seems like there\'s a code point error! (See in DevTools)')
+        throw e
 
-    let n = na.split('.')
-    if (n[n.length - 2]) n[n.length - 2] += ' (Corrupted)'
-    else n.unshift('Corrupted')
-    n = n.join('.')
-
-    ob.innerHTML = 'Downloading...'
-
-    const b = await blob(o, cs)
-    download(n, b)
+    }
 
     ob.innerHTML = 'Start!'
     loading = false
-    $('output-size').innerHTML = 'Output file size: ' + bitMeas(b.size)
 
 }
 async function blob(data, cs='iso-8859-1') { // (ANSI as default charset)

@@ -1,4 +1,4 @@
-function fromCharCode(i) {
+function fromCharCode(i) { 
     return charsets[$('charset').value].charAt(i)
 }
 async function corrupt(I) {

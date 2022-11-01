@@ -1,3 +1,5 @@
+/* deprecated */
+
 function Value(input) {
     this.value = input
     this.typeof = typeof this.value

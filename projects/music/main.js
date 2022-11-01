@@ -10,48 +10,51 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
          /* Added in 04/24/2022 */ 'Akordot Univert', 'Frequentic', 'Komberst', 'Misteiral', 'Superialer Remixer Beats Cover', 'Synth Chords', 'Ultrepeat', 'Ultinatium',
          /* Added in 04/30/2022 */ 'AMOGUS GUS 1', 'AMOGUS GUS 2', 'AMOGUS GUS 3', 'Baby Laughing Music Remix 1', 'Baby Laughing Music Remix 2', 'Chai Kingdom - Super Mario Land Remix', 'DIFICULTATION', 'Ending', 'ERROR',
                                    'Extarmity', 'graditental', 'Megalovania remix', 'Multi Mode', 'oofdance', 'ProgressRise - Surface', 'ProgressRise - The Sky', 'Scartissan', 'Super Idol Remix', 'TooFull', 'TUOV S2 - Escape', 'ultrahard',
-         /* Added in 05/31/2022 */ 'ascendar', 'Duplex Melodiam', 'Eternatical', 'Metagite', 'Outernation', 'OverForever', 'rhymetilated', 'NSMBU Underground Theme Remix', 'Quattuordecupity', 'Ultimation'
-        ]
+         /* Added in 05/31/2022 */ 'ascendar', 'Duplex Melodiam', 'Eternatical', 'Metagite', 'Outernation', 'OverForever', 'rhymetilated', 'NSMBU Underground Theme Remix', 'Quattuordecupity', 'Ultimation',
+         /* Added in 10/16/2022 */ 'Astronomic', 'Chai_Kingdom', 'Astronomic', 'Chai Kingdom (second remix)', 'HARMPHE - Ruins', 'Spatial', 'Synthesizal Full'
+        ],
+
 songs.sort() 
 songnames = songs.map((v)=>{return v + '.mp3'})
 playing = []
 ap = false, pause = false
 
-document.makeElement = (tag, innerHTML)=>{
+makeElement = (tag, innerHTML)=>{
     var node = document.createElement(tag);
     var textnode = document.createTextNode(innerHTML);
     node.appendChild(textnode);
     return node
 }
-document.placeElement = (node, id)=>{
+placeElement = (node, id)=>{
     $(id).appendChild(node);
 }
 
-(() => {
-var a
+/* placing elements */ {
+    
+    var a
 
-for (i=0; i<songs.length; i++) {
-    a = document.makeElement('button', songs[i])
-    a.id = 'Song' + i
-    document.placeElement(a, 'songs')
-    $('songs').appendChild(document.createElement('br'));
+    for (i=0; i<songs.length; i++) {
+        a = makeElement('button', songs[i])
+        a.id = 'Song' + i
+        placeElement(a, 'songs')
+        $('songs').appendChild(document.createElement('br'));
+    }
+    for (i=0; i<songs.length; i++) {
+        $('Song' + i).addEventListener('click', eval('()=>playSong('+i+')'))
+    }
+    
+    $('songs').appendChild(document.createElement('br'))
+    a = makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
+    a.className = 'special'
+    a.addEventListener('click', () => {
+        var a = new Audio('songs/UltimateMerge.mp3')
+        playing.push(a)
+        a.play() 
+        ap = true
+    })
+    $('songs').appendChild(a)
+
 }
-for (i=0; i<songs.length; i++) {
-    $('Song' + i).addEventListener('click', eval('()=>playSong('+i+')'))
-}
-
-$('songs').appendChild(document.createElement('br'))
-a = document.makeElement('button', '~~ ULTIMATE BonesYT SONGS MERGE [2022] ~~')
-a.className = 'special'
-a.addEventListener('click', () => {
-    var a = new Audio('songs/UltimateMerge.mp3')
-    playing.push(a)
-    a.play() 
-    ap = true
-})
-$('songs').appendChild(a)
-
-})()
 
 function playSong(id) {
     if (!ap | $('multi').checked) {

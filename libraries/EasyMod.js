@@ -1,9 +1,15 @@
+/* deprecated */
+
 /* This is EasyMod.js
    By BonesYT (start: 19:48 03/01/2022 DD/MM/YYYY)
               (release: 11:58 04/01/2022 DD/MM/YYYY)
               (update: u2 14:57 04/01/2022 DD/MM/YYYY)
    EasyMod.js basically adds functions to strings, numbers, etc.
-   Please don't copy! */
+   Please don't copy! 
+   
+   old version lmao.
+   
+   */
 
 //NUMBERS
 

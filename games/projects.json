@@ -1,0 +1,43 @@
+{
+    "title": [
+        "Number Guessing game",
+		"Box Catcher",
+		"Getto Area",
+		"Platformer",
+		"2D Explorer",
+		"Blendoku HTML Version",
+		"Slot Machine",
+        "Progress Rise (beta v0.3.1)"
+    ],
+    "description": [
+        "Basic number guesser. You have to guess the exact number using hints.",
+        "HTML Box catcher game. Catch them for points! It gets progressively faster.",
+        "A precision game: Get your mouse on the circle area until times up! Gets faster and harder.",
+        "Platformer test game with built-in TAS.",
+        "2D grid maze explorer with mining abilities.",
+        "Playable HTML version of Blendoku². Original by Lonely Few",
+        "Free online Slot Machine game! Get the right numbers for cash! (virtual cash ofc)",
+        "Progress Rise BETA v0.3.1. An incremental game about progress bars gradually increasing! Has 3 prestige layers and soundtrack!"
+    ],
+    "directory": [
+        "numberguesser",
+        "boxcatcher",
+        "getto-area",
+        "platformer",
+        "2dexplorer",
+        "blendoku",
+        "slots",
+        "progress-rise"
+    ],
+    "section": [
+        "games",
+        "games",
+        "games",
+        "games",
+        "games",
+        "games",
+        "games",
+        "increm",
+    ],
+    "amount": 8,
+}

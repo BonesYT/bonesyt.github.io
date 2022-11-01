@@ -1,3 +1,7 @@
+/* 
+    Math library/plug-in by BonesYT
+*/
+
 'use strict'
 ;(function(This){
 

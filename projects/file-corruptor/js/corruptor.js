@@ -1,13 +1,13 @@
 function fromCharCode(i) { 
     return charsets[$('charset').value].charAt(i)
 }
-async function corrupt(I) {
+async function corrupt(I, m) {
 
     const ob = $('output'),
           s = I.length
 
     let set
-    switch (mode) {
+    switch (m ?? mode) {
         case 0: set = {
             rnd: $('rnd').value / 100,
             min: +$('min').value,
@@ -39,6 +39,10 @@ async function corrupt(I) {
             cmin: +$('cmin').value,
             cmax: +$('cmax').value
         }; break
+        case 5: set = {
+            rnd: $('cprnd').value / 100,
+            fnc: Function('char', 'index', 'input', 'length', 'charset', 'charSel', $('code').value)
+        }; break
     }
 
     async function progupd(i) {
@@ -51,6 +55,9 @@ async function corrupt(I) {
     }
     function rnd(x, y) {
         return Math.random() * (y - x) + x
+    }
+    function cycle(x, y) {
+        return x < 0 ? (x % y + y) % y : x % y
     }
 
     let o = '', i, C = 0
@@ -140,6 +147,27 @@ async function corrupt(I) {
                 } else o += I[i]
 
             }
+        break; case 5: // Function
+
+            function CodePoint(i = 0) {
+                return fromCharCode(cycle(Math.floor(i), csch.length))
+            }function Skip(j = 1) {
+                return i += Math.min(Math.max(Math.floor(j), 0), s)
+            }function SubStr(i) {
+                return I.substring(i)
+            }async function NativeCorrupt(s, m) {
+                return (await corrupt(s, m)).out
+            }
+
+            let ch, cs = $('charset').value, csch = charsets[cs]
+            for (i = 0; i < I.length; i++) {
+
+                ch = set.fnc(I[i], i, I, I.length, cs, Math.random() < set.rnd)
+                     .split('').map(v => !csch.includes(v) ? '?' : v)
+                if (ch) o += ch
+
+            }
+
         break
 
     }

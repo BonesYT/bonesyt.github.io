@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Experimental file corruptor algorithm with several modes! Upload any media file and see what happens!">
+        <meta name="keywords" content="file, corruptor, algorithm, experiments, experimental, test">
+
         <link rel="stylesheet" href="https://bonesyt.github.io/style.css">
         <title>File Corruptor</title>
         <script defer src="js/main.js"></script>
@@ -10,7 +16,7 @@
         <script>window.TextEncoder=window.TextDecoder=null</script>
         <script src="https://cdn.jsdelivr.net/gh/inexorabletash/text-encoding/lib/encoding-indexes.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/inexorabletash/text-encoding/lib/encoding.js"></script>
-        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.png" type="image/x-icon">
+        <link rel="shortcut icon" href="https://bonesyt.github.io/favicon.ico" type="image/x-icon">
         <style>
             span {
                 display: inline-block;
@@ -38,6 +44,7 @@
         <button class="tab" id="bh">Byte shuffle</button>
         <button class="tab" id="ba">Byte add/del</button>
         <button class="tab" id="cp">Copy Paste</button>
+        <button class="tab" id="fn">Custom</button>
         <br>
         <div class="tabdiv">
 
@@ -80,6 +87,14 @@
                 Select Maximum <input type="range" id="smax" min="0" max="64" step="1" value="12"><span id="Vsmax"></span><br>
                 Clipboard Length Minimum <input type="range" id="cmin" min="0" max="32" step="1" value="5"><span id="Vcmin"></span><br>
                 Clipboard Length Maximum <input type="range" id="cmax" min="0" max="32" step="1" value="12"><span id="Vcmax"></span>
+
+            </div>
+            <div class="tab" id="fn">
+
+                Random Chance <input type="range" id="frnd" min="0" max="100" step="0.001" value="3"><span id="Vfrnd"></span><br>
+                <h3 class="lowmargin">char, index, input, length, charset, charSel, CodePoint(number), Skip(number), SubStr(length), rnd(from, to), nativeCorrupt(str, mode)</h3>
+                <h2 class="lowmargin">Function</h3>
+                <textarea id="code" cols="75" rows="12">return charSel ? CodePoint(index) : char</textarea>
 
             </div>
 

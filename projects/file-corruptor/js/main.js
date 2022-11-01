@@ -1,5 +1,5 @@
 const $ = i => document.getElementById(i),
-      tabs = ['br','bs','bh','ba','cp']
+      tabs = ['br','bs','bh','ba','cp','fn']
 
 let mode = 0,
     ready = false,

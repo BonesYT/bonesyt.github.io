@@ -1,3 +1,5 @@
+/* deprecated */
+
 var Imaginal
 
 (function(){

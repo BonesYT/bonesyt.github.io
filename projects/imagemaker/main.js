@@ -55,6 +55,7 @@ function draw(a) {
             $('show-fill').style.display = 'none'
             $('back').style.display = 'none'
             ctx.moveTo(pos.x, pos.y)
+            ctx.lineCap = 'round'
             int = setInterval(()=>{
                 if (mouseDown) {
                     console.log('test')

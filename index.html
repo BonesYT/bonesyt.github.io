@@ -1,27 +1,40 @@
-<!DOCTYPE html>
 <html lang="en">
 	<head>
+	
+		<meta charset="UTF-8">
+		<meta name="description" content="The start of BonesYT's website! I have made a lot of experimental projects and games.">
+		<meta name="keywords" content="BonesYT, experimental, js, JavaScript, games, projects">
+		<meta name="author" content="BonesYT">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
 		<link rel="stylesheet" href="style.css">
-		<link rel="icon" href="https://bonesyt.github.io/favicon.png" sizes="16x16" type="image/png">
+		<link rel="icon" href="https://bonesyt.github.io/favicon.ico" sizes="16x16" type="image/png">
 		<title>BonesYT's Home Page</title>
 		<script defer src="main.js"></script>
+
 	</head>
 	<body>
-		<a href="aboutme">About Me</a>
-		<img class="logo" src="logo.jpg">
+		<a href="aboutme">About Me</a><br>
+		<a href="changelog">Changelog</a>
+		<img class="logo" src="img/profile.png">
+
 		<h1>BonesYT's Home Page!</h1>
-		<h3>Welcome to my home page!</h3>
-		<h3>This is where my projects, games and other stuff will be! Awesome right?</h3>
-		<h3>First ever website. Made in GitHub!</h3>
+		<p>
+			Welcome to my home page!
+			This is where my projects, games and experimental stuff will be! Awesome right?
+			First ever website. Made in <a href="https://github.com/BonesYT/bonesyt.github.io">GitHub</a>!
+		</p>
+
 		<h1>Classic Clicker</h1>
 		<h3>Click this button below until you reach 128 of value!</h3>
-		<button id="clicker">0 / 128 (0%)</button>
-		<h1>Random Stuff</h3>
+		<button id="clicker">0 / 4096 (0%)</button>
 		<h3>click here for disguisions</h3>
-		<button onclick="alert('You have been disguised! Doubled clicker requirement lol.'); require = 256">Disguise</button>
+		<button id="disguiser">Disguise for 128</button>
+
 		<h1>Projects</h1>
-		<a href="projects">Normal projects</a>
+		<a href="projects">Projects</a>
 		<br>
-		<a href="games">Games!</a>
+		<a href="games">Games</a>
 	</body>
 </html>

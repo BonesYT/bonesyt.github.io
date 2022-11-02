@@ -19,11 +19,11 @@
     			);
 				border-color: #fff
 			}
-			button>img {
+			.controls>img {
 				width: 32px;
 				height: auto;
 			}
-			button {
+			.controls {
 				width: 32px;
 				height: 32px;
 			}
@@ -34,10 +34,10 @@
 		<h3>List of songs i've created!</h3>
 		<h3 id="amm"></h3>
 		Multiple songs? <input type="checkbox" id="multi"><br>
-		<button onclick="Pause()"><img src="textures/pause.png" id="pause"></button>
-		<button onclick="stop()"><img src="textures/stop.png"></button>
-		<button onclick="forward()"><img src="textures/forward.png"></button>
-		<button onclick="rewind()"><img src="textures/rewind.png"></button>
+		<button class="controls" onclick="Pause()"><img src="textures/pause.png" id="pause"></button>
+		<button class="controls" onclick="stop()"><img src="textures/stop.png"></button>
+		<button class="controls" onclick="forward()"><img src="textures/forward.png"></button>
+		<button class="controls" onclick="rewind()"><img src="textures/rewind.png"></button>
 		<br><br>
 		<div id="songs"></div>
 	</body>

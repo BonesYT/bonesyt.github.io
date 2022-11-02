@@ -1,7 +1,7 @@
 let projects
 
 const fr = new FileReader
-async function a(){
+async function a() {
     fr.readAsText(await fetch('projects.json').then(r => r.blob()))
 }
 a()

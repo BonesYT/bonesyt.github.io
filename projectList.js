@@ -8,7 +8,7 @@ a()
 fr.onload = () => {
 
     projects = JSON.parse(fr.result)
-    document.getElementById('list').innerHTML = ''
+    document.querySelectorAll('.proj-group').forEach(v => v.innerHTML = '')
     document.getElementById('amount').innerHTML = 'Amount: ' + projects.amount
 
     let div, title, desc, spanTitle, spanDesc

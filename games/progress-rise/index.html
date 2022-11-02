@@ -1,25 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Progress Rise BETA v0.4. An incremental game about progress bars gradually increasing! Has 3 prestige layers and soundtrack!">
-        <meta name="keywords" content="progress rise, incremental game, lngi, games, BonesYT">
-
-        <style>
-            #whitescreen[anim-trig] {
-                animation: 6s linear lu-background-fade
-            }
-            #whitescreentext[anim-trig] {
-            	animation: 2s linear infinite lu-text-rainbow,
-            			   .5s cubic-bezier(0, 1.08, 0.77, 1) infinite lu-text-bounce,
-            			   4s cubic-bezier(0, 1, 1, 0.01) lu-text-motion;
-            }
-            #tabs[anim-trig] {
-            	animation: 6s linear lu-background-glow
-            }
-        </style>
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/themes/color.css" id="theme">
         <script src="js/ExpantaNum.js"></script>
@@ -29,35 +10,22 @@
         <script defer src="js/elements.js"></script>
         <script defer src="js/saveload.js"></script>
         <script defer src="js/ticker.js"></script>
-        <script defer src="js/debug.js"></script>
-        <link rel="icon" href="imgs/favicon.ico" sizes="16x16" type="image/png">
+        <link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
         <title id="title">Progress Rise Beta</title>
     </head>
     <body>
-        <div style="display:none">
+        <div style="display: none">
             <div class="basic-container" id="normalpb-copy">
                 <h1 class="basic-text" id="normalpb-text-copy"></h1>
                 <div class="basic-prog" id="normalpb-prog-copy"></div>
             </div>
-            <div id="progressbar-copy" class="progress" style="display:none">
-                <div class="pb-container select" id="prog-cont" style="background-image: linear-gradient(rgb(161, 255, 161) 0%,rgb(68, 255, 132) 100%);outline: 4px solid rgb(8, 77, 32);">
-                    <div class="pb-prog select" id="prog-bar" style="width:20%;background-image: linear-gradient(rgb(40, 183, 89) 0%,rgb(24, 106, 52) 100%);">
-                        <span class="pb-text select" id="prog-text"></span>
-                    </div>
-                </div>
-                <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="img/increment.png" class="pb-img"></button>
-                <div class="pb-level select" id="prog-level" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); outline: rgb(8, 77, 32) solid 4px;">Level 3777343434</div>
-                <button class="pb-buy select" id="prog-buy" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); border-color: rgb(8, 77, 32)"></button>
-            </div>
-            <div class="pb-filter"></div>
         </div>
         <div class="main">
-            <img id="logo" src="imgs/logo.png" class="logo">
+            <img id="logo" src="images/logo.png" class="logo">
             <h1 class="layershow">Layers</h1>
             <button class="menu-button menu-progress" onclick="tab('progress')">Progress bars</button>
             <div class="layershow" style="display: none">
-                <button class="menu-button menu-progress-2" onclick="tab('progress-2')">EXOSPHERIC Layer</button>
-                <button class="menu-button menu-progress-3" onclick="tab('progress-3')">SPATIAL Layer</button>
+                <button class="menu-button menu-progress-2" onclick="tab('progress-2')">SKY Layer</button>
                 <br>
             </div>
             <h1 class="layershow">Info & Upgrades</h1>
@@ -68,39 +36,36 @@
             <button class="menu-button menu-options" onclick="tab('options')">Options</button>
         </div>
         <div class="gamescreen">
-            <div id="whitescreen" style="display:none">
-                <h1 id="whitescreentext">Layer up!</h1>
-            </div>
             <div class="news">
                 <h1 id="newstext" onclick="lol()">News text</h1>
             </div>
             <div id="tabs">
-
                 <div id="progress" class="tabcontent scr-progress">
+                    <div class="center a0"></div>
                     <div class="center">
                         <button class="glow-text" id="ascend" onclick="ascendAnim(0)">Ascend</button>
                         <button class="glow-text" id="give-scalebar" onclick="giveScaleBar()">Give to ScaleBar</button>
-                        <h1 id="prestige-gain" class="prestige-gain"></h1>
-                    </div>
-                    <div class="beta-recovery">
-                        <span> Hey there! This game is currently in BETA. If your save previously reached EXOSPHERE and it doesn't work, click here to skip this layer: </span>
-                        <button onclick="skip(1)"> Skip to EXOSPHERE </button>
-                        <button onclick="skip(0)"> Hide message </button>
+                        <h1 id="prestige-gain"></h1>
                     </div>
                     <h1 id="points">[Points]</h1>
                     <button id="next-bar" onclick="NextBar(0)">Buy next bar</button>
-                    <div id="progressbar-place-0"></div>
-                </div>
-
-                <div id="progress-2" class="tabcontent scr-progress-2" style="display:none">
-                    <div class="center">
-                        <button class="glow-text" id="ascend-2" onclick="ascendAnim(1)">Ascend</button>
-                        <!--button class="glow-text" id="give-scalebar-2" onclick="giveScaleBar()">Give to ScaleBar</button-->
-                        <h1 id="prestige-gain-2" class="prestige-gain"></h1>
+                    <div id="progressbar-place-0">
+                        <div id="progressbar-copy" class="progress" style="display:none">
+                            <div class="pb-container select" id="prog-cont" style="background-image: linear-gradient(rgb(161, 255, 161) 0%,rgb(68, 255, 132) 100%);outline: 4px solid rgb(8, 77, 32);">
+                                <div class="pb-prog select" id="prog-bar" style="width:20%;background-image: linear-gradient(rgb(40, 183, 89) 0%,rgb(24, 106, 52) 100%);">
+                                    <h5 class="pb-text select" id="prog-text"></h5>
+                                </div>
+                            </div>
+                            <button class="pb-add select" id="prog-button" style="border-color: rgb(24 104 54);background-image: linear-gradient(rgb(30, 161, 30) 0%,rgb(30, 161, 30) 50%,rgb(42, 185, 102) 51%);"><img src="images/increment.png" class="pb-img"></button>
+                            <div class="pb-level select" id="prog-level" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); outline: rgb(8, 77, 32) solid 4px;">Level 3777343434</div>
+                            <button class="pb-buy select" id="prog-buy" style="background-image: linear-gradient(rgb(161, 255, 161) 0%, rgb(68, 255, 132) 100%); border-color: rgb(8, 77, 32)"></button>
+                        </div>
                     </div>
-                    <h1 id="points-2">[Exosphere Points]</h1>
+                </div>
+                <div id="progress-2" class="tabcontent scr-progress" style="display:none">
+                    <h1 id="points-2">[Sky Points]</h1>
                     <h3 id="boost" style="margin-top: 0">[Boost]</h3>
-                    <h1 id="unassigned-points" style="margin-top: 5px">[Unassigned points]</h1>
+                    <h1 id="waited-points" style="margin-top: 5px">[Waited points]</h1>
                     <button id="scalebar-unlocker" onclick="UnlockMore(0)">Unlock ScaleBar | Cost: 3200 SP</button>
                     <button id="show0" class="button" onclick="tab('progress-2-tab', 'tab-progress2')">Progress Bars</button>
                     <button id="show1" class="button" onclick="tab('progress-2-scalebar', 'tab-progress2')">ScaleBar</button>
@@ -117,29 +82,17 @@
                     <div id="progress-2-scalebar" class="tab-progress2" style="display: none">
                         <h1>ScaleBar</h1>
                         <h3>Give Surface Points to increase Surface Layer speed!</h3>
-                        <h3 id="boost-sb">ScaleBar boosts SUR bars' speed by</h3>
+                        <h3 id="boost-sb">ScaleBar boosts L1 bars' speed by</h3>
                         <div id="scalebar">
-                            <div class="sb-container select" style="background-image: linear-gradient(rgb(161, 213, 255) 0%,rgb(68, 118, 255) 100%);outline: 4px solid rgb(8, 21, 77);">
-                                <div class="sb-prog select" id="sb-bar" style="width:20%;background-image: linear-gradient(rgb(40, 85, 183) 0%,rgb(20, 40, 150) 100%);">
-                                    <h5 class="sb-text select" id="sb-text"></h5>
+                            <div class="pb-container select" style="background-image: linear-gradient(rgb(161, 213, 255) 0%,rgb(68, 118, 255) 100%);outline: 4px solid rgb(8, 21, 77);">
+                                <div class="pb-prog select" id="sb-bar" style="width:20%;background-image: linear-gradient(rgb(40, 85, 183) 0%,rgb(20, 40, 150) 100%);">
+                                    <h5 class="pb-text select" id="sb-text"></h5>
                                 </div>
                             </div>
-                            <div class="sb-level select" id="sb-level" style="background-image: linear-gradient(rgb(161, 213, 255) 0%, rgb(68, 118, 255) 100%); outline: rgb(8, 21, 77) solid 4px;">Level []</div>
+                            <div class="pb-level select" id="sb-level" style="background-image: linear-gradient(rgb(161, 213, 255) 0%, rgb(68, 118, 255) 100%); outline: rgb(8, 21, 77) solid 4px;">Level []</div>
                         </div>
                     </div>
                 </div>
-
-                <div id="progress-3" class="tabcontent scr-progress-3" style="display:none">
-                    <h1 id="points-3">[Spatial Points]</h1>
-                    <h3 id="boost-2" style="margin-top: 0" class="break">[Boost]</h3>
-                    <h1 id="unassigned-points-2" style="margin-top: 5px">[Unassigned points]</h1>
-                    <span class="expt">Exponential Progress</span><br>
-                    <button class="button" onclick="SelectBars(2, true)">Select all bars</button>
-                    <button class="button" onclick="SelectBars(2, false)">Deselect all bars</button>
-                    <button class="button" onclick="ConfirmSelect(2)">Increase all selected bars</button>
-                    <div id="progressbar-place-2"></div>
-                </div>
-
                 <div id="options" class="tabcontent scr-options" style="display:none">
                     <h1>Volume</h1>
                     <button onclick="mute()" id="pause">mute/unmute</button>
@@ -168,12 +121,23 @@
                     </label>
                 </div>
                 <div id="upgrades" class="tabcontent scr-upgrades" style="display:none">
-                    <div id="upgg-0">
-                        <h1 class="layershow">Surface Layer Upgrades</h1>
-                    </div><div class="layershow" id="upgg-1">
-                        <h1>Exospheric Layer Upgrades</h1>
-                    </div><div class="layershow" id="upgg-2">
-                        <h1>Spatial Layer Upgrades</h1>
+                    <h1 class="layershow">Surface Layer Upgrades</h1>
+                    <button class="upg-button upg-0" id="upg-0" onclick="upgrade(0)"></button>
+                    <button class="upg-button upg-1" id="upg-1" onclick="upgrade(1)"></button>
+                    <button class="upg-button upg-1" id="upg-2" onclick="upgrade(2)"></button>
+                    <button class="upg-button upg-2" id="upg-3" onclick="upgrade(3)"></button>
+                    <button class="upg-button upg-2" id="upg-4" onclick="upgrade(4)"></button>
+                    <div class="layershow">
+                        <h1>Sky Layer Upgrades</h1>
+                        <button class="upg-button upg-3" id="upg-5" onclick="upgrade(5)"></button>
+                        <button class="upg-button upg-3" id="upg-6" onclick="upgrade(6)"></button>
+                        <button class="upg-button upg-4" id="upg-7" onclick="upgrade(7)"></button>
+                        <button class="upg-button upg-4" id="upg-8" onclick="upgrade(8)"></button>
+                        <button class="upg-button upg-2" id="upg-9" onclick="upgrade(9)"></button>
+                        <button class="upg-button upg-1" id="upg-10" onclick="upgrade(10)"></button>
+                        <button class="upg-button upg-1" id="upg-11" onclick="upgrade(11)"></button>
+                        <button class="upg-button upg-1" id="upg-12" onclick="upgrade(12)"></button>
+                        <button class="upg-button upg-0" id="upg-13" onclick="upgrade(13)"></button>
                     </div>
                 </div>
                 <div id="statistics" class="tabcontent scr-stats" style="display:none">
@@ -184,7 +148,7 @@
                     <h3 class="layershow" id="stats-bars-2"></h3>
                     <h3 id="stats-allbars"></h3>
                     <h3 id="stats-upgbought"></h3>
-                    <h3 class="layershow" id="stats-unassigned"></h3>
+                    <h3 class="layershow" id="stats-waited"></h3>
                     <h3 class="layershow" id="stats-scaletotal"></h3>
                     <h3 id="stats-since"></h3>
                     <h3 id="stats-time"></h3>
@@ -214,9 +178,9 @@
                         <h3>If you have enough points, you can buy them. They will be useful to make progress.</h3>
                     </div>
                     <div class="guide-item layershow">
-                        <h1>Exospheric Layer</h1>
-                        <h3>Exospheric layer! Now, instead of increasing when you press the button, it selects the progress bar!</h3>  <br>
-                        <h3>If you have unassigned points, press the increase all bars button, it'll divide the points into the ammount selected and will give to the progress bars.</h3>  <br>
+                        <h1>Sky Layer</h1>
+                        <h3>Sky layer! Now, instead of increasing when you press the button, it selects the progress bar!</h3>  <br>
+                        <h3>If you have waited points, press the increase all bars button, it'll divide the points into the ammount selected and will give to the progress bars.</h3>  <br>
                     </div>
                     <div class="guide-item layershow">
                         <h1>ScaleBar</h1>
@@ -234,12 +198,13 @@
                     <div class="ach-screen">
                         <div id="ach-desc"><h1>[Click on any achievement to read its description!]</h1></div>
                         <div id="ach-normal" class="tab-ach">
-                            <table><tbody id="table-normal"></tbody></table>
+                            <table><tbody id="table"></tbody></table>
                         </div>
-                        <div id="ach-secret" class="tab-ach" style="display:none">
-                            <table><tbody id="table-secret"></tbody></table>
-                        </div>
+                        <div id="ach-secret" class="tab-ach" style="display:none"></div>
                     </div>
+                </div>
+                <div id="whitescreen" style="display:none">
+                    <h1 id="whitescreentext">Layer up!</h1>
                 </div>
             </div>
         </div>

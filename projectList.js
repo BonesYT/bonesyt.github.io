@@ -30,7 +30,7 @@ fr.onload = () => {
         desc.appendChild(spanDesc)
         div.appendChild(title)
         div.appendChild(desc)
-        document.getElementById(projects.section[i] ?? projects.section).appendChild(div)
+        document.getElementById(typeof projects.section == 'object' ? projects.section[i] : projects.section).appendChild(div)
 
     }
 

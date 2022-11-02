@@ -10,54 +10,58 @@ body {
 	    rgb(49, 53, 58) 0%,
 	    rgb(66, 70, 78) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
+}
+.scr-progress-2 {
+	background-image: linear-gradient(
+	    rgb(37, 42, 48) 0%,
+	    rgb(56, 61, 71) 100%
+	);
+}
+.scr-progress-3 {
+	background-image: linear-gradient(
+	    rgb(35, 43, 53) 0%,
+	    rgb(33, 41, 40) 100%
+	);
 }
 .scr-options {
 	background-image: linear-gradient(
 	    rgb(49, 53, 58) 0%,
 	    rgb(66, 70, 78) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
-	text-align: center;
 }
 .scr-upgrades {
 	background-image: linear-gradient(
 	    rgb(49, 53, 58) 0%,
 	    rgb(66, 70, 78) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .scr-stats {
 	background-image: linear-gradient(
 	    rgb(49, 53, 58) 0%,
 	    rgb(66, 70, 78) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .scr-guide {
 	background-image: linear-gradient(
 	    rgb(73, 76, 82) 0%,
 	    rgb(22, 26, 34) 100%
 	);
-	text-align: center;
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .menu-button {
 	background-color: rgb(56, 59, 63);
 	border-color: rgb(26, 27, 29);
 }
-.min-button {
-	background-color: rgb(45, 52, 61);
-	border-color: rgb(22, 25, 31);
-}
 .menu-progress-2 {
 	background-color: rgb(99, 109, 119);
 	border-color: rgb(50, 55, 61);
+}
+.menu-progress-3 {
+	background-color: rgb(112, 127, 141);
+	border-color: rgb(75, 74, 90);
+}
+.min-button {
+	background-color: rgb(45, 52, 61);
+	border-color: rgb(22, 25, 31);
 }
 .upg-0 {
 	background-color: rgb(63, 66, 73);
@@ -98,10 +102,6 @@ body {
 		rgb(50, 53, 58) 0%,
         rgb(31, 34, 37) 100%
     );
-	width: 90%;
-	margin: auto;
-	margin-bottom: 25px;
-	margin-top: 15px;
 	border: 7px solid #67696d;
 }
 .main > h1 {
@@ -143,4 +143,10 @@ textarea {
 	background-color: #3b424d;
 	border: 2px solid #101214;
 	color: white;
+}
+.news {
+	background-image: linear-gradient(
+        rgb(106 112 123),
+        rgb(71 78 87)
+	);
 }

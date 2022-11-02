@@ -2,22 +2,31 @@
 
 function $(e) {
     return document.getElementById(e);
+}function $q(e) {
+    return document.querySelector(e);
+}function $c(e) {
+    return $q('.' + e)
 };
 
-var config = {
-    bars: [0,0],
+let config = {
+    audio: null,
+    docReady: false,
+    bars: [0,0,0],
     playing: false,
     lasttab: 'progress',
     lastbar: 0,
-    layerup: false,
+    first: [1, 1],
     int: {bars: []},
-    ach: 0,
-    upgradelayer: [0,0,0,0,0,1,1],
+    ach: [0,0],
+    upgradelayer: [0,0,0,0,0,1,1,1,1,1,1,1,1,1],
     news: {
         text: '',
         pos: -820
     },
-    min: false
+    min: false,
+    wtf: {
+        spam: 0
+    }
 }
 
 console.log('Only use console for testing. Please don\'t cheat.')
@@ -29,14 +38,15 @@ document.onmousedown = () => {
     if (!config.playing) {
         config.audio.volume = 0.4
         config.audio.loop = 'loop'
+        config.docReady = true
         config.audio.play()
-        config.playing = true;
+        config.playing = true
     }
 }
 
 function LdrToRGB(l, d, r) {
-    var a = Math.sin(d)*r
-    var b = Math.cos(d)*r
+    const a = Math.sin(d)*r
+    const b = Math.cos(d)*r
     return LabToRGB(l, a, b)
 }
 function LabToRGB(l, a, b) {
@@ -58,10 +68,10 @@ function LabToRGB(l, a, b) {
             b: Math.max(0, Math.min(1, b)) * 255}
 }
 function color(v=-1.1, b=0, d=100, id=0, layer=0) {
-    var x = Math.sin(v)*d
-    var y = Math.cos(v)*d
-    var c = LabToRGB(86+b, x, y)
-    var c2 = LabToRGB(75+b, x, y)
+    let x = Math.sin(v)*d,
+        y = Math.cos(v)*d,
+        c = LabToRGB(86+b, x, y),
+        c2 = LabToRGB(75+b, x, y)
     $(`prog-cont-${layer}-${id}`).style.backgroundImage = `linear-gradient(rgb(${c.r}, ${c.g}, ${c.b}) 0%,rgb(${c2.r}, ${c2.g}, ${c2.b}) 100%)`
     c = LabToRGB(38+b, x, y)
     c2 = LabToRGB(29+b, x, y)
@@ -95,8 +105,8 @@ function rainbow() {
 }
 
 document.makeElement = (tag, innerHTML)=>{
-    var node = document.createElement(tag);
-    var textnode = document.createTextNode(innerHTML);
+    const node = document.createElement(tag);
+    const textnode = document.createTextNode(innerHTML);
     node.appendChild(textnode);
     return node
 }
@@ -113,24 +123,32 @@ function mute() {
 }
 
 function tab(tab, Class='tabcontent') {
+    if (config.wtf.stopworking) return
     if (tab != config.lasttab) {
         game.stats.page = tab
-        playSFX('audio/tab.mp3')
+        playSFX('tab')
     }
     config.lasttab = tab
-    var i, tabcontent;
+    let i, tabcontent
     tabcontent = document.getElementsByClassName(Class);
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = 'none';
     }
     document.getElementById(tab).style.display = 'block';
+    update()
 }
 
-function achDesc(id) {
-    document.querySelector('#ach-desc>h1').innerHTML = 'Achievement ' + (id + 1) + ': ' + game.achievements[id].desc
+function achDesc(id, sid) {
+    if (sid >= 0 & !game.achievements[id].unlocked) {
+        $q('#ach-desc>h1').innerHTML = 'Secret achievement ' + (sid + 1) + ': ???'
+        return
+    }
+    $q('#ach-desc>h1').innerHTML = sid >= 0
+    ? 'Secret achievement ' + (sid + 1) + ': ' + game.achievements[id].desc
+    : 'Achievement ' + (id + 1) + ': ' + game.achievements[id].desc
 }
 
-var buy = {
+const bulk = {
     add:function(i,r,m) {
         return EN.floor(EN.div(EN.ln(EN.div(EN.add(EN.div(i,EN.div(10,
                EN.sub(EN.mul(m,10),10))),r),r)),EN.ln(m)))
@@ -155,25 +173,52 @@ function setTheme(theme) {
 }
 
 function min() {
-    var a = document.querySelector('.main')
-    var b = document.querySelector('.gamescreen')
-    var c = document.querySelectorAll('.menu-button'),
-        d = [game.stats.layer==0?'Progress Bars':'SURFACE Layer','SKY Layer','Upgrades','Statistics','Achivements','Guide','Options'],
-        e = [game.stats.layer==0?'PB':'L1','L2','Upg','Sta','Ach','Gui','Opt']
+
+    if (config.wtf.stopworking) return
+    let a = $c('main'),
+        b = $c('gamescreen'),
+        c = document.querySelectorAll('.menu-button'),
+        d = [!game.stats.layer?'Progress Bars':'SURFACE Layer','EXOSPHERIC Layer','SPATIAL Layer','Upgrades','Statistics','Achivements','Guide','Options'],
+        e = [!game.stats.layer?'PBs':'SUR','EXO','SPT','Upg','Sta','Ach','Gui','Opt']
+    
     if (config.min) {
         a.className = a.className.substr(0, a.className.length - 4)
         b.className = b.className.substr(0, b.className.length - 4)
         $('minbutton').innerHTML = '⇦'
         c.forEach((v,i) => v.innerHTML = d[i])
-        $('logo').src = 'images/logo.png'
+        $('logo').src = 'imgs/logo.png'
     } else {
         a.className += ' min'
         b.className += ' min'
         $('minbutton').innerHTML = '⇨'
         c.forEach((v,i) => v.innerHTML = e[i])
-        $('logo').src = 'images/logomin.png'
+        $('logo').src = 'imgs/logomin.png'
     }
     config.min = !config.min
+
+    config.wtf.lastsp = Date.now()
+    if (++config.wtf.spam == 1) funcao()
+
+}
+async function funcao() {
+
+    if (await new Promise(r => {
+        setInterval(() => {
+            if (Date.now() > config.wtf.lastsp + 128 | config.wtf.spam >= 100) {
+                r(config.wtf.spam)
+                config.wtf.spam = 0
+            }
+        })
+    }) >= 100) {
+        playSFX('bruh')
+        game.achievements[13].instUnlock()
+        config.wtf.stopworking = true
+        $q('body').style.filter = 'contrast(5)'
+        await new Promise(r => {setTimeout(r,5e3)})
+        config.wtf.stopworking = false
+        $q('body').style.filter = ''
+    }
+
 }
 
 //ExpantaNum JSON fix (Infinity turns into null if you use JSON.stringify)
@@ -184,10 +229,8 @@ function nullfix(i, o) {
     return i
 }
 
-function addBar(id) {
-    var hasAdded = !game.stats.completeid.includes(id)
-    if (hasAdded) game.stats.completeid.push(id)
-    return hasAdded
+function includeBar(id) {
+    if (!game.stats.completeid.includes(id)) game.stats.completeid.push(id)
 }
 
 function time(i) {
@@ -200,14 +243,17 @@ function time(i) {
 }
 
 function wipe(a) {
+
     if (a) {
-        for (var i = 0; i < 5; i++) {
-            if (!confirm('Are you ' + 'really '.repeat(i) + 'sure you want to wipe ALL of your progress? There is no prize. Click ' + (5 - i) + ' more times to confirm.')) {
-                return false
-            }
-        }
+        [
+            'Are you sure you want to wipe ALL of your progress? There is no prize.',
+            'Are you REALLY sure you want to wipe ALL of your progress? There is NO PRIZE.',
+            "No I'm serious. THERE IS NO PRIZE. You will LOSE EVERYTHING!",
+            "ARE YOU SURE YOU WANNA DO THAT!! IT IS IRREVERSIBLE ADN YOU WILL HAVE TO DO EVEYRTHING AGAIN FROM SCRATCH THIS IS YOU'RE LAST CHANCE!!!!!!"
+        ].forEach(v => {if (!confirm(v)) return})
+    
         game = new Game
-        for (var i=0; i<game.stats.layer+1; i++) {
+        for (let i=0; i<game.stats.layer+1; i++) {
             removeBars(i)
             placeBars(i)
         }
@@ -216,25 +262,67 @@ function wipe(a) {
         })
         config.audio.pause()
         config.audio.src = `audio/songs/back${game.stats.layer}.mp3`
-        $('vol-music').value = '1'
-        new Audio('audio/wipe.mp3').play()
+        playSFX('wipe')
         clearInterval(config.int.autosave)
         setTimeout(() => {
             alert('...And all the bars dissapear into the abyss.')
-            alert('Now you only have ONE MINUTE before your save is gone forever. If you changed your mind, please quickly restart the page.')
+            alert('Now you only have 30 SECONDS before your save is gone forever. If you changed your mind, please immediately restart the page.')
         }, 300);
         setTheme('color')
         setTimeout(()=>{config.audio.play()}, 7000)
         setTimeout(()=>{
             save(true)
             AutoStart(3)
-        }, 60000)
+        }, 3e4)
         update()
+        $c('beta-recovery').style.display = ''
     }
+
 }
 
 function playSFX(src) {
-    var a = new Audio(src)
+    const a = new Audio(`audio/${src}.mp3`)
     a.volume = game.stats.vol.sfx
     a.play()
+}
+function animTrig(...e) {
+    e.forEach(v => v.setAttribute('anim-trig', ''))
+}
+function animUntr() {
+    document.querySelectorAll('[anim-trig]').forEach(v =>
+        v.removeAttribute('anim-trig')    
+    )
+}
+async function wait(i) {
+    await new Promise(r => setTimeout(r, i * 1e3))
+}
+
+function skip(opt) {
+
+    if (opt) {
+        $c('beta-recovery').style.display = 'none'
+        game.EXO.gain = EN(300)
+        game.stats.complete = 36
+        ascendAnim(0)
+    } else {
+        $c('beta-recovery').style.display = 'none'
+    }
+
+}
+
+function layerloc(i) {
+    if (i == 0) return game
+    return game[['', 'EXO', 'SPT'][i]]
+}
+
+function toFixed(s, f, n) {
+    s=''+s
+    const a = s.split(/[.e]/)
+    if (!s.includes('.')) a.splice(1, 0, '')
+
+    if (n & !s.includes('e')) a[1] = a[1].substring(0, f)
+    else a[1] = a[1].substring(0, f).padEnd(f, 0)
+
+    const b = a[1].length == 0 & !n ? a[0] + '.' + '0'.repeat(f) : f == 0 | a[1].length == 0 ? a[0] : a[0] + '.' + a[1]
+    return a[2] ? b + 'e' + a[2] : b
 }

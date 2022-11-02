@@ -10,56 +10,61 @@ body {
 	    rgb(255, 187, 0) 0%,
 	    rgb(224, 123, 8) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
+}
+.scr-progress-2 {
+	background-image: linear-gradient(
+	    rgb(255, 153, 0) 0%,
+	    rgb(185, 95, 16) 100%
+	);
+}
+.scr-progress-3 {
+	background-image: linear-gradient(
+	    rgb(255, 114, 49) 0%,
+	    rgb(218, 32, 44) 100%
+	);
 }
 .scr-options {
 	background-image: linear-gradient(
 	    rgb(255, 187, 0) 0%,
 	    rgb(224, 123, 8) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
-	text-align: center;
 }
 .scr-upgrades {
 	background-image: linear-gradient(
 	    rgb(255, 187, 0) 0%,
 	    rgb(224, 123, 8) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .scr-stats {
 	background-image: linear-gradient(
 	    rgb(255, 187, 0) 0%,
 	    rgb(224, 123, 8) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .scr-guide {
 	background-image: linear-gradient(
 	    rgb(90, 64, 15) 0%,
 	    rgb(105, 18, 18) 100%
 	);
-	text-align: center;
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .menu-button {
 	background-color: rgb(255, 186, 82);
 	border-color: rgb(119, 74, 48);
 	color: black;
 }
+.menu-progress-2 {
+	background-color: rgb(253, 255, 116);
+	border-color: rgb(134, 119, 30);
+}
+.menu-progress-3 {
+	background-color: rgb(255, 207, 13);
+	border-color: rgb(153, 63, 35);
+	color: black;
+}
 .min-button {
 	background-color: rgb(199, 102, 28);
 	border-color: rgb(92, 46, 32);
 	color: black;
-}
-.menu-progress-2 {
-	background-color: rgb(253, 255, 116);
-	border-color: rgb(134, 119, 30);
 }
 .upg-0 {
 	background-color: rgb(255, 115, 0);
@@ -103,10 +108,6 @@ body {
 		rgb(248, 132, 0) 0%,
         rgb(168, 55, 10) 100%
     );
-	width: 90%;
-	margin: auto;
-	margin-bottom: 25px;
-	margin-top: 15px;
 	border: 7px solid #fffb00;
 }
 .main > h1 {
@@ -146,4 +147,11 @@ input[type="range"]::-webkit-slider-thumb {
 textarea {
 	background-color: #e69634;
 	border: 2px solid #752f0f;
+}
+.news {
+	background-image: linear-gradient(
+        rgb(255 238 0),
+        rgb(255 216 28)
+	);
+	color: black;
 }

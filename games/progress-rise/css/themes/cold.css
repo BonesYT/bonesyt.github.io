@@ -10,56 +10,61 @@ body {
 	    rgb(0, 183, 255) 0%,
 	    rgb(8, 109, 224) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
+}
+.scr-progress-2 {
+	background-image: linear-gradient(
+	    rgb(0, 153, 255) 0%,
+	    rgb(16, 95, 185) 100%
+	);
+}
+.scr-progress-3 {
+	background-image: linear-gradient(
+	    rgb(49, 114, 255) 0%,
+	    rgb(44, 32, 218) 100%
+	);
 }
 .scr-options {
 	background-image: linear-gradient(
 	    rgb(0, 183, 255) 0%,
 	    rgb(8, 109, 224) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
-	text-align: center;
 }
 .scr-upgrades {
 	background-image: linear-gradient(
 	    rgb(0, 183, 255) 0%,
 	    rgb(8, 109, 224) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .scr-stats {
 	background-image: linear-gradient(
 	    rgb(0, 183, 255) 0%,
 	    rgb(8, 109, 224) 100%
 	);
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .scr-guide {
 	background-image: linear-gradient(
 	    rgb(15, 60, 90) 0%,
 	    rgb(20, 18, 105) 100%
 	);
-	text-align: center;
-	background-attachment: fixed;
-	min-height: 100%;
 }
 .menu-button {
 	background-color: rgb(82, 172, 255);
 	border-color: rgb(48, 72, 119);
 	color: black;
 }
-.min-button {
-	background-color: rgb(28, 102, 199);
-	border-color: rgb(23, 46, 92);
-	color: black;
-}
 .menu-progress-2 {
 	background-color: rgb(116, 246, 255);
 	border-color: rgb(47, 149, 189);
+	color: black;
+}
+.menu-progress-3 {
+	background-color: rgb(13, 207, 255);
+	border-color: rgb(35, 63, 153);
+	color: black;
+}
+.min-button {
+	background-color: rgb(28, 102, 199);
+	border-color: rgb(23, 46, 92);
 	color: black;
 }
 .upg-0 {
@@ -104,10 +109,6 @@ body {
 		rgb(0, 128, 248) 0%,
         rgb(10, 65, 168) 100%
     );
-	width: 90%;
-	margin: auto;
-	margin-bottom: 25px;
-	margin-top: 15px;
 	border: 7px solid #00f7ff;
 }
 .main > h1 {
@@ -147,4 +148,17 @@ input[type="range"]::-webkit-slider-thumb {
 textarea {
 	background-color: #3496e6;
 	border: 2px solid #0f2f75;
+}
+.news {
+	background-image: linear-gradient(
+        rgb(226 231 237),
+        rgb(188 198 203)
+	);
+}
+.news {
+	background-image: linear-gradient(
+        rgb(0 238 255),
+        rgb(28 216 255)
+	);
+	color: black;
 }

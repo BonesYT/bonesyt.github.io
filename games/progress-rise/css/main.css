@@ -1,57 +1,133 @@
+/* Main */
+@import 'animation.css';
+@font-face {
+    font-family: gameFont;
+    src: url(https://fonts.cdnfonts.com/s/9006/MonospaceTypewriter.woff);
+}
+@font-face {
+    font-family: jsab;
+    src: url(https://db.onlinewebfonts.com/t/c9f309b3d47969ecac64a77a6c672594.ttf);
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: gameFont;
+}
 html {
 	height: 100%;
 }
 body {
 	font-family: gameFont;
+	white-space: nowrap;
+	margin: 0;
+	overflow: hidden;
 }
+.break {
+	white-space: break-spaces;
+}
+
+/* Game screen */
 .main {
-	width: 99%;
-	position: absolute;
-	transition: width 0.5s;
-	display: grid;
+	width: 30%;
+	height: 100%;
+	min-width: 192px;
+	transition: width 0.5s, min-width 0.5s;
+	white-space: initial;
+	float: left;
+	text-align: center;
 }
 .main.min {
-	width: 20%;
-	min-width: 200px;
+	width: 76.8px;
+	min-width: 0;
 }
 .logo {
-	width: 30.6%;
+	width: 100%;
 	height: auto;
-	transform: translate(-8px, -8px)
 }
 .gamescreen {
 	width: 70%;
+	min-width: 448px;
 	height: 100%;
-	right: 0%;
-	top: 0%;
-	position: absolute;
 	overflow: hidden;
-	transition: width 0.5s
+	transition: width 0.5s;
+	display: inline-block;
+	position: absolute;
 }
 .gamescreen.min {
-	width: 94%;
-	max-width: calc(100% - 60px)
+	width: calc(100% - 76.8px);
+	min-width: 563.2px;
 }
 #tabs {
 	width: 100%;
+	min-width: 448px;
 	height: calc(100% - 36px);
 	overflow: hidden;
-	position: absolute
+	position: absolute;
 }
+
+/* tabs */
+.scr-progress {
+	background-attachment: fixed;
+	min-height: 100%;
+}
+.scr-options {
+	background-attachment: fixed;
+	text-align: center;
+}
+.scr-upgrades {
+	background-attachment: fixed;
+	min-height: 100%;
+	white-space:normal;
+}
+.scr-guide {
+	background-attachment: fixed;
+	min-height: 100%;
+	text-align: center;
+}
+.scr-stats {
+	background-attachment: fixed;
+	min-height: 100%;
+}
+
+/* Layer Up */
 #whitescreen {
-	width: 1%;
-	height: 100vh;
-	display: table-cell;
+	width: 100%;
+	height: 100%;
 	background-color: white;
 	vertical-align: middle;
-	z-index: 200;
-	position: relative;
+	z-index: 4;
+	position: absolute;
 }
 #whitescreentext {
-	text-align: center;
-	margin: auto;
 	white-space: nowrap;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+	transform: translateY(-999%);
+	font-family: jsab;
+	font-size: max(102.5px, 16vw);
+    -webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	background-clip: text;
+	background-image: linear-gradient(
+	    hsl(0deg, 100%, 8%),
+	    hsl(-60deg 35% 5%)
+	);
 }
+
+/* Animation triggers 
+#whitescreen[anim-trig] {
+	animation: 6s linear lu-background-fade
+}
+#whitescreentext[anim-trig] {
+	animation: 2s linear infinite lu-text-rainbow,
+			   .5s cubic-bezier(0, 1.08, 0.77, 1) infinite lu-text-bounce,
+			   4s cubic-bezier(0, 1, 1, 0.01) lu-text-motion;
+}
+#tabs[anim-trig] {
+	animation: 6s linear lu-background-glow
+}*/
+
+/* progress bars */
 
 .progress {
 	height: 61px;
@@ -64,14 +140,17 @@ body {
     z-index: 2;
     transition: filter 0.54s;
     filter: brightness(1);
+	width: 64px;
+	height: 64px;
 }
-.pb-container {
+.pb-container,.sb-container {
 	height:30px;
 	width:200px;
 	overflow:hidden;
 	transform: translate(56px,47px);
 	z-index: 1;
 }
+.sb-container {transform: translate(26px,24px)}
 .pb-add[selected] {
 	animation: glow 1s ease-in-out infinite alternate;
 }
@@ -83,16 +162,40 @@ body {
 }
 .pb-img {
     border-radius: 50%;
-    width: 55px;
+    width: 64px;
     height: auto;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-.pb-prog {
-	height:100%;
-	width:0%;
-	float:left;
+.pb-prog,.sb-prog {
 	color: black;
+	height: 100%;
 }
-.pb-level {
+.pb-filter {
+	background: linear-gradient(
+		to right,
+		#39a15b,#d060a3,
+		#a13939,#383d8b,
+		#565fc1,#5a5529
+	), linear-gradient(
+		#565fc1,#5a5529,
+		#39b47b,#725324,
+		#39a15b,#d060a3
+	);
+	animation: pb-filter-x 4s infinite ease-in-out alternate,
+			   pb-filter-y 4s 2s infinite ease-in-out alternate,
+			   pb-filter-hue 10s infinite linear;
+	background-size: 270% 1800%;
+	background-blend-mode: hard-light;
+	background-repeat: space;
+	mix-blend-mode: hard-light;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.pb-level,.sb-level {
 	display: table-cell;
 	width: 90px;
 	height: 50px;
@@ -103,6 +206,7 @@ body {
 	white-space: pre-wrap;
 	color: black;
 }
+.sb-level {transform: translate(240px,-16px);}
 .pb-buy {
 	width: 95px;
 	height: 58px;
@@ -112,6 +216,7 @@ body {
 	font-family: gameFont;
 	white-space: pre-wrap;
 	transition: font-size 0.5s;
+	border-style: solid;
 }
 .pb-buy:hover {
 	font-size: 14px
@@ -119,7 +224,7 @@ body {
 .pb-buy:active {
 	font-size: 12px
 }
-.pb-text {
+.pb-text,.sb-text {
 	margin: 0;
 	left: 50%;
 	top: 50%;
@@ -131,12 +236,19 @@ body {
 	width: 100%;
 	font-size: 12px;
 }
-@font-face {
-    font-family: gameFont;
-    src: url(https://fonts.cdnfonts.com/s/9006/MonospaceTypewriter.woff);
-}
-h1, h2, h3, h4, h5, h6 {
-	font-family: gameFont;
+.expt {
+	font-family: jsab;
+	font-size: 27px;
+	font-style: italic;
+	background: linear-gradient(
+		#f44,
+		#b00
+	);
+	-webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1.2px #600;
+	animation: lu-text-rainbow 12s infinite linear;
 }
 .menu-button {
 	border-radius: 7px;
@@ -144,9 +256,9 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: gameFont;
 	font-size: 16px;
 	color: white;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
     transition: font-size 0.5s, border-radius 0.5s;
-    width: calc(30% - 11px);
+    width: calc(100% - 16px);
     height: 40px;
 }
 .min-button {
@@ -155,7 +267,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: gameFont;
 	font-size: 16px;
 	color: white;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
     transition: font-size 0.5s, border-radius 0.5s;
     width: 40px;
     height: 40px;
@@ -176,15 +288,13 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: gameFont;
 	font-size: 20px;
 	color: white;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
     width: 220px;
     height: 220px;
 	white-space: pre-wrap;
 	vertical-align: top;
-	margin-right: -4px;
 	transition: border-radius 0.64s, filter 0.64s;
 	filter: brightness(1);
-	margin-right: -9px;
 }
 .upg-button:hover {
 	border-radius: 30px;
@@ -194,14 +304,16 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 10px;
 	filter: brightness(0.75);
 }
-.button {
-	height: 48px;
+button {
 	border-radius: 2.5px;
 	border-width: 4px;
 	font-family: gameFont;
 	white-space: pre-wrap;
 	border-color: #444;
-	background-image: linear-gradient(#FFF 0%, #CCC 100%);
+	background-image: linear-gradient(#FFF 0, #CCC 100%);
+}
+.button {
+	height: 48px;
 }
 .title {
 	-webkit-background-clip: text;
@@ -212,7 +324,7 @@ h1, h2, h3, h4, h5, h6 {
 	width: 200px;
 	overflow: hidden;
 	outline: 4px solid #333;
-	background-image: linear-gradient(#FFF 0%, #CCC 100%);
+	background-image: linear-gradient(#FFF 0, #CCC 100%);
 	position: relative;
 	z-index: 100;
 	margin: 12px auto;
@@ -223,8 +335,8 @@ h1, h2, h3, h4, h5, h6 {
 	width: 40%;
 	float: left;
 	color: black;
-	background-image: linear-gradient(#888 0%, #555 100%);
-	z-index: 100;
+	background-image: linear-gradient(#888 0, #555 100%);
+	z-index: 2;
 }
 .basic-text {
 	margin: 0;
@@ -234,60 +346,47 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
     top: 50%;
 	transform: translateY(-50%);
-	z-index: 101;
+	z-index: 3;
 }
 .glow-text {
 	color: #f0f;
-	text-shadow: 0px 0px 8px #f0f, 0px 0px 20px #3a0a87;
+	text-shadow: 0 0 8px #f0f, 0 0 20px #3a0a87;
 	font-size: 30px;
 }
-.center {
-	text-align: center;
+.glow-text#ascend-2 {
+	color: #b42dff;
+	text-shadow: 0 0 8px #b42dff, 0 0 20px #35204d;
 }
-#prestige-gain {
+.center {text-align: center;}
+.prestige-gain {
 	font-size: 14px;
 	text-align: center;
 	margin: 3px 0 7px 0;
 	text-shadow: 0 0 5px rgb(162, 0, 255);
 }
 .main > h1 {
-	text-align: center;
-	transform: translate(-6px);
-	width:30%;
 	font-size: 12px;
-	z-index: 99999;
 }
 #progress-2 > #boost {
 	font-size: 20px;
-}
-@keyframes glow {
-	from {
-		filter: brightness(1.5)
-	}
-	to {
-		filter: brightness(0.75)
-	}
 }
 .ach-page {
 	display: flow-root;
 	height: 25vh;
 	width: 100%;
-	text-align: center;
 	position: relative;
 	min-height: 120px;
 }
 .ach-page>div {
 	position:absolute;
-	bottom:0;
-	margin-bottom:30px;
-	left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    white-space: nowrap;
+	bottom: 0;
+	margin-bottom: 30px;
+	text-align: center;
+	width: 100%;
 }
 .ach-page>div>button {
 	padding: 4px 10px;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 51%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
 	font-family: gameFont;
 	border-radius: 8px;
 	transition: border-radius 0.5s, filter 0.5s;
@@ -311,29 +410,24 @@ th>div {
 	height: 115px;
 	width: 115px;
 	background-color: #719bbf;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 51%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
 	border-radius: 10px;
 	border: #2b3746 solid 4px;
 	vertical-align: middle;
 	position: relative;
+	white-space:normal;
+	text-align: center;
 }
 th>div[unlocked] {
 	animation: glow2 1s ease-in-out infinite alternate;
 }
-@keyframes glow2 {
-	from {
-		filter: brightness(1.55)
-	}
-	to {
-		filter: brightness(1.35)
-	}
-}
-th>div>h1 {
+th>div>span {
 	font-size: 20px;
 	position:absolute;
 	left: 50%;
-	top: 39%;
+	top: 50%;
 	transform: translate(-50%, -50%);
+	width: 100%;
 }
 #ach-desc {
 	height: 35px;
@@ -351,7 +445,7 @@ input[type="range"] {
 	-webkit-appearance: none;
 	width: 225px;
 	height: 14px;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 51%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
 	border-radius: 4px;
 }
 input[type="range"]::-webkit-slider-thumb {
@@ -359,7 +453,7 @@ input[type="range"]::-webkit-slider-thumb {
 	appearance: none;
 	height: 28px;
 	width: 28px;
-	background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.25) 65.01%);
+	background-image: linear-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.25) 65%);
 	cursor: pointer;
 	border-radius: 50%;
 }
@@ -373,11 +467,9 @@ textarea {
 }
 .news {
 	width: 100%;
+	position:relative;
+	margin: 0;
 	height: 36px;
-	background-image: linear-gradient(
-        rgb(16, 201, 124),
-        rgb(30, 134, 91)
-	);
 	text-align: center;
 }
 #newstext {
@@ -389,4 +481,28 @@ textarea {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	height: 100%;
+}
+.guide-item {
+	width: 90%;
+	margin: auto;
+	margin-bottom: 25px;
+	margin-top: 15px;
+	white-space: normal;
+}
+.guide-item > h1, .guide-item > h3 {
+	margin: 10px 0;
+}
+.beta-recovery {
+	width: 400px;
+	font-size: 12px;
+	white-space: pre-wrap;
+	border-radius: 15px;
+	display: flex;
+	padding: 10px;
+	background: linear-gradient(
+		#eee8,
+		#fffa 50%,
+		#bbb7 50%,
+		#6666
+	);
 }

@@ -172,7 +172,8 @@ button:active {
     background-blend-mode: soft-light;
     background-color:#4102ff00;
     transform: translate(0); /* weird glitch */
-    margin: auto;
+    margin: 6px 6px;
+    display: inline-block;
 }
 .title {
     width: 100%;
@@ -209,7 +210,7 @@ button:active {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    font-size: 21px;
+    font-size: 17px;
 }
 .proj-item:hover {
     box-shadow: 0 0 6px #127cad,

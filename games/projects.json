@@ -7,7 +7,8 @@
         "2D Explorer",
         "Blendoku HTML Version",
         "Slot Machine",
-        "Progress Rise (beta v0.3.1)"
+        "Progress Rise (beta v0.3.1)",
+        "Nexmaze"
     ],
     "description": [
         "Basic number guesser. You have to guess the exact number using hints.",
@@ -17,7 +18,8 @@
         "2D grid maze explorer with mining abilities.",
         "Playable HTML version of Blendoku². Original by Lonely Few",
         "Free online Slot Machine game! Get the right numbers for cash! (virtual cash ofc)",
-        "Progress Rise BETA v0.3.1. An incremental game about progress bars gradually increasing! Has 3 prestige layers and soundtrack!"
+        "Progress Rise BETA v0.3.1. An incremental game about progress bars gradually increasing! Has 3 prestige layers and soundtrack!",
+        "A Ray-tracing labyrinth game about NextBots. Has 8 levels getting progressively harder!"
     ],
     "directory": [
         "numberguesser",
@@ -27,7 +29,8 @@
         "2dexplorer",
         "blendoku",
         "slots",
-        "progress-rise"
+        "progress-rise",
+        "nexmaze"
     ],
     "section": [
         "games",
@@ -37,7 +40,8 @@
         "games",
         "games",
         "games",
-        "increm"
+        "increm",
+        "games"
     ],
     "amount": 8
 }

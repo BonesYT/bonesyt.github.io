@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+        <title>Nexmaze</title>
+        <script src="js/class.js"></script>
+        <script src="js/exMath.js"></script>
+        <script defer src="js/main.js"></script>
+        <script src="js/render.js"></script>
+        <script src="js/ASPathFinder.js"></script>
+        <script src="js/NextBot.js"></script>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A Ray-tracing labyrinth game about NextBots. Has 8 levels getting progressively harder!">
+        <meta name="keywords" content="ray tracer, NextBot, Nico's NextBots, maze, labyrinth, escape game">
+
+    </head>
+    <body>
+        <span>Version v1.0</span>
+        <h1>Nexmaze</h1>
+        <p>CONTROLS: ⭡⭣AD movement ⭠⭢ rotation ⇧ sprint
+space to look backwards, P to pause, Q to use item</p>
+        <div id="start">
+            <button id="play">START GAME</button>
+            <h3>Warning: This game has flashing lights, and loud audio.</h3>
+        </div>
+        <canvas width="854" height="480" id="canvas" style="display:none"></canvas><br>
+        <div id="settings" style="display: none">
+            <button id="back">Confirm</button><br>
+            Music/BG Volume <input type="range" id="musvol" value=".8" min="0" max="1" step=".01"><br>
+            Sfx Volume <input type="range" id="sfxvol" value="1" min="0" max="1" step=".01"><br>
+            Mouse sensitivity <input type="range" id="mousesens" value="1" min=".2" max="2"><br>
+            Maximum framerate <input type="number" id="maxfps" value="30" min="10" max="120"><br>
+            Unlimited framerate <input type="checkbox" id="unlfps" checked><br>
+            Screen resolution <select id="resolution">
+                <option value="w1080p">1440x1080</option>
+                <option value="f1080p">1920x1080</option>
+                <option value="w720p">1280x720</option>
+                <option value="f720p">1080x720</option>
+                <option value="w480p">854x480</option>
+                <option value="f480p">640x480</option>
+                <option value="w360p">640x360</option>
+                <option value="f360p">480x360</option>
+                <option value="w240p">426x240</option>
+                <option value="f240p">360x240</option>
+            </select><br>
+            Render light speed <select id="lightspd">
+                <option value=".06">Best</option>
+                <option value=".12">Good</option>
+                <option value=".2">Normal</option>
+                <option value=".3">Fast</option>
+                <option value=".5">Faster</option>
+            </select>
+        </div>
+    </body>
+</html>

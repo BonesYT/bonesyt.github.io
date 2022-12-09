@@ -1,0 +1,70 @@
+body {
+    background-color: black;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 6px #92aac5;
+    font-family: Nexa-Bold;
+}
+h1 {
+    margin: 5px 0;
+}
+p {
+    white-space: break-spaces;
+}
+canvas {
+    outline: 4px white solid;
+    filter: drop-shadow(#dde8f0 0 0 4px)
+}
+@font-face {
+    font-family: Nexa-Bold;
+    src: url(https://db.onlinewebfonts.com/t/c9f309b3d47969ecac64a77a6c672594.ttf);
+}
+button, select, input[type="number"] {
+    color: white;
+    text-shadow: 0 0 6px #92aac5;
+    background-color: black;
+    border: white solid 2px;
+    border-radius: 4px;
+    padding: 6px 9px;
+    font-family: Nexa-Bold;
+    font-size: 24px;
+    filter: drop-shadow(#dde8f0 0 0 4px);
+    transition: filter 500ms ease-in;
+}
+button:hover {
+    filter: drop-shadow(#4d76fa 0 0 7px);
+    cursor: pointer;
+}
+select {
+    padding: 2px 2px;
+    font-size: 24px;
+    filter: drop-shadow(#dde8f0 0 0 4px)
+}
+input[type="range"] {
+    appearance: none;
+    width: 200px;
+    height: 12px;
+    background-color: black;
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border: 2px white solid;
+    border-radius: 8px;
+    filter: drop-shadow(#dde8f0 0 0 4px)
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px white solid;
+    filter: drop-shadow(#dde8f0 0 0 4px)
+}
+input[type="number"] {
+    padding: 0 4px;
+    font-size: 16px;
+    filter: drop-shadow(#dde8f0 0 0 4px)
+}

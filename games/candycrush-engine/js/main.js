@@ -104,8 +104,8 @@ function testlevel() {
         c:prompt('3/3: How many different colors in the table? 1 to 6.',5)||5,
     }
     c.c = Math.max(Math.min(c.c, 6), 1)
-    c.w = Math.max(Math.min(c.w, 64), 2)
-    c.h = Math.max(Math.min(c.h, 64), 2)
+    c.w = Math.max(Math.min(c.w, 256), 1)
+    c.h = Math.max(Math.min(c.h, 256), 1)
     const tiles = new LevelTileMap(new Vector2(c.w, c.h))
     const a = []
     /** @type {EngineMap} game */
@@ -122,8 +122,8 @@ function testlevel() {
     })
     game.patterns = patterns
     const aa = ['None']
-    for (let i = 0; i < 256; i++) a.push(new Regular(
-        new Vector2(i%16, Math.floor(i/16)), Math.floor(Math.random() * c.c), aa.at(Math.random()*aa.length), game
+    for (let i = 0; i < c.w*c.h; i++) a.push(new Regular(
+        new Vector2(i%c.w, Math.floor(i/c.w)), Math.floor(Math.random() * c.c), aa.at(Math.random()*aa.length), game
         ))
     game.assign($e('.game'))
     game.physicsFinished.connect(() => console.log('Iteration finished'))

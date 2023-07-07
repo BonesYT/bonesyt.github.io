@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Candy Crush Engine</title>
+        <script> let game, exports, config </script>
+        <script type="module" src="js/Event.js"></script>
+        <script type="module" src="js/CandyCrushEngine.js"></script>
+        <script type="module" src="js/main.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <meta name="description" content="This is a recreation of the Candy Crush engine.">
+        <meta name="keywords" content="candy crush, candy crush saga, king, combine, html5, BonesYT">
+    </head>
+    <body>
+        <div class="stats main">
+            <span id="moves"></span>  
+            <span id="score">Score</span>    
+            <span id="motion"></span>
+        </div>
+        <div class="game main"></div>  
+        <div class="info main">
+            <h1>Candy Crush engine</h1>    
+            <h3>Version 1.0. Currently classic only.</h3>
+            <p>i remade the engine from that game.</p>
+            <p>Click on 2 tiles to swap</p>
+            <p>Credits to <a href="https://community.king.com/en/" target="_blank">King</a> for the original series.</p>
+            <h2>Formations</h2>
+            <span>3 in row to clear; 4 in row for striped; T, L, + shape with 5 for wrapped, 5 in row for color bomb.</span>
+            <h2>Swap combos</h2>
+            <span class="spaced"><b>Striped+Striped</b>: clear row <i>and</i> column</span>
+            <span class="spaced"><b>Striped+Wrapped</b>: clear 3 rows and columns</span>
+            <span class="spaced"><b>Wrapped+Wrapped</b>: 5x5 explosion twice</span>
+            <span class="spaced"><b>ColorBomb+Normal</b>: clear all of the same color</span>
+            <span class="spaced"><b>ColorBomb+Special</b>: replace all of the same color with special and triggers all</span>
+            <span class="spaced"><b>ColorBomb+ColorBomb</b>: clears the whole table</span>
+        </div>
+    </body>
+</html>

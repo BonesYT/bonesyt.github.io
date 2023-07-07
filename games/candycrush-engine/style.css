@@ -1,0 +1,66 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    display: flex;
+    margin: 0;
+    overflow: hidden;
+}
+.screen {
+    background-color: black;
+    box-shadow: white 0 0 20px 12px;
+    width:calc(100% - 400px);
+    overflow: hidden;
+    position: absolute;
+    aspect-ratio: calc(1/1);
+    top: 50%;
+    left: 50%;
+    max-width: 100vh;
+    transform: translate(-50%, -50%);
+}
+.candy {
+    position: absolute;
+    background-size:100%;
+}
+span {
+    color: white;
+    font-family: monospace;
+    display: block;
+}
+#moves {
+    font-size: 3em;
+    color: cyan;
+    font-weight: 700;
+}
+[selected] {
+    filter: brightness(1.5)
+}
+@keyframes glow {
+    from {filter: brightness(1.2)}
+    to {filter: brightness(2)}
+}
+[triggered] {
+    animation: glow ease-in-out alternate-reverse infinite .2s
+}
+.main {
+    height: 100vh;
+}
+.game {
+    width: calc(100vw - 400px);
+    display: block;
+}
+.stats, .info {
+    width: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.stats {
+    padding: 3px;
+}
+.spaced {
+    margin: 15px 0;
+}
+a {
+    color: #2fff2d;
+    font-weight: 600;
+}

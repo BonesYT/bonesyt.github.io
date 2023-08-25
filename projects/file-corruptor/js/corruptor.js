@@ -186,16 +186,19 @@ async function start() {
         if (loading) {alert('A file is still being changed.'); return}
         if (!ready) {alert('Please select a file first!'); return}
         loading = true
+        let I
     
         ob.innerHTML = 'Uploading...'
     
         const cs = $('charset').value
-        I = await upload()
-        const s = I[1],
-              na = I[2]
-        I = new TextDecoder(cs).decode(
-            await I[0].arrayBuffer()
-        )
+        if (!content) {
+            I = await upload()
+            const s = I[1],
+                  na = I[2]
+            content = I = new TextDecoder(cs).decode(
+                await I[0].arrayBuffer()
+            )
+        } else I = content
     
         o = await corrupt(I, s)
         $('byte-modif').innerHTML = 'Modifications: ' + bitMeas(o.count)
@@ -214,7 +217,8 @@ async function start() {
 
     } catch (e) {
 
-        alert('Uh oh... Seems like there\'s a code point error! (See in DevTools)')
+        loading = false
+        alert(`Uh oh... Seems like there's an error (See in DevTools)\n\n${e}`)
         throw e
 
     }

@@ -241,6 +241,28 @@ input {
     border: solid 2px #3b89ff;
     font-family: 'Trebuchet MS', sans-serif;
     box-shadow: 0 5px #001b57;
+    color: white
+}
+input::placeholder {
+    color: #72adf0b3
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0px;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+    border-radius: 3px;
+    background: linear-gradient(
+        #b8b8b8, #595959
+    );
+    background-blend-mode: overlay;
+}
+input[type="color"] {
+    width: 40px;
+    height: 20px;
+    padding: 0;
+    border-radius: 5px;
+    margin: 4px 0;
 }
 textarea, select {
     border-radius: 4px;
@@ -324,7 +346,7 @@ input[type=file] {
     outline: 4px solid white;
     border-radius: 10px;
     display:inline-block;
-    width: 100%;
+    width: calc(100% - 15px);
     margin: 12px 0;
     font-family: 'Trebuchet MS', sans-serif;
     box-shadow: 0 15px #001b57;

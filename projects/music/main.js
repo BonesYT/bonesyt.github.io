@@ -11,7 +11,8 @@ songs = ['Bitbase', 'Thesuren', 'Orsical', 'Ditern', 'Ultraticalic', 'Megalatic'
          /* Added in 04/30/2022 */ 'AMOGUS GUS 1', 'AMOGUS GUS 2', 'AMOGUS GUS 3', 'Baby Laughing Music Remix 1', 'Baby Laughing Music Remix 2', 'Chai Kingdom - Super Mario Land Remix', 'DIFICULTATION', 'Ending', 'ERROR',
                                    'Extarmity', 'graditental', 'Megalovania remix', 'Multi Mode', 'oofdance', 'ProgressRise - Surface', 'ProgressRise - The Sky', 'Scartissan', 'Super Idol Remix', 'TooFull', 'TUOV S2 - Escape', 'ultrahard',
          /* Added in 05/31/2022 */ 'ascendar', 'Duplex Melodiam', 'Eternatical', 'Metagite', 'Outernation', 'OverForever', 'rhymetilated', 'NSMBU Underground Theme Remix', 'Quattuordecupity', 'Ultimation',
-         /* Added in 10/16/2022 */ 'Chai_Kingdom', 'Astronomic', 'Chai Kingdom (second remix)', 'HARMPHE - Ruins', 'Spatial', 'Synthesizal Full'
+         /* Added in 10/16/2022 */ 'Chai_Kingdom', 'Astronomic', 'Chai Kingdom (second remix)', 'HARMPHE - Ruins', 'Spatial', 'Synthesizal Full',
+         /* Added in 08/25/2023 */ 'Hyperbyte', 'Reverberator - Perfourth', 'Curse of Worthiness', 'Divine Invincibility'
         ],
 
 songs.sort() 

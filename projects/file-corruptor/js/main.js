@@ -3,7 +3,8 @@ const $ = i => document.getElementById(i),
 
 let mode = 0,
     ready = false,
-    loading = false
+    loading = false,
+    content = null
 
 tabs.forEach((v,i) => {
     $(v).addEventListener('click', e => {
@@ -36,6 +37,7 @@ $('byte-count').addEventListener('click', () => {
     if (v) document.querySelector('div[select]').childNodes[1].value = v / $('input').files[0].size * 100, upd()
 
 })
+$('input').addEventListener('input', () => content = null)
 
 function bitMeas(i) {
     if (i < 1024) return Math.floor(i) + ' bytes'

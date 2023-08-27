@@ -200,7 +200,7 @@ async function start() {
             )
         } else I = content
     
-        o = await corrupt(I, s)
+        o = await corrupt(I)
         $('byte-modif').innerHTML = 'Modifications: ' + bitMeas(o.count)
         o = o.out
     

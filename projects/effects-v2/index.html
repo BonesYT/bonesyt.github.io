@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=.333">
+    <meta name="description" content="Apply effects in your image! It can be adjusted, distorted, and even more!">
+    <meta name="keywords" content="bonesyt, adjust, effects, image, color, image editing, rgb">
+    <title>Advanced Image Effects</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+    <script src="script/color.global.js"></script>
+    <script src="script/class.js"></script>
+    <script src="script/colorLibrary.js"></script>
+    <script src="script/effects.js"></script>
+    <script defer src="script/main.js"></script>
+
+</head>
+<body>
+    <div id="templates" hidden>
+
+        <div class="effect">
+            <div class="topbar tab">
+                <button class="expand" title="Expand/Collapse"><img src="images/expanded.png"></img></button>
+                <span class="effect-name" class="topbar-text">Effect name</span>
+                <button class="import-preset" title="Load preset"><img src="images/import.png"></img></button>
+                <button class="export-preset" title="Save preset"><img src="images/export.png"></img></button>
+                <button class="random" title="Randomize parameters"><img src="images/random.png"></img></button>
+                <button class="clone" title="Duplicate effect"><img src="images/clone.png"></img></button>
+                <button class="default" title="Set parameters to default"><img src="images/reset.png"></img></button>
+                <button class="move-above" title="Move effect 1 layer up"><img src="images/move_above.png"></img></button>
+                <button class="move-below" title="Move effect 1 layer down"><img src="images/move_below.png"></img></button>
+                <button class="effect-toggle" title="Toggle"><img src="images/toggle.png"></img></button>
+                <button class="remove" title="Delete effect"><img src="images/remove.png"></img></button>
+            </div>
+            <div class="parameter-list"></div>
+        </div>
+
+        <button class="effect-option">
+            <div class="effect-icon"></div>
+            <span class="effect-option-name">Effect name</span>
+        </button>
+
+        <div class="parameter">
+            <span class="parameter-name">Parameter name</span>
+        </div>
+        
+        <div class="number">
+            <input type="range" class="slider-input">
+            <input type="number" class="number-input">
+        </div>
+        
+        <div class="color">
+            <input type="color" class="color-input">
+            <input type="text" class="text-input">
+        </div>
+        
+        <div class="bool">
+            <input type="checkbox" class="check-input">
+        </div>
+        
+        <div class="enum">
+            <select class="enum-input"></select>
+        </div>
+        
+        <div class="vector">
+            <div class="v2range"><div class="v2handle-contain">
+                <div class="v2handle"></div>
+            </div></div>
+            <div class="v2param">
+                <input type="number" class="v2x-input" placeholder="X Position">
+                <input type="number" class="v2y-input" placeholder="Y Position">
+            </div>
+        </div>
+
+    </div>
+    <div id="sections">
+        <div id="image-section">
+
+            <div id="image-topbar" class="topbar">
+                <span id="image-text" class="topbar-text">Select an image to begin</span>
+                <button id="render" title="Render output once"><img src="images/runonce.png"></img></button>
+                <button id="download" title="Download output"><img src="images/download.png"></img></button>
+                <button id="open" title="Open an image file"><img src="images/open.png"></img></button>
+            </div>
+
+            <div id="image">
+                <canvas id="output" width="1" height="1"></canvas>
+                <span id="metadata"></span>
+                <span id="fps"></span>
+            </div>
+
+        </div>
+        <div id="effect-section">
+
+            <div id="effect-topbar" class="topbar">
+                <span id="image-text" class="topbar-text">Effect list</span>
+                <button id="import" title="Import loadout"><img src="images/import.png"></img></button>
+                <button id="export" title="Export loadout"><img src="images/export.png"></img></button>
+                <button id="toggle-all" title="Switch between original and modified"><img src="images/toggle.png"></img></button>
+                <button id="add" title="Add effect"><img src="images/add.png"></img></button>
+            </div>
+            <div id="effect-list"></div>
+            <span>v1.0</span>
+
+        </div>
+    </div>
+    <div id="add-effect" hidden>
+
+        <div class="topbar">
+            <span class="topbar-text">Choose effect to add</span>
+            <button id="close" title="Close"><img src="images/remove.png"></img></button>
+        </div>
+        <div id="effect-option-list"></div>
+
+    </div>
+</body>
+</html>

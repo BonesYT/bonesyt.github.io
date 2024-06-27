@@ -21,7 +21,8 @@
         "3D Builder",
         "Complex Fractal Editor",
         "UTF-32 Characters",
-        "File Corruptor (EXP)"
+        "File Corruptor (EXP)",
+        "Advanced Image Effects"
     ],
     "description": [
         "Test project, AKA my first project!",
@@ -45,7 +46,8 @@
         "3D Builder is a 3D structure editor. Able to see build timelapse as well!",
         "Complex Fractal renderer powered by JavaScript",
         "Animated UTF-32 Character array.",
-        "Experimental file corruptor algorithm with several modes! Upload any media file and see what happens!"
+        "Experimental file corruptor algorithm with several modes! Upload any media file and see what happens!",
+        "Apply effects in your image! It can be adjusted, distorted, and even more!"
     ],
     "directory": [
         "test",
@@ -69,7 +71,8 @@
         "3dbuilder",
         "complexfractals",
         "utf-32",
-        "file-corruptor"
+        "file-corruptor",
+        "effects-v2"
     ],
     "section": "list",
     "amount": 22

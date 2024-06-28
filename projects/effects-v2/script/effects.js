@@ -691,7 +691,7 @@ const effectList = [
         let scale = Math.min(d.width, d.height)
         let seed = a.seed == -1 ? Math.floor(Math.random()*2**32) : a.seed + d.i ** 2 * 110
         let pos = rngcircle(a.rad, seed)
-        let other = d.get(pos[0] * scale + d.x, pos[1] * scale + d.y, a.bounds.name)
+        let other = d.get(new Vector(pos[0] * scale + d.x, pos[1] * scale + d.y), a.bounds.name)
         return d.color.lerp(other, a.mix)
     }),
     
@@ -935,7 +935,7 @@ const effectList = [
             break
         }
 
-        color.alpha = b(color.a*a.al, 0, 256)
+        color.alpha = b(color.alpha*a.al, 0, 256)
         return color
     }),
     

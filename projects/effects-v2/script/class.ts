@@ -58,7 +58,7 @@ class Color {
     }
     /** @returns {boolean} */
     isNaN(): boolean {
-        return Number.isNaN(this.red + this.green + this.blue + this.alpha)
+        return isNaN(this.red) || isNaN(this.green) || isNaN(this.blue) || isNaN(this.alpha)
     }
     
     /**
@@ -281,7 +281,8 @@ interface PixelData {
     i: number
     color: Color
     image: AdvancedImageData
-    get(x: number, y: number, z?: BoundsMode): Color
+    get(x: number, y: number, z?: BoundsMode): Color,
+    outputs: AdvancedImageData[]
 }
 
 type EffectFunction<T = any> = (data: PixelData, args: Arguments, pre: T) => Color
@@ -353,8 +354,10 @@ class AdvancedImageData {
     readonly width: number = 0
     readonly height: number = 0
     
-    /** @type {Color[]} */
+    /** data for all pixels @type {Color[]} */
     readonly data: Color[] = []
+    /** list of effect outputs that comes before this @type {AdvancedImageData[]} */
+    previous: AdvancedImageData[] = []
     
     /**
      * @param {ImageData} imageData
@@ -367,8 +370,8 @@ class AdvancedImageData {
      * @param {number} height
      * @memberof AdvancedImageData
      */
-    constructor(imageData: Color[], width: number, height: number)
-    constructor(imageData: ImageData | Color[], width?: number, height?: number) {
+    constructor(imageData: Color[], width: number, height: number, previous?: AdvancedImageData)
+    constructor(imageData: ImageData | Color[], width?: number, height?: number, previous?: AdvancedImageData) {
         if (imageData instanceof ImageData) {
             this.width = imageData.width
             this.height = imageData.height
@@ -380,6 +383,10 @@ class AdvancedImageData {
             this.width = width ?? 1
             this.height = height ?? 1
             this.data = imageData
+            if (previous) {
+                this.previous = this.previous.concat(previous.previous)
+                this.previous.push(previous)
+            }
         }
     }
     
@@ -507,13 +514,14 @@ class Effect {
                 height: imageData.height,
                 size: new Vector(imageData.width, imageData.height),
                 image: imageData,
-                get: (x,y) => imageData.getPixel.call(imageData, x,y)
+                get: (x,y) => imageData.getPixel.call(imageData, x,y),
+                outputs: imageData.previous
             }, this.arguments, init)
             if (pixel.isNaN()) pixel = Color.zero
             out.push(pixel)
         }
 
-        return new AdvancedImageData(out, imageData.width, imageData.height)
+        return new AdvancedImageData(out, imageData.width, imageData.height, imageData)
     }
 
     /** Creates a copy of this effect
@@ -535,6 +543,6 @@ class Effect {
 /** @typedef {{name: string,key?: string,type: ParameterTypes,min?: number|Vector,max?: number|Vector,softmin?: number|Vector,softmax?: number|Vector,default?: number,exponential?: boolean,writable:WritableFunction}} Parameter */
 /** @typedef {(data: PixelData, args: Arguments, pre: T) => Color} EffectFunction @template {any} T */
 /** @typedef {(image: AdvancedImageData, args: Arguments) => T} InitiateFunction @template {any} T */
-/** @typedef {{x: number,y: number,pos: Vector,width: number,height: number,size: Vector,i: number,color: Color,image: AdvancedImageData,get(pos: Vector, z?: BoundsMode): Color}} PixelData*/
+/** @typedef {{x: number,y: number,pos: Vector,width: number,height: number,size: Vector,i: number,color: Color,image: AdvancedImageData,get(pos: Vector, z?: BoundsMode): Color},outputs:AdvancedImageData[]} PixelData*/
 /** @typedef {'empty' | 'tile' | 'reflect' | 'clamp'} BoundsMode */
 /** @typedef {'number' | 'boolean' | 'int' | 'color' | `#${string}`} ParameterTypes */

@@ -35,7 +35,7 @@ class Color {
     }
     /** @returns {boolean} */
     isNaN() {
-        return Number.isNaN(this.red + this.green + this.blue + this.alpha);
+        return isNaN(this.red) || isNaN(this.green) || isNaN(this.blue) || isNaN(this.alpha);
     }
     /**
      * @param {(input: number, key: string) => number} f
@@ -260,9 +260,11 @@ class EffectTemplate {
 class AdvancedImageData {
     width = 0;
     height = 0;
-    /** @type {Color[]} */
+    /** data for all pixels @type {Color[]} */
     data = [];
-    constructor(imageData, width, height) {
+    /** list of effect outputs that comes before this @type {AdvancedImageData[]} */
+    previous = [];
+    constructor(imageData, width, height, previous) {
         if (imageData instanceof ImageData) {
             this.width = imageData.width;
             this.height = imageData.height;
@@ -275,6 +277,10 @@ class AdvancedImageData {
             this.width = width ?? 1;
             this.height = height ?? 1;
             this.data = imageData;
+            if (previous) {
+                this.previous = this.previous.concat(previous.previous);
+                this.previous.push(previous);
+            }
         }
     }
     /**
@@ -412,13 +418,14 @@ class Effect {
                 height: imageData.height,
                 size: new Vector(imageData.width, imageData.height),
                 image: imageData,
-                get: (x, y) => imageData.getPixel.call(imageData, x, y)
+                get: (x, y) => imageData.getPixel.call(imageData, x, y),
+                outputs: imageData.previous
             }, this.arguments, init);
             if (pixel.isNaN())
                 pixel = Color.zero;
             out.push(pixel);
         }
-        return new AdvancedImageData(out, imageData.width, imageData.height);
+        return new AdvancedImageData(out, imageData.width, imageData.height, imageData);
     }
     /** Creates a copy of this effect
      * @returns {Effect} */
@@ -436,7 +443,7 @@ class Effect {
 /** @typedef {{name: string,key?: string,type: ParameterTypes,min?: number|Vector,max?: number|Vector,softmin?: number|Vector,softmax?: number|Vector,default?: number,exponential?: boolean,writable:WritableFunction}} Parameter */
 /** @typedef {(data: PixelData, args: Arguments, pre: T) => Color} EffectFunction @template {any} T */
 /** @typedef {(image: AdvancedImageData, args: Arguments) => T} InitiateFunction @template {any} T */
-/** @typedef {{x: number,y: number,pos: Vector,width: number,height: number,size: Vector,i: number,color: Color,image: AdvancedImageData,get(pos: Vector, z?: BoundsMode): Color}} PixelData*/
+/** @typedef {{x: number,y: number,pos: Vector,width: number,height: number,size: Vector,i: number,color: Color,image: AdvancedImageData,get(pos: Vector, z?: BoundsMode): Color},outputs:AdvancedImageData[]} PixelData*/
 /** @typedef {'empty' | 'tile' | 'reflect' | 'clamp'} BoundsMode */
 /** @typedef {'number' | 'boolean' | 'int' | 'color' | `#${string}`} ParameterTypes */ 
 //# sourceMappingURL=class.js.map

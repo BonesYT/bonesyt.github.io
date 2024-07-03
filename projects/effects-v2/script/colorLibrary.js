@@ -9,13 +9,13 @@
    Lab conversion comes from https://github.com/antimatter15/rgb-lab/blob/master/color.js */
 
 
-function mod2(x,a,b) {
+   function mod2(x,a,b) {
     return mod(x-a, b-a) + a
 }
 function refl2(x,a,b) {
     return refl(x-a, b-a, true) + a
 }
-colorUtils = {
+const colorUtils = {
 
     /** @param {Color} color */
     getLuma(color) {
@@ -317,4 +317,54 @@ colorUtils = {
             case 'minimum': return Math.min(color.r, color.g, color.b)
         }
     },
+
+    /** @param {Color} a @param {Color} b @param {string} mode @returns {Color} */
+    blend(a, b, mode) {
+        // a = behind, b = front
+        function map(f) {
+            return a.map((v, k) => f(v / 255, b[k] / 255) * 255 || 0)
+        }
+
+        let c,d,out
+        switch (mode) {
+            
+            case 'alpha': return a.overlay(b)
+            case 'subtract': out = map((a, b) => a - b); break
+            case 'multiply': out = map((a, b) => a * b); break
+            case 'screen': out = map((a, b) => 1 - (1 - a) * (1 - b)); break
+            case 'darken': out = map((a, b) => Math.min(a, b)); break
+            case 'lighten': out = map((a, b) => Math.max(a, b)); break
+            case 'darker': out = colorUtils.getLuma(a) < colorUtils.getLuma(b) ? a : b; break
+            case 'lighter': out = colorUtils.getLuma(a) > colorUtils.getLuma(b) ? a : b; break
+            case 'color-burn': out = map((a, b) => 1 - (1 - a) / b); break
+            case 'color-dodge': out = map((a, b) => a / (1 - b)); break
+            case 'linear-burn': out = map((a, b) => a + b - 1); break
+            case 'linear-dodge': out = map((a, b) => a + b); break
+            case 'overlay': out = map((a, b) => a > .5 ? 1-2*(1-a)*(1-b) : b*a*2); break
+            case 'soft-light': out = map((a, b) => (1 - 2 * b) * a ** 2 + 2 * b * a); break
+            case 'hard-light': out = map((a, b) => b > .5 ? 1-2*(1-a)*(1-b) : b*a*2); break
+            case 'vivid-light': out = map((a, b) => b > .5 ? a / (1 - b * 2 + 1) : 1 - (1 - a) / (b * 2)); break
+            case 'linear-light': out = map((a, b) => a + 2 * b - 1); break
+            case 'pin-light': out = map((a, b) => b > .5 ? Math.max(a, 2*b-1) : Math.min(a, 2*b)); break
+            case 'hard-mix': out = map((a, b) => a + 2 * b - 1 > .5 ? 1 : 0); break
+            case 'difference': out = map((a, b) => Math.abs(a - b)); break
+            case 'exclusion': out = map((a, b) => 1 - Math.abs(1 - a - b)); break
+            case 'negative-light': out = map((a, b) => b > .5 ? Math.abs(a - (1 - (b*2-1))) : 1 - Math.abs(1 - a - (b*2))); break
+            case 'divide': out = map((a, b) => a == 0 && b == 0 ? 0 : a / b); break
+            case 'divide-alt': out = map((a, b) => a == 0 && b == 1 ? 0 : a / (1 - b)); break
+            case 'hue': out = (c = colorUtils.toHSV(a), c[0] = colorUtils.toHSV(b)[0], colorUtils.fromHSV(...c, a.alpha)); break
+            case 'saturation': out = (c = colorUtils.toHSL(a), c[1] = colorUtils.toHSV(b)[1], colorUtils.fromHSV(...c, a.alpha)); break
+            case 'luminosity': out = (c = colorUtils.getLuma(a), d = colorUtils.getLuma(b), a.map(v => v + (d - c))); break
+            case 'color': out = (c = colorUtils.getLuma(b), d = colorUtils.getLuma(a), b.map(v => v + (d - c))); break
+            case 'gamma': out = map((a, b) => a ** Math.exp(1 - b*2)); break
+            case 'threshold': out = map((a, b) => a < b); break
+            case 'xor': out = a.map((v, k) => v ^ b[k]); break
+            case 'or': out = a.map((v, k) => v | b[k]); break
+            case 'and': out = a.map((v, k) => v & b[k])
+
+        }
+        out.alpha = a.alpha
+        
+        return a.lerp(out, b.alpha/255)
+    }
 }

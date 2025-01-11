@@ -1,10 +1,13 @@
-/** Made by BonesYT (https://bonesyt.github.io/libraries/ScratchComplex.js)
+(function(Scratch){// UNSANDBOXED
+/** Made by BonesYT (https://bonesyt.github.io/libraries/ScratchComplexUnsandboxed.js)
  * Version 1.0 - 01/10/2025 MM/DD/YYYY
- * Mathematical functions for complex numbers! Has all the operations from the Operators category.*/
-if (Scratch.extensions.unsandboxed) {
-    throw new Error("You're running a sandboxed extension as unsandboxed. Use the unsandboxed version instead for that.");
+ * Mathematical functions for complex numbers! Has all the operations from the Operators category.
+*/
+'use strict'
+if (!Scratch.extensions.unsandboxed) {
+    throw new Error("You're running an unsandboxed extension as sandboxed. Use the sandboxed version instead for that.");
 }
-
+    
 class ScratchComplex {
     constructor() {}
 
@@ -203,7 +206,7 @@ class ScratchComplex {
     getInfo() {
         return {
             id: "complex",
-            name: "Complex Values",
+            name: "Complex Numbers",
             color1: '#51CCAB',
             color2: '#42BC9B',
             color3: '#2FA887',
@@ -306,5 +309,5 @@ class ScratchComplex {
 
     /* add methods for blocks */
 }
-
 Scratch.extensions.register(new ScratchComplex)
+})(Scratch)

@@ -191,10 +191,11 @@ async function start() {
         ob.innerHTML = 'Uploading...'
     
         const cs = $('charset').value
+        let na
         if (!content) {
             I = await upload()
-            const s = I[1],
-                  na = I[2]
+            const s = I[1]
+            na = I[2]
             content = I = new TextDecoder(cs).decode(
                 await I[0].arrayBuffer()
             )

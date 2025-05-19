@@ -178,6 +178,7 @@ async function corrupt(I, m) {
     }
 
 }
+let name
 async function start() {
 
     const ob = $('output')
@@ -191,11 +192,10 @@ async function start() {
         ob.innerHTML = 'Uploading...'
     
         const cs = $('charset').value
-        let na
         if (!content) {
             I = await upload()
             const s = I[1]
-            na = I[2]
+            name = I[2]
             content = I = new TextDecoder(cs).decode(
                 await I[0].arrayBuffer()
             )
@@ -205,7 +205,7 @@ async function start() {
         $('byte-modif').innerHTML = 'Modifications: ' + bitMeas(o.count)
         o = o.out
     
-        let n = na.split('.')
+        let n = name.split('.')
         if (n[n.length - 2]) n[n.length - 2] += ' (Corrupted)'
         else n.unshift('Corrupted')
         n = n.join('.')
